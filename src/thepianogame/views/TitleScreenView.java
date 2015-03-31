@@ -36,6 +36,14 @@ public class TitleScreenView extends JPanel {
     }
     
     public JPanel makeButtons() {
+        /*
+            Creates a JPanel to hold three buttons:
+                - Start button
+                - Instructions button
+                - Quit button
+        
+            Sets their actions
+        */
         JPanel buttons = new JPanel();
         JButton start = new JButton("Start");
         JButton instructions = new JButton("Instructions");
@@ -43,7 +51,8 @@ public class TitleScreenView extends JPanel {
         
         // create action listeners
         instructions.addActionListener(new ActionListener() {
-
+     
+            @Override
             public void actionPerformed(ActionEvent e) {
                 instructionsDialog.setVisible(true);
             }
@@ -52,6 +61,7 @@ public class TitleScreenView extends JPanel {
         
         start.addActionListener(new ActionListener() {
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 controller.startGame();
             }
@@ -68,7 +78,11 @@ public class TitleScreenView extends JPanel {
     }
     
     public JDialog makeInstructionsDialog() {
+        /*
+            Creates the JDialog that holds the instructions
+        */
         JDialog dialog = new JDialog();
+        // remove this label. It is only a filler to check if the dialog works.
         JLabel instruction1 = new JLabel("This is an instruction");
         
         dialog.add(instruction1);

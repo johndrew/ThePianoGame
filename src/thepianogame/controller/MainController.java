@@ -13,10 +13,6 @@ import javax.swing.JFrame;
 import thepianogame.views.GameScreenView;
 import thepianogame.views.TitleScreenView;
 
-/**
- *
- * @author taylorstheking4
- */
 public class MainController extends JFrame implements ActionListener, 
         KeyListener {
     

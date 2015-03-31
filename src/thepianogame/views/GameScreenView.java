@@ -31,6 +31,10 @@ public class GameScreenView extends JPanel {
     }
     
     public final void makeGameWindow() {
+        /*
+            Creates the window that will contain the road, car, chord objects,
+            and options.
+        */
         gameWindow = new JPanel();
         gameWindow.setLayout(new BorderLayout());
         
@@ -44,6 +48,9 @@ public class GameScreenView extends JPanel {
     }
     
     public final void makePianoVisualization() {
+        /*
+            Creates the piano visualization
+        */
         pianoVisualization = new JPanel();
         pianoVisualization.setLayout(new BorderLayout());
         

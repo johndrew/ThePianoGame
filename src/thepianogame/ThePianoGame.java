@@ -8,11 +8,6 @@ package thepianogame;
 import java.awt.Dimension;
 import thepianogame.controller.MainController;
 
-
-/**
- *
- * @author taylorstheking4
- */
 public class ThePianoGame {
     
     /**

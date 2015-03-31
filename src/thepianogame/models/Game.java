@@ -5,10 +5,6 @@
  */
 package thepianogame.models;
 
-/**
- *
- * @author taylorstheking4
- */
 public class Game {
     
     public Game() {
