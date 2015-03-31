@@ -11,4 +11,5 @@ package thepianogame.models;
  */
 public class PianoKey {
     
+    private String noteName;
 }

@@ -5,17 +5,23 @@
  */
 package thepianogame.models;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author taylorstheking4
  */
-public class ChordObject {
+public class Chord {
     
     private String name;
-    private Chord chord;
+    private ArrayList<Note> notes;
     
-    public ChordObject(String name, Chord chord) {
+    public Chord(String name, ArrayList<Note> notes) {
         this.name = name;
-        this.chord = chord;
+        this.notes = notes;
+    }
+    
+    public ArrayList<Note> getNotes() {
+        return this.notes;
     }
 }

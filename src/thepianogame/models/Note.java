@@ -9,13 +9,11 @@ package thepianogame.models;
  *
  * @author taylorstheking4
  */
-public class ChordObject {
+public class Note {
     
     private String name;
-    private Chord chord;
     
-    public ChordObject(String name, Chord chord) {
+    public Note(String name) {
         this.name = name;
-        this.chord = chord;
     }
 }
