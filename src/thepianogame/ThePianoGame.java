@@ -6,26 +6,14 @@
 package thepianogame;
 
 import java.awt.Dimension;
-import javax.swing.JFrame;
-import thepianogame.models.Game;
-import thepianogame.views.StartScreen;
+import thepianogame.controller.MainController;
+
 
 /**
  *
  * @author taylorstheking4
  */
-public class ThePianoGame extends JFrame {
-    
-    public ThePianoGame() {
-        initComponents();
-    }
-
-    public void initComponents() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        StartScreen startScreen = new StartScreen();
-        this.add(startScreen);
-    }
+public class ThePianoGame {
     
     /**
      * @param args the command line arguments
@@ -33,10 +21,10 @@ public class ThePianoGame extends JFrame {
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ThePianoGame app = new ThePianoGame();
-                app.setPreferredSize(new Dimension(800, 700));
-                app.pack();
-                app.setVisible(true);
+                MainController controller = new MainController();
+                controller.setPreferredSize(new Dimension(800, 700));
+                controller.pack();
+                controller.setVisible(true);
             }
         });
     }

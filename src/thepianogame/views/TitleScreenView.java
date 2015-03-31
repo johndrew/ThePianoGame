@@ -15,17 +15,19 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import thepianogame.controller.MainController;
 
-/**
- *
- * @author taylorstheking4
- */
-public class StartScreen extends JPanel {
+public class TitleScreenView extends JPanel {
     
-    public StartScreen() {
-        JLabel title = new JLabel("The Piano Game");
+    private MainController controller;
+    
+    public TitleScreenView(MainController controller) {
+        this.controller = controller;
+        
+        title = new JLabel("The Piano Game");
         instructionsDialog = makeInstructionsDialog();
         
+        title.setFont (title.getFont ().deriveFont (64.0f));
         this.setLayout(new BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
         this.add(title);
         this.add(makeButtons());
@@ -48,6 +50,13 @@ public class StartScreen extends JPanel {
         
         });
         
+        start.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                controller.startGame();
+            }
+        });
+        
 //        buttons.setPreferredSize(new Dimension(200, 200));
         buttons.setLayout(new GridLayout(3, 1));
         
@@ -63,7 +72,7 @@ public class StartScreen extends JPanel {
         JLabel instruction1 = new JLabel("This is an instruction");
         
         dialog.add(instruction1);
-        dialog.setPreferredSize(new Dimension(200, 200));
+        dialog.setPreferredSize(new Dimension(500, 500));
         dialog.setLocation(new Point(100, 200));
         dialog.pack();
         dialog.setModal(false);
@@ -72,4 +81,5 @@ public class StartScreen extends JPanel {
     }
     
     private JDialog instructionsDialog;
+    private JLabel title;
 }
