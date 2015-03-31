@@ -5,17 +5,40 @@
  */
 package thepianogame;
 
+import java.awt.Dimension;
+import javax.swing.JFrame;
+import thepianogame.models.Game;
+import thepianogame.views.StartScreen;
+
 /**
  *
  * @author taylorstheking4
  */
-public class ThePianoGame {
+public class ThePianoGame extends JFrame {
+    
+    public ThePianoGame() {
+        initComponents();
+    }
 
+    public void initComponents() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        StartScreen startScreen = new StartScreen();
+        this.add(startScreen);
+    }
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                ThePianoGame app = new ThePianoGame();
+                app.setPreferredSize(new Dimension(800, 700));
+                app.pack();
+                app.setVisible(true);
+            }
+        });
     }
     
 }
