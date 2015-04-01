@@ -62,6 +62,11 @@ public class GameScreenView extends JPanel {
             Creates the piano visualization
         */
         pianoVisualization = new JPanel();
+        Dimension pianoSize = new Dimension(690, 92);
+        pianoVisualization.setSize(pianoSize);
+        pianoVisualization.setPreferredSize(pianoSize);
+        pianoVisualization.setMaximumSize(pianoSize);
+        pianoVisualization.setMinimumSize(pianoSize);
         piano = new PianoView();
         
         pianoVisualization.setLayout(new BorderLayout());
