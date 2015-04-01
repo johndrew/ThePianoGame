@@ -5,6 +5,15 @@
  */
 package thepianogame.models;
 
-public class Road {
+import java.awt.BorderLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class Road extends JPanel {
     
+    public Road() {
+        // TODO: Change these
+        setLayout(new BorderLayout());
+        add(new JLabel("Road"), BorderLayout.CENTER);
+    }
 }

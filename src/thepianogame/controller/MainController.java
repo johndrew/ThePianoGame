@@ -20,6 +20,7 @@ public class MainController extends JFrame implements ActionListener,
         initUI();
         
         addKeyListener(this);
+        setFocusable(true);
     }
     
     /*
@@ -52,7 +53,7 @@ public class MainController extends JFrame implements ActionListener,
         titleScreen.setVisible(false);
         gameScreen.setVisible(true);
     }
-
+    
     /*
         Used for responding to menu clicks
     */
@@ -62,29 +63,36 @@ public class MainController extends JFrame implements ActionListener,
 
     @Override
     public void keyTyped(KeyEvent e) {
-        System.out.println("Key Typed");
+//        System.out.println("Key Typed");
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-//        int keyCode = e.getKeyCode();
-//        
-//        System.out.println("Key pressed");
-//        
-//        switch (keyCode) {
-//                case KeyEvent.VK_SPACE:
-//                    System.out.println("Space bar pressed");
-//                    break;
-//                default:
-//                    System.out.println("Other");
-//                    break;
-//        }
-        System.out.println("Key Pressed");
+        int keyCode = e.getKeyCode();
+        
+        System.out.println("Key pressed");
+        
+        switch (keyCode) {
+                case KeyEvent.VK_SPACE:
+                    System.out.println("Space bar pressed.");
+                    if (gameScreen.isVisible() && 
+                            !gameScreen.isPauseDialogVisible()) {
+                        gameScreen.showPauseDialog();
+                    }
+                    else if (gameScreen.isVisible() &&
+                            gameScreen.isPauseDialogVisible()) {
+                        gameScreen.hidePauseDialog();
+                    }
+                    break;
+                default:
+                    System.out.println("Other");
+                    break;
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        System.out.println("Key Released");
+//        System.out.println("Key Released");
     }
     
     /*
