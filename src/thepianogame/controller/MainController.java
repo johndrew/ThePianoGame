@@ -54,6 +54,18 @@ public class MainController extends JFrame implements ActionListener,
         gameScreen.setVisible(true);
     }
     
+    public void backToMenu() {
+        /*
+            Shows the TitleScreenView and hides the GameScreenView
+        */
+        gameScreen.setVisible(false);
+        titleScreen.setVisible(true);
+    }
+    
+    public void closeProgram() {
+        System.exit(0);
+    }
+    
     /*
         Used for responding to menu clicks
     */
@@ -76,12 +88,12 @@ public class MainController extends JFrame implements ActionListener,
                 case KeyEvent.VK_SPACE:
                     System.out.println("Space bar pressed.");
                     if (gameScreen.isVisible() && 
-                            !gameScreen.isPauseDialogVisible()) {
-                        gameScreen.showPauseDialog();
+                            !gameScreen.isPauseMenuVisible()) {
+                        gameScreen.showPauseMenu();
                     }
                     else if (gameScreen.isVisible() &&
-                            gameScreen.isPauseDialogVisible()) {
-                        gameScreen.hidePauseDialog();
+                            gameScreen.isPauseMenuVisible()) {
+                        gameScreen.hidePauseMenu();
                     }
                     break;
                 default:

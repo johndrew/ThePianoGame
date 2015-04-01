@@ -67,6 +67,15 @@ public class TitleScreenView extends JPanel {
             }
         });
         
+        quit.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.closeProgram();
+            }
+            
+        });
+        
 //        buttons.setPreferredSize(new Dimension(200, 200));
         buttons.setLayout(new GridLayout(3, 1));
         
@@ -89,11 +98,14 @@ public class TitleScreenView extends JPanel {
         dialog.setPreferredSize(new Dimension(500, 500));
         dialog.setLocation(new Point(100, 200));
         dialog.pack();
-        dialog.setModal(false);
+        dialog.setModal(true);
         
         return dialog;
     }
     
+    /*
+        Private variables. DO NOT MODIFY.
+    */
     private JDialog instructionsDialog;
     private JLabel title;
 }
