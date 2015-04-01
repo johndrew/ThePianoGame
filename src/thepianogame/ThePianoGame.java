@@ -6,10 +6,13 @@
 package thepianogame;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
 import thepianogame.controller.MainController;
 
 public class ThePianoGame {
-    
+
     /**
      * @param args the command line arguments
      */
@@ -22,6 +25,24 @@ public class ThePianoGame {
                 controller.setVisible(true);
             }
         });
+        
+        // set up fps timers
+        final int TARGET_FPS = 60;
+        final long DELAY = 1000/TARGET_FPS;
+        long lastTime = System.currentTimeMillis();
+        int frameNo = 0;
+        
+        while (true) {
+            
+            /** do time based updating here **/
+            
+            // frame rate limiting
+            while (System.currentTimeMillis() <= lastTime + DELAY) {
+                
+            }
+            lastTime = System.currentTimeMillis();
+            System.out.println(frameNo++);
+        }
     }
-    
+
 }
