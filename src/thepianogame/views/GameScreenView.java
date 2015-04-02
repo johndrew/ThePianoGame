@@ -12,9 +12,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import thepianogame.controller.MainController;
 import thepianogame.models.Road;
 
@@ -44,17 +46,40 @@ public class GameScreenView extends JPanel {
         gameWindow = new JPanel();
         gameWindow.setLayout(new BorderLayout());
         
-        // TODO: Change these to JPanels
-        JButton b1 = new JButton("Left Options");
-        JButton b2 = new JButton("Right Options");
-        road = new RoadView();
+        JPanel header = new JPanel();
+        header.setLayout(new BorderLayout());
+        Dimension headerSize = new Dimension(890, 50);
+        header.setPreferredSize(headerSize);
         
-        gameWindow.add(b1, BorderLayout.WEST);
-        gameWindow.add(b2, BorderLayout.EAST);
+        JSeparator separator= new javax.swing.JSeparator();
+        header.add(separator, BorderLayout.SOUTH);
+        gameWindow.add(header, BorderLayout.NORTH);
+        
+        Dimension marginSize = new Dimension(200, 550);
+        JPanel leftMargin = new JPanel();
+        leftMargin.setPreferredSize(marginSize);
+        leftMargin.setMaximumSize(marginSize);
+        leftMargin.setMinimumSize(marginSize);
+        
+        JPanel rightMargin = new JPanel();
+        rightMargin.setPreferredSize(marginSize);
+        rightMargin.setMaximumSize(marginSize);
+        rightMargin.setMinimumSize(marginSize);
+        
+        gameWindow.add(leftMargin, BorderLayout.WEST);
+        gameWindow.add(rightMargin, BorderLayout.EAST);
+        
+        road = new RoadView();
+        Dimension roadSize = new Dimension(420, 520);
+        road.setPreferredSize(roadSize);
+        road.setMaximumSize(roadSize);
+        road.setMinimumSize(roadSize);
+        
         gameWindow.add(road, BorderLayout.CENTER);
         
-        b1.setEnabled(false);
-        b2.setEnabled(false);
+        settings = new SettingsView();
+        rightMargin.add(settings);
+        
     }
     
     public final void makePianoVisualization() {
@@ -68,6 +93,7 @@ public class GameScreenView extends JPanel {
         pianoVisualization.setMaximumSize(pianoSize);
         pianoVisualization.setMinimumSize(pianoSize);
         piano = new PianoView();
+        piano.setMinimumSize(pianoSize);
         
         pianoVisualization.setLayout(new BorderLayout());
         pianoVisualization.add(piano, BorderLayout.CENTER);
@@ -120,7 +146,7 @@ public class GameScreenView extends JPanel {
             Replaces the road view with the pause menu
         */
         gameWindow.add(pauseMenu, BorderLayout.CENTER);
-        road.setVisible(false);
+        //road.setVisible(false);
         pauseMenu.setVisible(true);
     }
     
@@ -130,7 +156,7 @@ public class GameScreenView extends JPanel {
         */
         gameWindow.add(road, BorderLayout.CENTER);
         pauseMenu.setVisible(false);
-        road.setVisible(true);
+        //road.setVisible(true);
     }
     
     public void makeEndGameMenu() {
@@ -187,4 +213,5 @@ public class GameScreenView extends JPanel {
     private JPanel endGameMenu;
     private RoadView road;
     private PianoView piano;
+    private SettingsView settings;
 }
