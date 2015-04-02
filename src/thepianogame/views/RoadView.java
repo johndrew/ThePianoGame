@@ -6,6 +6,7 @@
 package thepianogame.views;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import thepianogame.models.Road;
@@ -13,11 +14,16 @@ import thepianogame.models.Road;
 public class RoadView extends JPanel {
     
     public RoadView() {
-        model = new Road();
+        initComponents();
+    }
+    
+    @SuppressWarnings("unchecked")
+    private void initComponents() {
+        JPanel road = new javax.swing.JPanel();
+        this.setLayout(new BorderLayout());
+        this.add(road, BorderLayout.CENTER);
         
-        // TODO: Change these
-        setLayout(new BorderLayout());
-        add(new JLabel("Road"), BorderLayout.CENTER);
+        road.setBackground(new java.awt.Color(0, 0, 0));
     }
     
     private Road model;

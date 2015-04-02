@@ -78,6 +78,7 @@ public class PianoView extends JPanel {
         JPanel dsharp5 = new javax.swing.JPanel();
         JPanel e5 = new javax.swing.JPanel();
         
+        
         pianoPane.setBackground(new java.awt.Color(255, 255, 255));
         pianoPane.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         pianoPane.setLayout(new java.awt.GridBagLayout());
