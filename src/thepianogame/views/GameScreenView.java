@@ -7,6 +7,7 @@ package thepianogame.views;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import thepianogame.controller.MainController;
+import thepianogame.models.Player;
 import thepianogame.models.Road;
 
 public class GameScreenView extends JPanel {
@@ -45,17 +47,42 @@ public class GameScreenView extends JPanel {
         */
         gameWindow = new JPanel();
         gameWindow.setLayout(new BorderLayout());
-        
-        JPanel header = new JPanel();
-        header.setLayout(new BorderLayout());
-        Dimension headerSize = new Dimension(890, 50);
-        header.setPreferredSize(headerSize);
-        
+          
         JSeparator separator= new javax.swing.JSeparator();
-        header.add(separator, BorderLayout.SOUTH);
-        gameWindow.add(header, BorderLayout.NORTH);
+        gameWindow.add(separator, BorderLayout.NORTH);
         
-        Dimension marginSize = new Dimension(200, 550);
+        JLabel score = new JLabel();
+        JLabel scoreNumber = new JLabel();
+        
+        score.setText("SCORE:");
+        scoreNumber.setText("0");
+        
+        score.setFont(score.getFont ().deriveFont (18.0f));
+        scoreNumber.setFont(scoreNumber.getFont ().deriveFont (18.0f));
+        
+        JPanel scorePanel = new JPanel();
+        Dimension scoreSize = new Dimension(200, 28);
+        scorePanel.setPreferredSize(scoreSize);
+        scorePanel.setLayout(new FlowLayout());
+        scorePanel.add(score);
+        scorePanel.add(scoreNumber);
+        
+        JLabel life1 = new JLabel();
+        JLabel life2 = new JLabel();
+        JLabel life3 = new JLabel();
+        
+        life1.setIcon(new javax.swing.ImageIcon("/Users/marinastoebner/Documents/Northeastern/NUSpring2015/Human Computer Interaction/PianoGameImages/musicNote.png")); // NOI18N
+        life2.setIcon(new javax.swing.ImageIcon("/Users/marinastoebner/Documents/Northeastern/NUSpring2015/Human Computer Interaction/PianoGameImages/musicNote.png")); // NOI18N
+        life3.setIcon(new javax.swing.ImageIcon("/Users/marinastoebner/Documents/Northeastern/NUSpring2015/Human Computer Interaction/PianoGameImages/musicNote.png")); // NOI18N
+
+        JPanel lifesPanel = new JPanel();
+        Dimension lifesSize = new Dimension(150, 50);
+        lifesPanel.setPreferredSize(lifesSize);
+        lifesPanel.add(life1);
+        lifesPanel.add(life2);
+        lifesPanel.add(life3);
+        
+        Dimension marginSize = new Dimension(200, 480);
         JPanel leftMargin = new JPanel();
         leftMargin.setPreferredSize(marginSize);
         leftMargin.setMaximumSize(marginSize);
@@ -70,7 +97,7 @@ public class GameScreenView extends JPanel {
         gameWindow.add(rightMargin, BorderLayout.EAST);
         
         road = new RoadView();
-        Dimension roadSize = new Dimension(420, 520);
+        Dimension roadSize = new Dimension(420, 480);
         road.setPreferredSize(roadSize);
         road.setMaximumSize(roadSize);
         road.setMinimumSize(roadSize);
@@ -79,6 +106,9 @@ public class GameScreenView extends JPanel {
         
         settings = new SettingsView();
         rightMargin.add(settings);
+        leftMargin.add(lifesPanel);
+        leftMargin.add(scorePanel);
+        
         
     }
     
@@ -87,7 +117,7 @@ public class GameScreenView extends JPanel {
             Creates the piano visualization
         */
         pianoVisualization = new JPanel();
-        Dimension pianoSize = new Dimension(690, 92);
+        Dimension pianoSize = new Dimension(685, 92);
         pianoVisualization.setSize(pianoSize);
         pianoVisualization.setPreferredSize(pianoSize);
         pianoVisualization.setMaximumSize(pianoSize);
@@ -214,4 +244,5 @@ public class GameScreenView extends JPanel {
     private RoadView road;
     private PianoView piano;
     private SettingsView settings;
+    private Player player;
 }
