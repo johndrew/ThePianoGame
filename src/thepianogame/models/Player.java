@@ -15,7 +15,7 @@ public class Player {
     public int lives = 3;
     
     public String getScore(){
-        return "0";
+        return String.valueOf(score);
     }
     
     public void loseLife(){

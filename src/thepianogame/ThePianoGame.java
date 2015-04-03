@@ -20,7 +20,7 @@ public class ThePianoGame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 MainController controller = new MainController();
-                Dimension screenSize = new Dimension(900, 715);
+                Dimension screenSize = new Dimension(900, 700);
                 controller.setPreferredSize(screenSize);
                 controller.setMaximumSize(screenSize);
                 controller.setMinimumSize(screenSize);

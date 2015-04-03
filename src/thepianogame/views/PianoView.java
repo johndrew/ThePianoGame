@@ -7,6 +7,10 @@ package thepianogame.views;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
@@ -24,7 +28,7 @@ public class PianoView extends JScrollPane {
     private void initComponents() {
         JLayeredPane layer = new JLayeredPane();
         layer.setSize(685, 92);
-        JPanel[] keys = new JPanel[53];
+        keys = new JPanel[53];
         int keyIndex = 0, i;
 
         for(i=0;i<31;i++){
@@ -38,7 +42,8 @@ public class PianoView extends JScrollPane {
             }
         }
         this.setViewportView(layer);
-        setSize(685, 92);     
+        setSize(685, 92); 
+        
     }
     
     private JPanel createWhiteKey(int i){
@@ -54,9 +59,27 @@ public class PianoView extends JScrollPane {
         JPanel blackKey = new JPanel();
         blackKey.setBackground(Color.BLACK);
         blackKey.setLocation(15 + i*22,0);
-        blackKey.setSize(15, 66);
+        blackKey.setSize(15, 64);
         return blackKey;
     }
     
+    public void turnKeysGreen(int[] keyIndexes, JPanel[] keys){
+        for(int i=0; i<keyIndexes.length; i++){
+            keys[keyIndexes[i]].setBackground(Color.green);
+        }
+    }
+    
+    public void turnKeysRed(int[] keyIndexes, JPanel[] keys){
+        for(int i=0; i<keyIndexes.length; i++){
+            keys[keyIndexes[i]].setBackground(Color.red);
+        }
+    }
+    
     private Piano model;
+    public JPanel[] keys;
+    public int[] leftC = {12, 16, 19};
+    public int[] leftCInverted = {16, 19, 24};
+    
+    
+    
 }
