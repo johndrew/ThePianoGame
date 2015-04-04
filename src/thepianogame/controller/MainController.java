@@ -9,10 +9,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import static thepianogame.controller.MainController.CONTROL_MODE.COMPUTER_KEYBOARD;
 import static thepianogame.controller.MainController.CONTROL_MODE.MIDI_KEYBOARD;
 import thepianogame.views.GameScreenView;
+import thepianogame.views.PianoView;
 import thepianogame.views.TitleScreenView;
 
 public final class MainController extends JFrame implements ActionListener, 
@@ -101,6 +103,9 @@ public final class MainController extends JFrame implements ActionListener,
 
     @Override
     public void keyPressed(KeyEvent e) {
+        /*
+            Assigns computer keys to certain actions
+        */
         int keyCode = e.getKeyCode();
         
         if (current_mode == COMPUTER_KEYBOARD) {
@@ -124,6 +129,7 @@ public final class MainController extends JFrame implements ActionListener,
             switch (keyCode) {
                     case KeyEvent.VK_SPACE:
                         System.out.println("Space bar pressed.");
+                        
                         if (gameScreen.isVisible() && 
                                 !gameScreen.isPauseMenuVisible()) {
                             gameScreen.showPauseMenu();
@@ -132,85 +138,105 @@ public final class MainController extends JFrame implements ActionListener,
                                 gameScreen.isPauseMenuVisible()) {
                             gameScreen.hidePauseMenu();
                         }
+                        
                         break;   
                     case KeyEvent.VK_A:
                         // F3
                         System.out.println("A key pressed.");
+                        gameScreen.computerKeyPressed(KeyEvent.VK_A);
                         break;
                     case KeyEvent.VK_W:
                         // F#3 or Gb3
                         System.out.println("W key pressed.");
+                        gameScreen.computerKeyPressed(KeyEvent.VK_W);
                         break;
                     case KeyEvent.VK_S:
                         // G3
                         System.out.println("S key pressed.");
+                        gameScreen.computerKeyPressed(KeyEvent.VK_S);
                         break;
                     case KeyEvent.VK_E:
                         // G#3 or Ab3
                         System.out.println("E key pressed.");
+                        gameScreen.computerKeyPressed(KeyEvent.VK_E);
                         break;
                     case KeyEvent.VK_D:
                         // A3
                         System.out.println("D key pressed.");
+                        gameScreen.computerKeyPressed(KeyEvent.VK_D);
                         break;
                     case KeyEvent.VK_R:
                         // A#3 or Bb3
                         System.out.println("R key pressed.");
+                        gameScreen.computerKeyPressed(KeyEvent.VK_R);
                         break;
                     case KeyEvent.VK_F:
                         // B3
                         System.out.println("F key pressed.");
+                        gameScreen.computerKeyPressed(KeyEvent.VK_F);
                         break;
                     case KeyEvent.VK_G:
                         // Middle C or C4
                         System.out.println("G key pressed.");
+                        gameScreen.computerKeyPressed(KeyEvent.VK_G);
                         break;
                     case KeyEvent.VK_Y:
                         // C#4 or Db4
                         System.out.println("Y key pressed.");
+                        gameScreen.computerKeyPressed(KeyEvent.VK_Y);
                         break;
                     case KeyEvent.VK_H:
                         // D4
                         System.out.println("H key pressed.");
+                        gameScreen.computerKeyPressed(KeyEvent.VK_H);
                         break;
                     case KeyEvent.VK_U:
                         // D#4 or Eb4
                         System.out.println("U key pressed.");
+                        gameScreen.computerKeyPressed(KeyEvent.VK_U);
                         break;
                     case KeyEvent.VK_J:
                         // E4
                         System.out.println("J key pressed.");
+                        gameScreen.computerKeyPressed(KeyEvent.VK_J);
                         break;
                     case KeyEvent.VK_K:
                         // F4
                         System.out.println("K key pressed.");
+                        gameScreen.computerKeyPressed(KeyEvent.VK_K);
                         break;
                     case KeyEvent.VK_O:
                         // F#4 or Gb4
                         System.out.println("O key pressed.");
+                        gameScreen.computerKeyPressed(KeyEvent.VK_O);
                         break;
                     case KeyEvent.VK_L:
                         // G4
                         System.out.println("L key pressed.");
+                        gameScreen.computerKeyPressed(KeyEvent.VK_L);
                         break;
                     case KeyEvent.VK_P:
                         // G#4 or Ab4
                         System.out.println("P key pressed.");
+                        gameScreen.computerKeyPressed(KeyEvent.VK_P);
                         break;
                     case KeyEvent.VK_SEMICOLON:
                         // A4
                         System.out.println("; key pressed.");
+                        gameScreen.computerKeyPressed(KeyEvent.VK_SEMICOLON);
                         break;
                     case KeyEvent.VK_OPEN_BRACKET:
                         // A#4 or Bb4
                         System.out.println("[ key pressed.");
+                        gameScreen.computerKeyPressed(KeyEvent.VK_OPEN_BRACKET);
                         break;
                     case KeyEvent.VK_QUOTE:
                         // B4
                         System.out.println("' key pressed.");
+                        gameScreen.computerKeyPressed(KeyEvent.VK_QUOTE);
                         break;
                     default:
-                        System.out.println("Other");
+                        System.out.println("Other key");
                         break;
             }
         }

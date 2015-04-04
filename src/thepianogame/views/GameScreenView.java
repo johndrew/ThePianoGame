@@ -234,8 +234,8 @@ public class GameScreenView extends JPanel {
         endGameMenu.setVisible(false);
     }
     
-    public PianoView getPianoView() {
-        return this.piano;
+    public void computerKeyPressed(int keyEventCode) {
+        piano.computerKeyPressed(keyEventCode);
     }
     
     /*

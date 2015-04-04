@@ -6,16 +6,18 @@
 package thepianogame.views;
 
 import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import java.util.Timer;
 import thepianogame.controller.MainController.CONTROL_MODE;
 import static thepianogame.controller.MainController.CONTROL_MODE.MIDI_KEYBOARD;
 import thepianogame.models.Piano;
 
 public class PianoView extends JScrollPane {
-    
-    private CONTROL_MODE current_mode;
     
     public PianoView() {
         initComponents();
@@ -60,13 +62,20 @@ public class PianoView extends JScrollPane {
             }
         }
         else {
+            ArrayList<Integer> keyEvents = makeComputerKeyEventsList();
+            computerKeyEventMap = new HashMap<Integer,Integer>();
+            
             for(i=0;i<totalWhiteKeys;i++) {
                 keys[keyIndex] = createWhiteKey(i);
                 layer.add(keys[keyIndex], 0, -1);
+                computerKeyEventMap.put(keyEvents.get(keyIndex), keyIndex);
                 keyIndex+=1;
+                
+                // computer keyboard needs to start on an F and end on a B
                 if(i%7!=3 && i%7!=6){
                     keys[keyIndex] = createBlackKey(i);
                     layer.add(keys[keyIndex], 1, -1);
+                    computerKeyEventMap.put(keyEvents.get(keyIndex), keyIndex);
                     keyIndex+=1;
                 }
             }
@@ -158,11 +167,54 @@ public class PianoView extends JScrollPane {
         keys[keyIndex].setBackground(color);
     }
     
-    private Piano model;
+    public ArrayList<Integer> makeComputerKeyEventsList() {
+        /*
+            Creates a list of the keyEvents for the computer that will be used
+            to control the game in COMPUTER_KEYBOARD mode.
+        */
+        ArrayList<Integer> events = new ArrayList<Integer>();
+        
+        events.add(KeyEvent.VK_A); // F
+        events.add(KeyEvent.VK_W); // F#
+        events.add(KeyEvent.VK_S); // G
+        events.add(KeyEvent.VK_E); // G#
+        events.add(KeyEvent.VK_D); // A
+        events.add(KeyEvent.VK_R); // A#
+        events.add(KeyEvent.VK_F); // B
+        events.add(KeyEvent.VK_G); // Middle C
+        events.add(KeyEvent.VK_Y); // C#
+        events.add(KeyEvent.VK_H); // D
+        events.add(KeyEvent.VK_U); // D#
+        events.add(KeyEvent.VK_J); // E
+        events.add(KeyEvent.VK_K); // F
+        events.add(KeyEvent.VK_O); // F#
+        events.add(KeyEvent.VK_L); // G
+        events.add(KeyEvent.VK_P); // G#
+        events.add(KeyEvent.VK_SEMICOLON); // A
+        events.add(KeyEvent.VK_OPEN_BRACKET); // A#
+        events.add(KeyEvent.VK_QUOTE); // B
+        
+        return events;
+    }
+    
+    public void computerKeyPressed(int keyEventCode) {
+        Integer keyIndex = computerKeyEventMap.get(keyEventCode);
+        Color originalColor = keys[keyIndex].getBackground();
+        
+        System.out.println("key index: " + keyIndex);
+        turnKeyDifferentColor(keyIndex, keys, Color.blue);
+        
+        // Turn the key back to the original color
+        turnKeyDifferentColor(keyIndex, keys, originalColor);
+    }
+    
     public JPanel[] keys;
     public int[] leftC = {12, 16, 19};
     public int[] leftCInverted = {16, 19, 24};
     
-    
-    
+    private Piano model;
+    private CONTROL_MODE current_mode;
+    // Maps computer keyboard keys to their corresponding piano keys on the
+    // visualization.
+    private HashMap<Integer,Integer> computerKeyEventMap;
 }
