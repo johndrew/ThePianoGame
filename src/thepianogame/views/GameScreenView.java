@@ -13,23 +13,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import thepianogame.controller.MainController;
-//<<<<<<< Updated upstream
 import thepianogame.models.Player;
-//=======
-//import thepianogame.controller.MainController.CONTROL_MODE;
-//import static thepianogame.controller.MainController.CONTROL_MODE.MIDI_KEYBOARD;
-//>>>>>>> Stashed changes
-import thepianogame.models.Road;
 
 public class GameScreenView extends JPanel {
-    
-    private MainController controller;
     
     public GameScreenView(MainController controller) {
         this.controller = controller;
@@ -127,16 +118,7 @@ public class GameScreenView extends JPanel {
         pianoVisualization.setPreferredSize(pianoSize);
         pianoVisualization.setMaximumSize(pianoSize);
         pianoVisualization.setMinimumSize(pianoSize);
-        
-        
-        piano = new PianoView();
-        
-//        if (controller.getCurrentMode() == MIDI_KEYBOARD) {
-//            piano = new PianoView();
-//        }
-//        else {
-//            piano = new PianoView(controller.getCurrentMode());
-//        }
+        piano = new PianoView(controller.getCurrentMode());
 
         piano.setMinimumSize(pianoSize);
         pianoVisualization.setLayout(new BorderLayout());
@@ -248,9 +230,14 @@ public class GameScreenView extends JPanel {
         endGameMenu.setVisible(false);
     }
     
+    public PianoView getPianoView() {
+        return this.piano;
+    }
+    
     /*
         Private variables. DO NOT MODIFY.
     */
+    private MainController controller;
     private JPanel gameWindow;
     private JPanel pianoVisualization;
     private JPanel pauseMenu;

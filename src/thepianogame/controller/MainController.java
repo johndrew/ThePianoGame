@@ -50,10 +50,17 @@ public final class MainController extends JFrame implements ActionListener,
     }
     
     public boolean isMIDIKeyboardConnected() {
+        /*
+            Will check if a MIDI keyboard is connected to the computer
+            by USB. If yes, then true is returned.
+        */
         return false;
     }
     
     public CONTROL_MODE getCurrentMode() {
+        /*
+            Returns the current_mode. Mode is defined by the CONTROL_MODE enum
+        */
         return current_mode;
     }
     
@@ -97,6 +104,22 @@ public final class MainController extends JFrame implements ActionListener,
         int keyCode = e.getKeyCode();
         
         if (current_mode == COMPUTER_KEYBOARD) {
+            
+            /*
+                Assigns actions for the computer keyboard.
+            
+                The computer keyboard consists of a single octave (12 keys of F
+                through E, plus 7 extra keys that represent F through B 
+                on the piano.
+            
+                Here is a visual representation of the layout:
+                
+                        W E R   Y U   O P [
+                       A S D F G H J K L ; '
+            
+                The last three are a semi-colon, a square open bracket, and
+                an apostrophe in case there is any confusion.
+            */
         
             switch (keyCode) {
                     case KeyEvent.VK_SPACE:
