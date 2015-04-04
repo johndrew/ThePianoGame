@@ -19,7 +19,7 @@ public class RoadView extends JPanel {
     
     @SuppressWarnings("unchecked")
     private void initComponents() {
-        JPanel road = new javax.swing.JPanel();
+        JPanel road = new JPanel();
         this.setLayout(new BorderLayout());
         this.add(road, BorderLayout.CENTER);
         

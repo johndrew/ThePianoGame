@@ -18,11 +18,18 @@ public class Player {
         return String.valueOf(score);
     }
     
+    // adds 10 points to the player's score when they correctly play a chord
+    public void increaseScore() {
+        score +=10;
+    }
+    
+    // removes a life from the player
     public void loseLife(){
         lives -= 1;
     }
     
-    public void reset() {
+    // resets the score to 0 and lives to 3
+    public void resetPlayer() {
         score = 0;
         lives = 3;
     }

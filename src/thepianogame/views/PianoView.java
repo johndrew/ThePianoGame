@@ -46,15 +46,18 @@ public class PianoView extends JScrollPane {
         
     }
     
+    // creates the piano's white keys
     private JPanel createWhiteKey(int i){
         JPanel whiteKey = new JPanel();
-        whiteKey.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        whiteKey.setBorder(javax.swing.BorderFactory.createBevelBorder(
+                javax.swing.border.BevelBorder.RAISED));
         whiteKey.setBackground(Color.WHITE);
         whiteKey.setLocation(i*22,0);
         whiteKey.setSize(22, 88);
         return whiteKey;
     }
 
+    // creates the piano's black keys
     private JPanel createBlackKey(int i){
         JPanel blackKey = new JPanel();
         blackKey.setBackground(Color.BLACK);
@@ -63,12 +66,16 @@ public class PianoView extends JScrollPane {
         return blackKey;
     }
     
+    // takes in a set of key indexes mapping to the location of the keys on
+    // the virtual keyboard and turns them green
     public void turnKeysGreen(int[] keyIndexes, JPanel[] keys){
         for(int i=0; i<keyIndexes.length; i++){
             keys[keyIndexes[i]].setBackground(Color.green);
         }
     }
     
+    // takes in a set of key indexes mapping to the location of the keys on
+    // the virtual keyboard and turns them red
     public void turnKeysRed(int[] keyIndexes, JPanel[] keys){
         for(int i=0; i<keyIndexes.length; i++){
             keys[keyIndexes[i]].setBackground(Color.red);
