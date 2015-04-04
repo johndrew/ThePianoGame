@@ -6,6 +6,7 @@
 package thepianogame.views;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Point;
@@ -97,6 +98,9 @@ public class GameScreenView extends JPanel {
         road.setPreferredSize(roadSize);
         road.setMaximumSize(roadSize);
         road.setMinimumSize(roadSize);
+
+        JLabel car = new JLabel();
+        car.setIcon(new javax.swing.ImageIcon("/Users/marinastoebner/Documents/Northeastern/NUSpring2015/Human Computer Interaction/PianoGameImages/car.png"));
         
         gameWindow.add(road, BorderLayout.CENTER);
         
