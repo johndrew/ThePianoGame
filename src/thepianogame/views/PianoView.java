@@ -6,13 +6,15 @@
 package thepianogame.views;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import java.util.Timer;
+import javax.swing.Timer;
 import thepianogame.controller.MainController.CONTROL_MODE;
 import static thepianogame.controller.MainController.CONTROL_MODE.MIDI_KEYBOARD;
 import thepianogame.models.Piano;
@@ -198,14 +200,20 @@ public class PianoView extends JScrollPane {
     }
     
     public void computerKeyPressed(int keyEventCode) {
-        Integer keyIndex = computerKeyEventMap.get(keyEventCode);
-        Color originalColor = keys[keyIndex].getBackground();
+        final Integer keyIndex = computerKeyEventMap.get(keyEventCode);
+        final Color originalColor = keys[keyIndex].getBackground();
         
         System.out.println("key index: " + keyIndex);
         turnKeyDifferentColor(keyIndex, keys, Color.blue);
         
-        // Turn the key back to the original color
-        turnKeyDifferentColor(keyIndex, keys, originalColor);
+        new Timer(250, new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                turnKeyDifferentColor(keyIndex, keys, originalColor);
+            }
+            
+        }).start();
     }
     
     public JPanel[] keys;
