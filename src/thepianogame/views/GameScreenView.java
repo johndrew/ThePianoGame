@@ -19,7 +19,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import thepianogame.controller.MainController;
+//<<<<<<< Updated upstream
 import thepianogame.models.Player;
+//=======
+//import thepianogame.controller.MainController.CONTROL_MODE;
+//import static thepianogame.controller.MainController.CONTROL_MODE.MIDI_KEYBOARD;
+//>>>>>>> Stashed changes
 import thepianogame.models.Road;
 
 public class GameScreenView extends JPanel {
@@ -122,9 +127,18 @@ public class GameScreenView extends JPanel {
         pianoVisualization.setPreferredSize(pianoSize);
         pianoVisualization.setMaximumSize(pianoSize);
         pianoVisualization.setMinimumSize(pianoSize);
-        piano = new PianoView();
-        piano.setMinimumSize(pianoSize);
         
+        
+        piano = new PianoView();
+        
+//        if (controller.getCurrentMode() == MIDI_KEYBOARD) {
+//            piano = new PianoView();
+//        }
+//        else {
+//            piano = new PianoView(controller.getCurrentMode());
+//        }
+
+        piano.setMinimumSize(pianoSize);
         pianoVisualization.setLayout(new BorderLayout());
         pianoVisualization.add(piano, BorderLayout.CENTER);
     }

@@ -10,16 +10,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JFrame;
-import static thepianogame.controller.MainController.control_mode.COMPUTER_KEYBOARD;
-import static thepianogame.controller.MainController.control_mode.MIDI_KEYBOARD;
+import static thepianogame.controller.MainController.CONTROL_MODE.COMPUTER_KEYBOARD;
+import static thepianogame.controller.MainController.CONTROL_MODE.MIDI_KEYBOARD;
 import thepianogame.views.GameScreenView;
 import thepianogame.views.TitleScreenView;
 
-public class MainController extends JFrame implements ActionListener, 
+public final class MainController extends JFrame implements ActionListener, 
         KeyListener {
     
-    public enum control_mode {MIDI_KEYBOARD, COMPUTER_KEYBOARD};
-    private control_mode current_mode;
+    public enum CONTROL_MODE {MIDI_KEYBOARD, COMPUTER_KEYBOARD};
+    private final CONTROL_MODE current_mode;
     
     public MainController() {
         initUI();
@@ -27,9 +27,8 @@ public class MainController extends JFrame implements ActionListener,
         addKeyListener(this);
         setFocusable(true);
         
-        // For our prototype, we are only implementing computer keyboard control
-        // So, here we set the default mode to COMPUTER_KEYBOARD
-        current_mode = COMPUTER_KEYBOARD;
+        // Sets the game control mode
+        current_mode = isMIDIKeyboardConnected() ? MIDI_KEYBOARD : COMPUTER_KEYBOARD;
     }
     
     /*
@@ -48,8 +47,14 @@ public class MainController extends JFrame implements ActionListener,
         
         titleScreen.setVisible(true);
         gameScreen.setVisible(false);
-        
-        
+    }
+    
+    public boolean isMIDIKeyboardConnected() {
+        return false;
+    }
+    
+    public CONTROL_MODE getCurrentMode() {
+        return current_mode;
     }
     
     public void startGame() {
@@ -79,7 +84,7 @@ public class MainController extends JFrame implements ActionListener,
         Used for responding to menu clicks
     */
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Action Performed");
+//        System.out.println("Action Performed");
     }
 
     @Override
@@ -107,31 +112,31 @@ public class MainController extends JFrame implements ActionListener,
                         break;   
                     case KeyEvent.VK_A:
                         // F3
-                        System.out.println("A");
+                        System.out.println("A key pressed.");
                         break;
                     case KeyEvent.VK_W:
                         // F#3 or Gb3
-                        System.out.println("W");
+                        System.out.println("W key pressed.");
                         break;
                     case KeyEvent.VK_S:
                         // G3
-                        System.out.println("S");
+                        System.out.println("S key pressed.");
                         break;
                     case KeyEvent.VK_E:
                         // G#3 or Ab3
-                        System.out.println("E");
+                        System.out.println("E key pressed.");
                         break;
                     case KeyEvent.VK_D:
                         // A3
-                        System.out.println("D");
+                        System.out.println("D key pressed.");
                         break;
                     case KeyEvent.VK_R:
                         // A#3 or Bb3
-                        System.out.println("R");
+                        System.out.println("R key pressed.");
                         break;
                     case KeyEvent.VK_F:
                         // B3
-                        System.out.println("F");
+                        System.out.println("F key pressed.");
                         break;
                     case KeyEvent.VK_G:
                         // Middle C or C4
@@ -139,47 +144,47 @@ public class MainController extends JFrame implements ActionListener,
                         break;
                     case KeyEvent.VK_Y:
                         // C#4 or Db4
-                        System.out.println("Y");
+                        System.out.println("Y key pressed.");
                         break;
                     case KeyEvent.VK_H:
                         // D4
-                        System.out.println("H");
+                        System.out.println("H key pressed.");
                         break;
                     case KeyEvent.VK_U:
                         // D#4 or Eb4
-                        System.out.println("U");
+                        System.out.println("U key pressed.");
                         break;
                     case KeyEvent.VK_J:
                         // E4
-                        System.out.println("J");
+                        System.out.println("J key pressed.");
                         break;
                     case KeyEvent.VK_K:
                         // F4
-                        System.out.println("K");
+                        System.out.println("K key pressed.");
                         break;
                     case KeyEvent.VK_O:
                         // F#4 or Gb4
-                        System.out.println("O");
+                        System.out.println("O key pressed.");
                         break;
                     case KeyEvent.VK_L:
                         // G4
-                        System.out.println("L");
+                        System.out.println("L key pressed.");
                         break;
                     case KeyEvent.VK_P:
                         // G#4 or Ab4
-                        System.out.println("P");
+                        System.out.println("P key pressed.");
                         break;
                     case KeyEvent.VK_SEMICOLON:
                         // A4
-                        System.out.println(";");
+                        System.out.println("; key pressed.");
                         break;
                     case KeyEvent.VK_OPEN_BRACKET:
                         // A#4 or Bb4
-                        System.out.println("[");
+                        System.out.println("[ key pressed.");
                         break;
                     case KeyEvent.VK_QUOTE:
                         // B4
-                        System.out.println("'");
+                        System.out.println("' key pressed.");
                         break;
                     default:
                         System.out.println("Other");
