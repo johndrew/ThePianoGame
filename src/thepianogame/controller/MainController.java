@@ -140,7 +140,7 @@ public final class MainController extends JFrame implements ActionListener,
                 && !gameScreen.isEndGameMenuVisible()) {
             // adjust this number to control the movement speed of dashes on the
             // road. It should adjust based on the difficulty setting.
-            gameScreen.moveDashes(gameScreen.getTempo() / 20);
+            gameScreen.moveDashes(4);
         }
         
         if (moveCarLeft) {
