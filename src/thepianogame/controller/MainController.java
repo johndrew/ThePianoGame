@@ -30,6 +30,8 @@ public final class MainController extends JFrame implements ActionListener,
     private Timer timer;
     public Game g;
     private boolean shouldUpdateGame;
+    private boolean moveCarLeft = false;
+    private boolean moveCarRight = false;
 
     public MainController() {
         initUI();
@@ -58,6 +60,9 @@ public final class MainController extends JFrame implements ActionListener,
 
         titleScreen.setVisible(true);
         gameScreen.setVisible(false);
+        
+        carLeftBoundary = 63;
+        carRightBoundary = 321;
     }
 
     public boolean isMIDIKeyboardConnected() {
@@ -113,6 +118,28 @@ public final class MainController extends JFrame implements ActionListener,
         // adjust this number to control the movement speed of dashes on the
         // road. It should adjust based on the difficulty setting.
         gameScreen.moveDashes(4);
+        
+        if (moveCarLeft) {
+            int carX = gameScreen.getCarXCoordinate();
+            if (carX != carLeftBoundary) {
+                // if you change this number below, you must also change
+                // the carLeftBoundary because the boundary needs to be
+                // a multiple of the number below
+                gameScreen.moveCarLeft(3);
+            } else {
+                moveCarLeft = false;
+            }
+        } else if (moveCarRight) {
+            int carX = gameScreen.getCarXCoordinate();
+            if (carX != carRightBoundary) {
+                // if you change this number below, you must also change
+                // the carRightBoundary because the boundary needs to be
+                // a multiple of the number below
+                gameScreen.moveCarRight(3);
+            } else {
+                moveCarRight = false;
+            }
+        }
     }
 
     @Override
@@ -163,11 +190,13 @@ public final class MainController extends JFrame implements ActionListener,
                     // F3
                     System.out.println("A key pressed.");
                     gameScreen.computerKeyPressed(KeyEvent.VK_A);
+//                    moveCarLeft = true;
                     break;
                 case KeyEvent.VK_W:
                     // F#3 or Gb3
                     System.out.println("W key pressed.");
                     gameScreen.computerKeyPressed(KeyEvent.VK_W);
+//                    moveCarRight = true;
                     break;
                 case KeyEvent.VK_S:
                     // G3
@@ -450,4 +479,6 @@ public final class MainController extends JFrame implements ActionListener,
     private TitleScreenView titleScreen;
     private GameScreenView gameScreen;
     private HashMap<Integer,Boolean> keyPressedMap;
+    private int carLeftBoundary;
+    private int carRightBoundary;
 }

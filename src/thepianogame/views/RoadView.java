@@ -96,8 +96,13 @@ public class RoadView extends JPanel {
         if (amountToMove < 0) {
             amountToMove *= -1;
         }
+        
         car.setBounds(car.getX() - amountToMove, car.getY(), 
-                car.getWidth(), car.getHeight());
+                    car.getWidth(), car.getHeight());
+    }
+    
+    public int getCarXPosition() {
+        return car.getX();
     }
     
     public void moveCarRight(int amountToMove) {
@@ -110,6 +115,10 @@ public class RoadView extends JPanel {
         }
         car.setBounds(car.getX() + amountToMove, car.getY(), 
                 car.getWidth(), car.getHeight());
+    }
+    
+    public Dimension getRoadSize() {
+        return this.roadSize;
     }
     
     private class Dash extends JPanel {

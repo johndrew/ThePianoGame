@@ -231,6 +231,8 @@ public class GameScreenView extends JPanel {
     
     public void computerKeyPressed(int keyEventCode) {
         piano.computerKeyPressed(keyEventCode);
+        
+//        road.moveCarLeft(25);
     }
     
     public void computerKeyReleased(int keyEventCode) {
@@ -239,6 +241,22 @@ public class GameScreenView extends JPanel {
     
     public void moveDashes(int amountToMove) {
         road.moveDashes(amountToMove);
+    }
+    
+    public void moveCarLeft(int amountToMove) {
+        road.moveCarLeft(amountToMove);
+    }
+    
+    public void moveCarRight(int amountToMove) {
+        road.moveCarRight(amountToMove);
+    }
+    
+    public int getCarXCoordinate() {
+        return road.getCarXPosition();
+    }
+    
+    public Dimension getRoadSize() {
+        return road.getRoadSize();
     }
     
     private JLabel newLife(){
