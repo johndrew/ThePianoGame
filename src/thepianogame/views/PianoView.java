@@ -12,11 +12,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.Timer;
+import javax.swing.border.BevelBorder;
 import thepianogame.controller.MainController.CONTROL_MODE;
 import static thepianogame.controller.MainController.CONTROL_MODE.MIDI_KEYBOARD;
 import thepianogame.models.Piano;
@@ -78,6 +80,7 @@ public class PianoView extends JScrollPane {
             
             labelWhiteKeys(keys);
             labelBlackKeys(keys);
+            deactivateKeys(keys);
         }
      
         this.setViewportView(layer);
@@ -89,8 +92,7 @@ public class PianoView extends JScrollPane {
     private JPanel createWhiteKey(int i){
         JPanel whiteKey = new JPanel();
         whiteKey.setLayout(new BorderLayout());
-        whiteKey.setBorder(javax.swing.BorderFactory.createBevelBorder(
-                javax.swing.border.BevelBorder.RAISED));
+        whiteKey.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         whiteKey.setBackground(Color.WHITE);
         whiteKey.setLocation(i*22,0);
         whiteKey.setSize(22, 88);
@@ -134,6 +136,21 @@ public class PianoView extends JScrollPane {
             label.setForeground(Color.white);
             label.setHorizontalAlignment(JLabel.CENTER);
             keys[blackKeyIndexes[i] + 17].add(label, BorderLayout.SOUTH);
+        }
+    }
+    
+    // turns inactive keys grey
+    private void deactivateKeys(JPanel[] keys) {
+        for(int i = 0; i < keys.length; i++){
+            if(i<17 || i>35){
+                if(keys[i].getBackground() == Color.BLACK) {
+                    keys[i].setBackground(Color.darkGray);
+                }
+                else{
+                    keys[i].setBackground(Color.lightGray);
+                    //keys[i].setBorder(BorderFactory.createLineBorder(Color.gray, 1));
+                }
+            }
         }
     }
     
