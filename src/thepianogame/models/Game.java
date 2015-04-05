@@ -35,11 +35,11 @@ public class Game {
         score = 0;
         car = new Car();
     }
-    
+
     public void setTempo(int newTempo, double frameRate) {
         double beatsPerSecond = newTempo / 60.;
         double beatsPerFrame = beatsPerSecond / frameRate;
-        fallRate = beatsPerFrame;
+        fallRate = beatsPerFrame / 4; // chord falls on a per-bar instead of per-beat basis
     }
 
     public void run() {
@@ -50,7 +50,7 @@ public class Game {
             chords.add(new ChordObject(Chord.getRandomChord(key, scale), true));
             System.out.println("New chord: " + chords.get(0).name);
         }
-            // advance all the current chords, hurt the player if a chord has
+        // advance all the current chords, hurt the player if a chord has
         // moved too far without being cleared
         for (int i = 0; i < chords.size();) {
             chords.get(i).position += fallRate;
@@ -62,7 +62,7 @@ public class Game {
                 i++;
             }
         }
-            // FIXME: CHECK IF CORRECT KEYS ARE PRESSED. do something like:
+        // FIXME: CHECK IF CORRECT KEYS ARE PRESSED. do something like:
         // bool goodNotes = true;
         // for (note n : chords.get(0).getNotes()) {
         //      if (n isn't pressed) {

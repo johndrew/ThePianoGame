@@ -113,13 +113,13 @@ public final class MainController extends JFrame implements ActionListener,
      */
     public void actionPerformed(ActionEvent e) {
         if (shouldUpdateGame) {
-            g.setTempo(60 /*placeholder*/ , 60);
+            g.setTempo(gameScreen.getTempo() , 60);
             g.run();
         }
         
         // adjust this number to control the movement speed of dashes on the
         // road. It should adjust based on the difficulty setting.
-        gameScreen.moveDashes(4);
+        gameScreen.moveDashes(gameScreen.getTempo() / 20);
         
         if (moveCarLeft) {
             int carX = gameScreen.getCarXCoordinate();

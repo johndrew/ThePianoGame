@@ -259,6 +259,10 @@ public class GameScreenView extends JPanel {
         return road.getRoadSize();
     }
     
+    public int getTempo() {
+        return settings.getTempo();
+    }
+    
     private JLabel newLife(){
         BufferedImage img = null;
         try {

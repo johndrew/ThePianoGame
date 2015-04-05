@@ -18,6 +18,8 @@ import javax.swing.JPanel;
  */
 public class SettingsView extends JPanel {
     
+    private JComboBox tempos;
+    
     public SettingsView() {
         initComponents();
     }
@@ -39,7 +41,7 @@ public class SettingsView extends JPanel {
         JLabel levelLabel = new javax.swing.JLabel();
         JComboBox levels = new javax.swing.JComboBox();
         JLabel tempoLabel = new javax.swing.JLabel();
-        JComboBox tempos = new javax.swing.JComboBox();
+        tempos = new javax.swing.JComboBox();
         JLabel keyLabel = new javax.swing.JLabel();
         JComboBox keys = new javax.swing.JComboBox();
         JComboBox majorOrMinor = new javax.swing.JComboBox();
@@ -73,6 +75,10 @@ public class SettingsView extends JPanel {
         this.add(levelPanel, BorderLayout.NORTH);
         this.add(tempoPanel, BorderLayout.CENTER);
         this.add(keyPanel, BorderLayout.SOUTH);
+    }   
+    
+    public int getTempo() {
+        return Integer.parseInt((String) tempos.getSelectedItem());
     }
     
 }
