@@ -151,7 +151,7 @@ public class PianoView extends JScrollPane {
                 }
                 else{
                     keys[i].setBackground(Color.lightGray);
-                    //keys[i].setBorder(BorderFactory.createLineBorder(Color.gray, 1));
+                    keys[i].setBorder(BorderFactory.createLineBorder(Color.gray, 1));
                 }
             }
         }
