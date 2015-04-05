@@ -25,10 +25,17 @@ public class Chord {
          */
         return this.notes;
     }
+    
+    public String getName() {
+        /*
+         Returns a list of the notes in this chord
+         */
+        return this.name;
+    }
 
     /*
      */
-    public Chord getRandomChord(int key, Scale scale/*, sevenths*/) {
+    public static Chord getRandomChord(int key, Scale scale/*, sevenths*/) {
         Random r = new Random();
         int root = r.nextInt(7);
         int third = root + 2;

@@ -5,6 +5,8 @@
  */
 package thepianogame.models;
 
+import java.util.ArrayList;
+
 public class Game {
 
     static Scale major
@@ -16,6 +18,14 @@ public class Game {
     static final String[] keyNames
             = new String[]{"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A",
                 "A#", "B"};
+    static ArrayList<ChordObject> chords;
+    static int key;
+    static Scale scale;
+    static int lives;
+    static int score;
+    static Car car;
+
+    final static double fallRate = .01;
 
     public Game() {
         run();
@@ -23,8 +33,54 @@ public class Game {
 
     public void run() {
         // main game loop
+        final int TARGET_FPS = 60;
+        final long DELAY = 1000 / TARGET_FPS;
+        long lastTime = System.currentTimeMillis();
+        int frameNo = 0;
+
         while (true) {
-            break;
+
+            // add new ChordObject if there aren't any
+            if (chords.isEmpty()) {
+                // fix this so objects aren't always on the right side of the screen
+                chords.add(new ChordObject(Chord.getRandomChord(key, scale), true));
+            }
+            // advance all the current chords, hurt the player if a chord has
+            // moved too far without being cleared
+            for (int i = 0; i < chords.size();) {
+                chords.get(i).position += fallRate;
+                if (chords.get(i).position >= 1) {
+                    lives--;
+                    chords.remove(i);
+                    car.onRightSide = !car.onRightSide;
+                } else {
+                    i++;
+                }
+            }
+            // FIXME: CHECK IF CORRECT KEYS ARE PRESSED. do something like:
+            // bool goodNotes = true;
+            // for (note n : chords.get(0).getNotes()) {
+            //      if (n isn't pressed) {
+            //          goodNotes = false;
+            //          break;
+            //      }
+            // }
+            // if (goodNotes) {
+            //      score += 10;
+            //      chords.remove(i);
+            //      car.onRightSide = !car.onRightSide;
+            // }
+
+            if (lives <= 0) {
+                // end the game
+            }
+
+            // frame rate limiting
+            while (System.currentTimeMillis() <= lastTime + DELAY) {
+
+            }
+            lastTime = System.currentTimeMillis();
+            System.out.println(frameNo++);
         }
     }
 }

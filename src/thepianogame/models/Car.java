@@ -6,5 +6,5 @@
 package thepianogame.models;
 
 public class Car {
-    
+    public boolean onRightSide = false;
 }
