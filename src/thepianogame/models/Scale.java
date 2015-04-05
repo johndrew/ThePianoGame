@@ -5,11 +5,18 @@
  */
 package thepianogame.models;
 
-public class Note {
+/**
+ *
+ * @author graham
+ */
+public class Scale {
     
-    private int value;
+    int[] steps;
+    String[] chords;
     
-    public Note(int value) {
-        this.value = value;
+    public Scale(int[] steps, String[] chords) {
+        this.steps = steps;
+        this.chords = chords;
     }
+    
 }
