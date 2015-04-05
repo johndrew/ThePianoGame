@@ -84,19 +84,6 @@ public class PianoView extends JScrollPane {
         setSize(685, 92); 
         
     }
-  
-    private void createKeyboard(JLayeredPane layer, int numberOfKeys, int keyIndex, int i){
-        for(i=0;i<numberOfKeys;i++){
-                keys[keyIndex] = createWhiteKey(i);
-                layer.add(keys[keyIndex], 0, -1);
-                keyIndex+=1;
-                if(i%7!=2 && i%7!=6){
-                    keys[keyIndex] = createBlackKey(i);
-                    layer.add(keys[keyIndex], 1, -1);
-                    keyIndex+=1;
-                }
-            }
-    }
     
     // creates the piano's white keys
     private JPanel createWhiteKey(int i){
