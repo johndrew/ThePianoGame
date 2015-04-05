@@ -103,7 +103,7 @@ public class GameScreenView extends JPanel {
         
         gameWindow.add(road, BorderLayout.CENTER);
         
-        settings = new SettingsView();
+        settings = new SettingsView(controller);
         rightMargin.add(settings);
         leftMargin.add(lifesPanel);
         leftMargin.add(scorePanel);
