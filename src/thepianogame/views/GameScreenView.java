@@ -87,11 +87,14 @@ public class GameScreenView extends JPanel {
         gameWindow.add(leftMargin, BorderLayout.WEST);
         gameWindow.add(rightMargin, BorderLayout.EAST);
         
-        road = new RoadView();
-        Dimension roadSize = new Dimension(420, 480);
-        road.setPreferredSize(roadSize);
-        road.setMaximumSize(roadSize);
-        road.setMinimumSize(roadSize);
+        road = new RoadView(new Dimension(420, 480));
+
+
+//        JLabel car = new JLabel();
+//        car.setIcon(new javax.swing.ImageIcon("/Users/marinastoebner/Documents/Northeastern/NUSpring2015/Human Computer Interaction/PianoGameImages/car.png"));
+ 
+        CarView car = new CarView();
+        road.add(car);       
         
         gameWindow.add(road, BorderLayout.CENTER);
         
@@ -227,6 +230,11 @@ public class GameScreenView extends JPanel {
     
     public void computerKeyPressed(int keyEventCode) {
         piano.computerKeyPressed(keyEventCode);
+//        road.moveDashes(20);
+    }
+    
+    public void computerKeyReleased(int keyEventCode) {
+        piano.computerKeyReleased(keyEventCode);
     }
     
     private JLabel newLife(){
