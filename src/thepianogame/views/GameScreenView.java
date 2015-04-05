@@ -6,9 +6,10 @@
 package thepianogame.views;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,12 +22,12 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import thepianogame.controller.MainController;
 import thepianogame.models.Player;
-import thepianogame.views.CarView;
 
 public class GameScreenView extends JPanel {
     
@@ -36,6 +37,7 @@ public class GameScreenView extends JPanel {
         makeGameWindow();
         makePianoVisualization();
         makePauseDialog();
+        makeEndGameDialog();
         
         setLayout(new BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
         
@@ -125,7 +127,8 @@ public class GameScreenView extends JPanel {
     }
     
     public final void makePauseDialog() {
-        pauseMenu = new JPanel();
+        pauseMenu = new JDialog();
+        JPanel menuContainer = new JPanel();
         JLabel title = new JLabel("Paused Game");
         JButton resume = new JButton("Resume");
         JButton restart = new JButton("Restart");
@@ -133,12 +136,17 @@ public class GameScreenView extends JPanel {
         JPanel buttons = new JPanel();
         
         pauseMenu.setLayout(new BorderLayout());
-        pauseMenu.add(title, BorderLayout.NORTH);
-        buttons.setLayout(new BoxLayout(buttons, BoxLayout.PAGE_AXIS));
+        pauseMenu.add(menuContainer, BorderLayout.CENTER);
+        menuContainer.setLayout(new BorderLayout());
+        title.setFont(new Font(title.getFont().getName(), Font.PLAIN, 32));
+        
+        menuContainer.add(title, BorderLayout.NORTH);
+        
+        buttons.setLayout(new GridLayout(3,1));
         buttons.add(resume);
         buttons.add(restart);
         buttons.add(endGame);
-        pauseMenu.add(buttons, BorderLayout.CENTER);
+        menuContainer.add(buttons, BorderLayout.CENTER);
         
         resume.addActionListener(new ActionListener() {
 
@@ -147,6 +155,15 @@ public class GameScreenView extends JPanel {
                 hidePauseMenu();
             }
             
+        });
+        
+        restart.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.newGame();
+                hidePauseMenu();
+            }
         });
         
         endGame.addActionListener(new ActionListener() {
@@ -160,6 +177,8 @@ public class GameScreenView extends JPanel {
         pauseMenu.setPreferredSize(new Dimension(400, 400));
         pauseMenu.setLocation(new Point(200, 200));
         pauseMenu.setVisible(false);
+        pauseMenu.pack();
+        pauseMenu.setModal(false);
     }
     
     public boolean isPauseMenuVisible() {
@@ -167,24 +186,14 @@ public class GameScreenView extends JPanel {
     }
     
     public void showPauseMenu() {
-        /*
-            Replaces the road view with the pause menu
-        */
-        gameWindow.add(pauseMenu, BorderLayout.CENTER);
-        //road.setVisible(false);
         pauseMenu.setVisible(true);
     }
     
     public void hidePauseMenu() {
-        /*
-            Replaces the pause menu with the road view
-        */
-        gameWindow.add(road, BorderLayout.CENTER);
         pauseMenu.setVisible(false);
-        //road.setVisible(true);
     }
     
-    public void makeEndGameMenu() {
+    public final void makeEndGameDialog() {
         /*
             Creates the JPanel that will appear when either the users selects
             "End Game" from the pause menu, or the user runs out of lives.
@@ -192,32 +201,47 @@ public class GameScreenView extends JPanel {
             This allows the user to either play again or exit to the main menu.
             Also displays the final score.
         */
-        endGameMenu = new JPanel();
+        endGameMenu = new JDialog();
+        JPanel container = new JPanel();
         JButton playAgain = new JButton("Play Again");
         JButton backToMenu = new JButton("Back To Menu");
+        
+        playAgain.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.newGame();
+                hideEndGameMenu();
+            }
+        });
         
         backToMenu.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+                controller.backToMenu();
+                hideEndGameMenu();
             }
         });
         
-        endGameMenu.setLayout(new BoxLayout(endGameMenu, BoxLayout.PAGE_AXIS));
-        endGameMenu.add(playAgain);
-        endGameMenu.add(backToMenu);
+        endGameMenu.setLayout(new BorderLayout());
+        endGameMenu.add(container, BorderLayout.CENTER);
+        container.setLayout(new GridLayout(2,1));
+        container.add(playAgain);
+        container.add(backToMenu);
         
+        endGameMenu.setPreferredSize(new Dimension(400, 400));
+        endGameMenu.setLocation(new Point(200, 200));
         endGameMenu.setVisible(false);
-        
-        gameWindow.add(endGameMenu, BorderLayout.CENTER);
+        endGameMenu.pack();
+        endGameMenu.setModal(true);
+    }
+    
+    public boolean isEndGameMenuVisible() {
+        return endGameMenu.isVisible();
     }
     
     public void showEndGameMenu() {
-        /*
-            Replaces the pause menu with the endGameMenu
-        */
-//        gameWindow.add(endGameMenu, BorderLayout.CENTER);
         pauseMenu.setVisible(false);
         endGameMenu.setVisible(true);
     }
@@ -279,8 +303,8 @@ public class GameScreenView extends JPanel {
     private MainController controller;
     private JPanel gameWindow;
     private JPanel pianoVisualization;
-    private JPanel pauseMenu;
-    private JPanel endGameMenu;
+    private JDialog pauseMenu;
+    private JDialog endGameMenu;
     private RoadView road;
     private CarView car;
     private PianoView piano;
