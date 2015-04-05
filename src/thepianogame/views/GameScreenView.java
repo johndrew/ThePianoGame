@@ -231,12 +231,14 @@ public class GameScreenView extends JPanel {
     
     public void computerKeyPressed(int keyEventCode) {
         piano.computerKeyPressed(keyEventCode);
-        
-//        road.moveDashes(20);
     }
     
     public void computerKeyReleased(int keyEventCode) {
         piano.computerKeyReleased(keyEventCode);
+    }
+    
+    public void moveDashes(int amountToMove) {
+        road.moveDashes(amountToMove);
     }
     
     private JLabel newLife(){

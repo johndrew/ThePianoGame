@@ -17,7 +17,6 @@ import static thepianogame.controller.MainController.CONTROL_MODE.COMPUTER_KEYBO
 import static thepianogame.controller.MainController.CONTROL_MODE.MIDI_KEYBOARD;
 import thepianogame.models.Game;
 import thepianogame.views.GameScreenView;
-import thepianogame.views.PianoView;
 import thepianogame.views.TitleScreenView;
 
 public final class MainController extends JFrame implements ActionListener,
@@ -110,6 +109,10 @@ public final class MainController extends JFrame implements ActionListener,
         if (shouldUpdateGame) {
             g.run();
         }
+        
+        // adjust this number to control the movement speed of dashes on the
+        // road. It should adjust based on the difficulty setting.
+        gameScreen.moveDashes(4);
     }
 
     @Override

@@ -38,12 +38,12 @@ public class RoadView extends JPanel {
         /*
             Draws the dashes on the road.
         */
-        int numberOfDashes = 7;
-        int gapSize = 20;
-        int dashHeight = 58;
+        int numberOfDashes = 5;
+        dashHeight = 58;
         int dashWidth = 20;
+        gapSize = (dashHeight*2);
         int dashX = (this.roadSize.width/2) + dashWidth;
-        int dashY = 20;
+        int dashY = (dashHeight * -1) - gapSize;
         dashes = new ArrayList<Dash>();
         Dash dash;
         
@@ -57,21 +57,24 @@ public class RoadView extends JPanel {
     }
     
     public void moveDashes(int amountToMove) {
-        int roadWidth = this.roadSize.width;
         int roadHeight = this.roadSize.height;
         
         if (amountToMove < 0) {
             amountToMove *= -1;
         }
         
-        for (int i=0;i<dashes.size();i++) {
-            Dash current = dashes.get(i);
+        for (Dash current : dashes) {
+            int adjustment = current.y + amountToMove;
             
-            if (current.y+amountToMove > roadHeight) {
-                System.out.println("hello");
+            // moves the dash to the top of the screen when it goes off
+            // the bottom of the screen
+            if (((current.y+amountToMove)-dashHeight) >= (roadHeight+dashHeight)) {
+                int backToTop = (dashHeight*-2) - gapSize - 40;
+                current.y = backToTop;
+            } else {
+                current.moveDash(current.x, adjustment);
+                current.y = adjustment;
             }
-            
-            current.moveDash(current.x, current.y+amountToMove);
         }
     }
     
@@ -142,4 +145,6 @@ public class RoadView extends JPanel {
     private Dimension roadSize;
     private CarView car;
     private ArrayList<Dash> dashes;
+    private int gapSize;
+    private int dashHeight;
 }
