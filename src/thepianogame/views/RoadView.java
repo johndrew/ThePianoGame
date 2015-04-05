@@ -47,12 +47,11 @@ public class RoadView extends JPanel {
         */
         int numberOfDashes = 8;
         int gapSize = 20;
-//        int dashHeight = (road.getHeight() - (numberOfDashes+1 * gapSize)) 
-//                / numberOfDashes;
         int dashHeight = 56 + (2/3);
         int dashWidth = 20;
         int dashX = (this.roadSize.width/2) - (dashWidth/2);
         int dashY = 0;
+        dashes = new ArrayList<Dash>();
         Dash dash;
         
         // This JPanel will hold all of the dashes. This is needed to get
@@ -68,10 +67,19 @@ public class RoadView extends JPanel {
             
             dashContainer.add(dash);
             dashContainer.add(Box.createRigidArea(new Dimension(5, gapSize)));
-//            dashes.add(dash);
+            dashes.add(dash);
         }
         
         road.add(dashContainer);
+    }
+    
+    public void moveDashes(int amountToMove) {
+        if (amountToMove < 0) {
+            for (int i=0;i<dashes.size();i++) {
+                Dash current = dashes.get(i);
+                current.moveDash(current.x, current.y+amountToMove);
+            }
+        }
     }
     
     private class Dash extends JPanel {
