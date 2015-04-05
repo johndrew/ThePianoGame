@@ -5,14 +5,11 @@
  */
 package thepianogame.views;
 
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import thepianogame.controller.MainController;
@@ -35,7 +32,7 @@ public class TitleScreenView extends JPanel {
         instructionsDialog.setVisible(false);
     }
     
-    public JPanel makeButtons() {
+    public final JPanel makeButtons() {
         /*
             Creates a JPanel to hold three buttons:
                 - Start button
@@ -86,26 +83,16 @@ public class TitleScreenView extends JPanel {
         return buttons;
     }
     
-    public JDialog makeInstructionsDialog() {
+    public final InstructionsView makeInstructionsDialog() {
         /*
             Creates the JDialog that holds the instructions
         */
-        JDialog dialog = new JDialog();
-        // remove this label. It is only a filler to check if the dialog works.
-        JLabel instruction1 = new JLabel("This is an instruction");
-        
-        dialog.add(instruction1);
-        dialog.setPreferredSize(new Dimension(500, 500));
-        dialog.setLocation(new Point(100, 200));
-        dialog.pack();
-        dialog.setModal(true);
-        
-        return dialog;
+        return new InstructionsView(controller.getCurrentMode());
     }
     
     /*
         Private variables. DO NOT MODIFY.
     */
-    private JDialog instructionsDialog;
+    private InstructionsView instructionsDialog;
     private JLabel title;
 }

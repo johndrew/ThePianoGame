@@ -40,8 +40,9 @@ public final class MainController extends JFrame implements ActionListener,
         setFocusable(true);
 
         // Sets the game control mode
-        current_mode = isMIDIKeyboardConnected() ? MIDI_KEYBOARD
-                : COMPUTER_KEYBOARD;
+//        current_mode = isMIDIKeyboardConnected() ? MIDI_KEYBOARD
+//                : COMPUTER_KEYBOARD;
+        current_mode = COMPUTER_KEYBOARD;
     }
 
     /*

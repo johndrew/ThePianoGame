@@ -5,12 +5,10 @@
  */
 package thepianogame.views;
 
-import java.awt.Dimension;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -37,7 +35,7 @@ public class CarView extends JPanel {
     }
     
     public void initComponents() {
-    
+        setBackground(new Color(0, 0, 0));
     }
     
     @Override
