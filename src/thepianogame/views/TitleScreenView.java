@@ -45,9 +45,9 @@ public class TitleScreenView extends JPanel {
             Sets their actions
         */
         JPanel buttons = new JPanel();
-        JButton start = new JButton("Start");
-        JButton instructions = new JButton("Instructions");
-        JButton quit = new JButton("Quit");
+        JButton start = new JButton("PLAY");
+        JButton instructions = new JButton("HOW TO PLAY");
+        JButton quit = new JButton("QUIT");
         
         // create action listeners
         instructions.addActionListener(new ActionListener() {

@@ -5,17 +5,25 @@
  */
 package thepianogame.models;
 
+import thepianogame.views.GameScreenView;
+import thepianogame.views.PianoView;
+
 /**
  *
  * @author marinastoebner
  */
 public class Player {
     
-    public int score = 0;
-    public int lives = 3;
+    public int score;
+    public int lives;
+    
+    public Player(int score, int lives) {
+        this.score = score; 
+        this.lives = lives;
+    }
     
     public String getScore(){
-        return String.valueOf(score);
+        return String.valueOf(this.score);
     }
     
     // adds 10 points to the player's score when they correctly play a chord
@@ -28,9 +36,4 @@ public class Player {
         lives -= 1;
     }
     
-    // resets the score to 0 and lives to 3
-    public void resetPlayer() {
-        score = 0;
-        lives = 3;
-    }
 }

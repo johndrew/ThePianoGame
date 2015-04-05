@@ -35,6 +35,7 @@ public class GameScreenView extends JPanel {
         add(gameWindow);
         add(Box.createRigidArea(new Dimension(0,5)));
         add(pianoVisualization);
+
     }
     
     public final void makeGameWindow() {
@@ -51,8 +52,9 @@ public class GameScreenView extends JPanel {
         JLabel score = new JLabel();
         JLabel scoreNumber = new JLabel();
         
+        player = new Player(0, 3);
         score.setText("SCORE:");
-        scoreNumber.setText("0");
+        scoreNumber.setText(String.valueOf(player.score));
         
         score.setFont(score.getFont ().deriveFont (18.0f));
         scoreNumber.setFont(scoreNumber.getFont ().deriveFont (18.0f));
@@ -63,22 +65,14 @@ public class GameScreenView extends JPanel {
         scorePanel.setLayout(new FlowLayout());
         scorePanel.add(score);
         scorePanel.add(scoreNumber);
-        
-        JLabel life1 = new JLabel();
-        JLabel life2 = new JLabel();
-        JLabel life3 = new JLabel();
-        
-        life1.setIcon(new javax.swing.ImageIcon("/Users/marinastoebner/Documents/Northeastern/NUSpring2015/Human Computer Interaction/PianoGameImages/musicNote.png")); // NOI18N
-        life2.setIcon(new javax.swing.ImageIcon("/Users/marinastoebner/Documents/Northeastern/NUSpring2015/Human Computer Interaction/PianoGameImages/musicNote.png")); // NOI18N
-        life3.setIcon(new javax.swing.ImageIcon("/Users/marinastoebner/Documents/Northeastern/NUSpring2015/Human Computer Interaction/PianoGameImages/musicNote.png")); // NOI18N
-
+      
         JPanel lifesPanel = new JPanel();
         Dimension lifesSize = new Dimension(150, 50);
         lifesPanel.setPreferredSize(lifesSize);
-        lifesPanel.add(life1);
-        lifesPanel.add(life2);
-        lifesPanel.add(life3);
-        
+   
+        // add a life for every life the player has
+        for(int i = 0; i < player.lives; i++){lifesPanel.add(newLife());}
+
         Dimension marginSize = new Dimension(200, 480);
         JPanel leftMargin = new JPanel();
         leftMargin.setPreferredSize(marginSize);
@@ -98,9 +92,6 @@ public class GameScreenView extends JPanel {
         road.setPreferredSize(roadSize);
         road.setMaximumSize(roadSize);
         road.setMinimumSize(roadSize);
-
-        JLabel car = new JLabel();
-        car.setIcon(new javax.swing.ImageIcon("/Users/marinastoebner/Documents/Northeastern/NUSpring2015/Human Computer Interaction/PianoGameImages/car.png"));
         
         gameWindow.add(road, BorderLayout.CENTER);
         
@@ -238,6 +229,12 @@ public class GameScreenView extends JPanel {
         piano.computerKeyPressed(keyEventCode);
     }
     
+    private JLabel newLife(){
+        JLabel life = new JLabel();
+        life.setIcon(new javax.swing.ImageIcon("/Users/marinastoebner/Documents/Northeastern/NUSpring2015/Human Computer Interaction/PianoGameImages/musicNote.png"));
+        return life;
+    }
+    
     /*
         Private variables. DO NOT MODIFY.
     */
@@ -250,4 +247,5 @@ public class GameScreenView extends JPanel {
     private PianoView piano;
     private SettingsView settings;
     private Player player;
+    
 }
