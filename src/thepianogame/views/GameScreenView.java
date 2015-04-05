@@ -12,14 +12,21 @@ import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import thepianogame.controller.MainController;
 import thepianogame.models.Player;
+import thepianogame.views.CarView;
 
 public class GameScreenView extends JPanel {
     
@@ -90,7 +97,7 @@ public class GameScreenView extends JPanel {
         road = new RoadView(new Dimension(420, 480));
 
         car = new CarView();
-        road.addCar(car);       
+        road.addCar(car);
         
         gameWindow.add(road, BorderLayout.CENTER);
         
@@ -233,8 +240,16 @@ public class GameScreenView extends JPanel {
     }
     
     private JLabel newLife(){
-        JLabel life = new JLabel();
-        life.setIcon(new javax.swing.ImageIcon("/Users/marinastoebner/Documents/Northeastern/NUSpring2015/Human Computer Interaction/PianoGameImages/musicNote.png"));
+        BufferedImage img = null;
+        try {
+            String path = "/thepianogame/resources/musicNote.png";
+            img = ImageIO.read(getClass().getResourceAsStream(path));
+        } catch (IOException ex) {
+            Logger.getLogger(CarView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        JLabel life = new JLabel(new ImageIcon(img));
+        
         return life;
     }
     
