@@ -90,18 +90,37 @@ public final class MainController extends JFrame implements ActionListener,
 
         titleScreen.setVisible(false);
         gameScreen.setVisible(true);
+        startNewGame();
+    }
+    
+    public void startNewGame() {
         shouldUpdateGame = true;
         g = new Game();
         timer = new Timer((int) (1000 / 60), this);
         timer.start();
     }
+    
+    public void endGame() {
+        /*
+            Stops the timer and any other things involved in a Game instance
+        */
+        timer.stop();
+    }
+    
+    public void newGame() {
+        endGame();
+        startNewGame();
+    }
 
     public void backToMenu() {
         /*
-         Shows the TitleScreenView and hides the GameScreenView
+            Shows the TitleScreenView and hides the GameScreenView
+        
+            Ends the current game.
          */
         gameScreen.setVisible(false);
         titleScreen.setVisible(true);
+        endGame();
     }
 
     public void closeProgram() {
@@ -117,9 +136,12 @@ public final class MainController extends JFrame implements ActionListener,
             g.run();
         }
         
-        // adjust this number to control the movement speed of dashes on the
-        // road. It should adjust based on the difficulty setting.
-        gameScreen.moveDashes(gameScreen.getTempo() / 20);
+        if (!gameScreen.isPauseMenuVisible() 
+                && !gameScreen.isEndGameMenuVisible()) {
+            // adjust this number to control the movement speed of dashes on the
+            // road. It should adjust based on the difficulty setting.
+            gameScreen.moveDashes(gameScreen.getTempo() / 20);
+        }
         
         if (moveCarLeft) {
             int carX = gameScreen.getCarXCoordinate();
