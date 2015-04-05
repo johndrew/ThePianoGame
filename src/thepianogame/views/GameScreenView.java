@@ -93,11 +93,7 @@ public class GameScreenView extends JPanel {
         gameWindow.add(leftMargin, BorderLayout.WEST);
         gameWindow.add(rightMargin, BorderLayout.EAST);
         
-        road = new RoadView();
-        Dimension roadSize = new Dimension(420, 480);
-        road.setPreferredSize(roadSize);
-        road.setMaximumSize(roadSize);
-        road.setMinimumSize(roadSize);
+        road = new RoadView(new Dimension(420, 480));
 
         JLabel car = new JLabel();
         car.setIcon(new javax.swing.ImageIcon("/Users/marinastoebner/Documents/Northeastern/NUSpring2015/Human Computer Interaction/PianoGameImages/car.png"));
