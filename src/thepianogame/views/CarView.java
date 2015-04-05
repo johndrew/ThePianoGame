@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 
 public class CarView extends JPanel {
     
-    public CarView() throws URISyntaxException {
+    public CarView() {
         
         BufferedImage img = null;
         try {
@@ -37,8 +37,7 @@ public class CarView extends JPanel {
     }
     
     public void initComponents() {
-        
-        setPreferredSize(new Dimension(200, 200));
+    
     }
     
     @Override

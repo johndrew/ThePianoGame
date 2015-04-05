@@ -5,17 +5,9 @@
  */
 package thepianogame.views;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Point;
 import java.util.ArrayList;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import thepianogame.models.Road;
 
@@ -37,6 +29,7 @@ public class RoadView extends JPanel {
     @SuppressWarnings("unchecked")
     private void initComponents() {
         setBackground(new java.awt.Color(0, 0, 0));
+        setLayout(null);
         
         makeDashedCenterDivider(this);
     }
@@ -45,41 +38,75 @@ public class RoadView extends JPanel {
         /*
             Draws the dashes on the road.
         */
-        int numberOfDashes = 8;
+        int numberOfDashes = 7;
         int gapSize = 20;
-        int dashHeight = 56 + (2/3);
+        int dashHeight = 58;
         int dashWidth = 20;
-        int dashX = (this.roadSize.width/2) - (dashWidth/2);
-        int dashY = 0;
+        int dashX = (this.roadSize.width/2) + dashWidth;
+        int dashY = 20;
         dashes = new ArrayList<Dash>();
         Dash dash;
         
-        // This JPanel will hold all of the dashes. This is needed to get
-        // them in a vertical line
-        JPanel dashContainer = new JPanel();
-        dashContainer.setLayout(new BoxLayout(dashContainer, 
-                BoxLayout.PAGE_AXIS));
-        dashContainer.setBackground(new java.awt.Color(0, 0, 0));
-        
         for (int i=0;i<numberOfDashes;i++) {
             dash = new Dash(dashWidth, dashHeight, dashX, dashY);
-            dashY -= dashHeight + gapSize;
+            add(dash);
+            dashY += dashHeight + gapSize;
             
-            dashContainer.add(dash);
-            dashContainer.add(Box.createRigidArea(new Dimension(5, gapSize)));
             dashes.add(dash);
         }
-        
-        road.add(dashContainer);
     }
     
     public void moveDashes(int amountToMove) {
+        int roadWidth = this.roadSize.width;
+        int roadHeight = this.roadSize.height;
+        
         if (amountToMove < 0) {
-            for (int i=0;i<dashes.size();i++) {
-                Dash current = dashes.get(i);
-                current.moveDash(current.x, current.y+amountToMove);
-            }
+            amountToMove *= -1;
         }
+        
+        for (int i=0;i<dashes.size();i++) {
+            Dash current = dashes.get(i);
+            
+            if (current.y+amountToMove > roadHeight) {
+                System.out.println("hello");
+            }
+            
+            current.moveDash(current.x, current.y+amountToMove);
+        }
+    }
+    
+    public void addCar(CarView car) {
+        /*
+            Adds the car to the roadview. Sets its initial absolute position.
+        */
+        add(car);
+        this.car = car;
+        car.setBounds(this.roadSize.width - 75, this.roadSize.height - 125, 
+                100, 180);
+    }
+    
+    public void moveCarLeft(int amountToMove) {
+        /*
+            Adjusts the x position of the car. Does nothing to the y position.
+        */
+        // ensures that no matter the input, the car will move left.
+        if (amountToMove < 0) {
+            amountToMove *= -1;
+        }
+        car.setBounds(car.getX() - amountToMove, car.getY(), 
+                car.getWidth(), car.getHeight());
+    }
+    
+    public void moveCarRight(int amountToMove) {
+        /*
+            Adjusts the x position of the car. Does nothing to the y position.
+        */
+        // ensures that no matter the input, the car will move left.
+        if (amountToMove < 0) {
+            amountToMove *= -1;
+        }
+        car.setBounds(car.getX() + amountToMove, car.getY(), 
+                car.getWidth(), car.getHeight());
     }
     
     private class Dash extends JPanel {
@@ -98,11 +125,11 @@ public class RoadView extends JPanel {
                     javax.swing.border.BevelBorder.RAISED));
             setBackground(Color.YELLOW);
             setPreferredSize(new Dimension(width, height));
-            setLocation(x, y);
+            setBounds(x, y, width, height);
         }
         
         public void moveDash(int x, int y) {
-            setLocation(x, y);
+            setBounds(x, y, width, height);
         }
         
         private int width;
@@ -113,5 +140,6 @@ public class RoadView extends JPanel {
     
     private Road model;
     private Dimension roadSize;
+    private CarView car;
     private ArrayList<Dash> dashes;
 }

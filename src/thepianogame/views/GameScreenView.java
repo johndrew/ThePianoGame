@@ -89,12 +89,8 @@ public class GameScreenView extends JPanel {
         
         road = new RoadView(new Dimension(420, 480));
 
-
-//        JLabel car = new JLabel();
-//        car.setIcon(new javax.swing.ImageIcon("/Users/marinastoebner/Documents/Northeastern/NUSpring2015/Human Computer Interaction/PianoGameImages/car.png"));
- 
-        CarView car = new CarView();
-        road.add(car);       
+        car = new CarView();
+        road.addCar(car);       
         
         gameWindow.add(road, BorderLayout.CENTER);
         
@@ -102,8 +98,6 @@ public class GameScreenView extends JPanel {
         rightMargin.add(settings);
         leftMargin.add(lifesPanel);
         leftMargin.add(scorePanel);
-        
-        
     }
     
     public final void makePianoVisualization() {
@@ -230,6 +224,7 @@ public class GameScreenView extends JPanel {
     
     public void computerKeyPressed(int keyEventCode) {
         piano.computerKeyPressed(keyEventCode);
+        
 //        road.moveDashes(20);
     }
     
@@ -252,6 +247,7 @@ public class GameScreenView extends JPanel {
     private JPanel pauseMenu;
     private JPanel endGameMenu;
     private RoadView road;
+    private CarView car;
     private PianoView piano;
     private SettingsView settings;
     private Player player;
