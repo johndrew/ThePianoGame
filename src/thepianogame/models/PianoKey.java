@@ -7,22 +7,5 @@ package thepianogame.models;
 
 public class PianoKey {
     
-    public enum PIANOKEY_TYPE {WHITE_TYPE, BLACK_TYPE};
-    private String name;
-    private int octaveNumber;
-    private PIANOKEY_TYPE type;
-    
-    public PianoKey(String name, int octaveNumber, PIANOKEY_TYPE type) {
-        this.name = name;
-        this.type = type;
-        this.octaveNumber = octaveNumber;
-    }
-    
-    public String getName() {
-        return name;
-    }
-    
-    public int getOctaveNumber() {
-        return octaveNumber;
-    }
+    public PianoKey() {}
 }

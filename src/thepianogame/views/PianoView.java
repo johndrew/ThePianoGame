@@ -20,6 +20,9 @@ import javax.swing.Timer;
 import thepianogame.controller.MainController.CONTROL_MODE;
 import static thepianogame.controller.MainController.CONTROL_MODE.MIDI_KEYBOARD;
 import thepianogame.models.Piano;
+import thepianogame.views.PianoKeyView.PIANOKEY_TYPE;
+import static thepianogame.views.PianoKeyView.PIANOKEY_TYPE.BLACK_KEY;
+import static thepianogame.views.PianoKeyView.PIANOKEY_TYPE.WHITE_KEY;
 
 public class PianoView extends JScrollPane {
     
@@ -87,7 +90,7 @@ public class PianoView extends JScrollPane {
     
     // creates the piano's white keys
     private JPanel createWhiteKey(int i){
-        JPanel whiteKey = new JPanel();
+        JPanel whiteKey = new PianoKeyView(WHITE_KEY);
         whiteKey.setLayout(new BorderLayout());
         whiteKey.setBorder(javax.swing.BorderFactory.createBevelBorder(
                 javax.swing.border.BevelBorder.RAISED));
@@ -99,7 +102,7 @@ public class PianoView extends JScrollPane {
 
     // creates the piano's black keys
     private JPanel createBlackKey(int i){
-        JPanel blackKey = new JPanel();
+        JPanel blackKey = new PianoKeyView(BLACK_KEY);
         blackKey.setLayout(new BorderLayout());
         blackKey.setBackground(Color.BLACK);
         blackKey.setLocation(15 + i*22,0);
@@ -230,19 +233,21 @@ public class PianoView extends JScrollPane {
     
     public void computerKeyPressed(int keyEventCode) {
         final Integer keyIndex = computerKeyEventMap.get(keyEventCode);
-        final Color originalColor = keys[keyIndex].getBackground();
         
-        System.out.println("key index: " + keyIndex);
         turnKeyDifferentColor(keyIndex, keys, Color.blue);
+    }
+    
+    public void computerKeyReleased(int keyEventCode) {
+        final Integer keyIndex = computerKeyEventMap.get(keyEventCode);
+        PianoKeyView key = (PianoKeyView)keys[keyIndex];
+        PIANOKEY_TYPE originalColor = key.getType();
         
-        new Timer(250, new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                turnKeyDifferentColor(keyIndex, keys, originalColor);
-            }
-            
-        }).start();
+        if (originalColor == WHITE_KEY) {
+            turnKeyDifferentColor(keyIndex, keys, Color.white);
+        }
+        else {
+            turnKeyDifferentColor(keyIndex, keys, Color.black);
+        }
     }
     
     public JPanel[] keys;

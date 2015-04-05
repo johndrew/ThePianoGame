@@ -234,7 +234,7 @@ public class GameScreenView extends JPanel {
     }
     
     public void computerKeyReleased(int keyEventCode) {
-        
+        piano.computerKeyReleased(keyEventCode);
     }
     
     private JLabel newLife(){
