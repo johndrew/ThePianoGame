@@ -14,10 +14,6 @@ import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import thepianogame.controller.MainController;
 
-/**
- *
- * @author marinastoebner
- */
 public class SettingsView extends JPanel {
     
     private JComboBox tempos;
@@ -28,7 +24,7 @@ public class SettingsView extends JPanel {
         initComponents();
     }
     
-    public void initComponents(){
+    public final void initComponents(){
         JPanel levelPanel = new JPanel();
         levelPanel.setLayout(new BorderLayout());
         Dimension panelSize = new Dimension(190, 60);

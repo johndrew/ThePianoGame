@@ -39,7 +39,8 @@ public final class MainController extends JFrame implements ActionListener,
         addKeyListener(this);
         setFocusable(true);
 
-        // Sets the game control mode
+        // Sets the game control mode. Uncomment this after the prototype is 
+        // turned in
 //        current_mode = isMIDIKeyboardConnected() ? MIDI_KEYBOARD
 //                : COMPUTER_KEYBOARD;
         current_mode = COMPUTER_KEYBOARD;
@@ -94,6 +95,11 @@ public final class MainController extends JFrame implements ActionListener,
     }
     
     public void startNewGame() {
+        /*
+            Creates a new game instance.
+        
+            Starts a new timer.
+        */
         shouldUpdateGame = true;
         g = new Game();
         timer = new Timer((int) (1000 / 60), this);
@@ -108,6 +114,12 @@ public final class MainController extends JFrame implements ActionListener,
     }
     
     public void newGame() {
+        /*
+            Ends an old game and starts a new one.
+        
+            This is typically called when the user decides to either
+            restart or play again.
+        */
         endGame();
         startNewGame();
     }
@@ -167,9 +179,7 @@ public final class MainController extends JFrame implements ActionListener,
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-//        System.out.println("Key Typed");
-    }
+    public void keyTyped(KeyEvent e) {}
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -214,98 +224,117 @@ public final class MainController extends JFrame implements ActionListener,
                     // F3
                     System.out.println("A key pressed.");
                     gameScreen.computerKeyPressed(KeyEvent.VK_A);
+                    keyPressedMap.put(keyCode, true);
 //                    moveCarLeft = true;
                     break;
                 case KeyEvent.VK_W:
                     // F#3 or Gb3
                     System.out.println("W key pressed.");
                     gameScreen.computerKeyPressed(KeyEvent.VK_W);
+                    keyPressedMap.put(keyCode, true);
 //                    moveCarRight = true;
                     break;
                 case KeyEvent.VK_S:
                     // G3
                     System.out.println("S key pressed.");
                     gameScreen.computerKeyPressed(KeyEvent.VK_S);
+                    keyPressedMap.put(keyCode, true);
                     break;
                 case KeyEvent.VK_E:
                     // G#3 or Ab3
                     System.out.println("E key pressed.");
                     gameScreen.computerKeyPressed(KeyEvent.VK_E);
+                    keyPressedMap.put(keyCode, true);
                     break;
                 case KeyEvent.VK_D:
                     // A3
                     System.out.println("D key pressed.");
                     gameScreen.computerKeyPressed(KeyEvent.VK_D);
+                    keyPressedMap.put(keyCode, true);
                     break;
                 case KeyEvent.VK_R:
                     // A#3 or Bb3
                     System.out.println("R key pressed.");
                     gameScreen.computerKeyPressed(KeyEvent.VK_R);
+                    keyPressedMap.put(keyCode, true);
                     break;
                 case KeyEvent.VK_F:
                     // B3
                     System.out.println("F key pressed.");
                     gameScreen.computerKeyPressed(KeyEvent.VK_F);
+                    keyPressedMap.put(keyCode, true);
                     break;
                 case KeyEvent.VK_G:
                     // Middle C or C4
                     System.out.println("G key pressed.");
                     gameScreen.computerKeyPressed(KeyEvent.VK_G);
+                    keyPressedMap.put(keyCode, true);
                     break;
                 case KeyEvent.VK_Y:
                     // C#4 or Db4
                     System.out.println("Y key pressed.");
                     gameScreen.computerKeyPressed(KeyEvent.VK_Y);
+                    keyPressedMap.put(keyCode, true);
                     break;
                 case KeyEvent.VK_H:
                     // D4
                     System.out.println("H key pressed.");
                     gameScreen.computerKeyPressed(KeyEvent.VK_H);
+                    keyPressedMap.put(keyCode, true);
                     break;
                 case KeyEvent.VK_U:
                     // D#4 or Eb4
                     System.out.println("U key pressed.");
                     gameScreen.computerKeyPressed(KeyEvent.VK_U);
+                    keyPressedMap.put(keyCode, true);
                     break;
                 case KeyEvent.VK_J:
                     // E4
                     System.out.println("J key pressed.");
                     gameScreen.computerKeyPressed(KeyEvent.VK_J);
+                    keyPressedMap.put(keyCode, true);
                     break;
                 case KeyEvent.VK_K:
                     // F4
                     System.out.println("K key pressed.");
                     gameScreen.computerKeyPressed(KeyEvent.VK_K);
+                    keyPressedMap.put(keyCode, true);
                     break;
                 case KeyEvent.VK_O:
                     // F#4 or Gb4
                     System.out.println("O key pressed.");
                     gameScreen.computerKeyPressed(KeyEvent.VK_O);
+                    keyPressedMap.put(keyCode, true);
                     break;
                 case KeyEvent.VK_L:
                     // G4
                     System.out.println("L key pressed.");
                     gameScreen.computerKeyPressed(KeyEvent.VK_L);
+                    keyPressedMap.put(keyCode, true);
                     break;
                 case KeyEvent.VK_P:
                     // G#4 or Ab4
                     System.out.println("P key pressed.");
                     gameScreen.computerKeyPressed(KeyEvent.VK_P);
+                    keyPressedMap.put(keyCode, true);
                     break;
                 case KeyEvent.VK_SEMICOLON:
                     // A4
                     System.out.println("; key pressed.");
                     gameScreen.computerKeyPressed(KeyEvent.VK_SEMICOLON);
+                    keyPressedMap.put(keyCode, true);
                     break;
                 case KeyEvent.VK_OPEN_BRACKET:
                     // A#4 or Bb4
                     System.out.println("[ key pressed.");
                     gameScreen.computerKeyPressed(KeyEvent.VK_OPEN_BRACKET);
+                    keyPressedMap.put(keyCode, true);
                     break;
                 case KeyEvent.VK_QUOTE:
                     // B4
                     System.out.println("' key pressed.");
                     gameScreen.computerKeyPressed(KeyEvent.VK_QUOTE);
+                    keyPressedMap.put(keyCode, true);
                     break;
                 default:
                     System.out.println("Other key");
@@ -360,96 +389,115 @@ public final class MainController extends JFrame implements ActionListener,
                     System.out.println("A key released.");
 //                    keyPressedMap.put(keyCode, true);
                     gameScreen.computerKeyReleased(KeyEvent.VK_A);
+                    keyPressedMap.put(keyCode, false);
                     break;
                 case KeyEvent.VK_W:
                     // F#3 or Gb3
                     System.out.println("W key released.");
                     gameScreen.computerKeyReleased(KeyEvent.VK_W);
+                    keyPressedMap.put(keyCode, false);
                     break;
                 case KeyEvent.VK_S:
                     // G3
                     System.out.println("S key released.");
                     gameScreen.computerKeyReleased(KeyEvent.VK_S);
+                    keyPressedMap.put(keyCode, false);
                     break;
                 case KeyEvent.VK_E:
                     // G#3 or Ab3
                     System.out.println("E key released.");
                     gameScreen.computerKeyReleased(KeyEvent.VK_E);
+                    keyPressedMap.put(keyCode, false);
                     break;
                 case KeyEvent.VK_D:
                     // A3
                     System.out.println("D key released.");
                     gameScreen.computerKeyReleased(KeyEvent.VK_D);
+                    keyPressedMap.put(keyCode, false);
                     break;
                 case KeyEvent.VK_R:
                     // A#3 or Bb3
                     System.out.println("R key released.");
                     gameScreen.computerKeyReleased(KeyEvent.VK_R);
+                    keyPressedMap.put(keyCode, false);
                     break;
                 case KeyEvent.VK_F:
                     // B3
                     System.out.println("F key released.");
                     gameScreen.computerKeyReleased(KeyEvent.VK_F);
+                    keyPressedMap.put(keyCode, false);
                     break;
                 case KeyEvent.VK_G:
                     // Middle C or C4
                     System.out.println("G key released.");
                     gameScreen.computerKeyReleased(KeyEvent.VK_G);
+                    keyPressedMap.put(keyCode, false);
                     break;
                 case KeyEvent.VK_Y:
                     // C#4 or Db4
                     System.out.println("Y key released.");
                     gameScreen.computerKeyReleased(KeyEvent.VK_Y);
+                    keyPressedMap.put(keyCode, false);
                     break;
                 case KeyEvent.VK_H:
                     // D4
                     System.out.println("H key released.");
                     gameScreen.computerKeyReleased(KeyEvent.VK_H);
+                    keyPressedMap.put(keyCode, false);
                     break;
                 case KeyEvent.VK_U:
                     // D#4 or Eb4
                     System.out.println("U key released.");
                     gameScreen.computerKeyReleased(KeyEvent.VK_U);
+                    keyPressedMap.put(keyCode, false);
                     break;
                 case KeyEvent.VK_J:
                     // E4
                     System.out.println("J key released.");
                     gameScreen.computerKeyReleased(KeyEvent.VK_J);
+                    keyPressedMap.put(keyCode, false);
                     break;
                 case KeyEvent.VK_K:
                     // F4
                     System.out.println("K key released.");
                     gameScreen.computerKeyReleased(KeyEvent.VK_K);
+                    keyPressedMap.put(keyCode, false);
                     break;
                 case KeyEvent.VK_O:
                     // F#4 or Gb4
                     System.out.println("O key released.");
                     gameScreen.computerKeyReleased(KeyEvent.VK_O);
+                    keyPressedMap.put(keyCode, false);
                     break;
                 case KeyEvent.VK_L:
                     // G4
                     System.out.println("L key released.");
                     gameScreen.computerKeyReleased(KeyEvent.VK_L);
+                    keyPressedMap.put(keyCode, false);
                     break;
                 case KeyEvent.VK_P:
                     // G#4 or Ab4
                     System.out.println("P key released.");
                     gameScreen.computerKeyReleased(KeyEvent.VK_P);
+                    keyPressedMap.put(keyCode, false);
                     break;
                 case KeyEvent.VK_SEMICOLON:
                     // A4
                     System.out.println("; key released.");
                     gameScreen.computerKeyReleased(KeyEvent.VK_SEMICOLON);
+                    keyPressedMap.put(keyCode, false);
                     break;
                 case KeyEvent.VK_OPEN_BRACKET:
                     // A#4 or Bb4
                     System.out.println("[ key released.");
                     gameScreen.computerKeyReleased(KeyEvent.VK_OPEN_BRACKET);
+                    keyPressedMap.put(keyCode, false);
                     break;
                 case KeyEvent.VK_QUOTE:
                     // B4
                     System.out.println("' key released.");
                     gameScreen.computerKeyReleased(KeyEvent.VK_QUOTE);
+                    keyPressedMap.put(keyCode, false);
                     break;
                 default:
                     System.out.println("Other key released.");
@@ -489,6 +537,11 @@ public final class MainController extends JFrame implements ActionListener,
     }
     
     public void makeKeyPressedMap() {
+        /*
+            Creates a hashmap of KeyEvents to boolean values
+        
+            Used to determine which keys are being pressed at a certain time.
+        */
         ArrayList<Integer> events = makeComputerKeyEventsList();
         keyPressedMap = new HashMap<Integer,Boolean>();
         
