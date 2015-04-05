@@ -25,7 +25,7 @@ public class Game {
     static int score;
     static Car car;
 
-    final static double fallRate = .01;
+    static double fallRate = .01;
     static boolean rungame = true;
 
     public Game() {
@@ -35,6 +35,12 @@ public class Game {
         score = 0;
         car = new Car();
     }
+    
+    public void setTempo(int newTempo, double frameRate) {
+        double beatsPerSecond = newTempo / 60.;
+        double beatsPerFrame = beatsPerSecond / frameRate;
+        fallRate = beatsPerFrame;
+    }
 
     public void run() {
 
@@ -42,6 +48,7 @@ public class Game {
         if (chords.isEmpty()) {
             // fix this so objects aren't always on the right side of the screen
             chords.add(new ChordObject(Chord.getRandomChord(key, scale), true));
+            System.out.println("New chord: " + chords.get(0).name);
         }
             // advance all the current chords, hurt the player if a chord has
         // moved too far without being cleared

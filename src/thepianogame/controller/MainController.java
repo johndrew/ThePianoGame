@@ -113,6 +113,7 @@ public final class MainController extends JFrame implements ActionListener,
      */
     public void actionPerformed(ActionEvent e) {
         if (shouldUpdateGame) {
+            g.setTempo(60 /*placeholder*/ , 60);
             g.run();
         }
         

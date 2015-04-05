@@ -7,8 +7,8 @@ package thepianogame.models;
 
 public class ChordObject {
 
-    private String name;
-    private Chord chord;
+    public String name;
+    public Chord chord;
     public double position; // ranges from 0 - 1 (0 is the top of the screen,
                             // 1 is whatever part of the screen hurts the player.
                             // makes it easier to draw on screens of any size
