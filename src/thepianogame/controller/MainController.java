@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import static thepianogame.controller.MainController.CONTROL_MODE.COMPUTER_KEYBOARD;
 import static thepianogame.controller.MainController.CONTROL_MODE.MIDI_KEYBOARD;
+import thepianogame.models.Game;
 import thepianogame.views.GameScreenView;
 import thepianogame.views.PianoView;
 import thepianogame.views.TitleScreenView;
@@ -75,6 +76,7 @@ public final class MainController extends JFrame implements ActionListener,
         
         titleScreen.setVisible(false);
         gameScreen.setVisible(true);
+        Game g = new Game();
     }
     
     public void backToMenu() {

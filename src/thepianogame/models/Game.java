@@ -26,8 +26,14 @@ public class Game {
     static Car car;
 
     final static double fallRate = .01;
+    static boolean rungame = true;
 
     public Game() {
+        chords = new ArrayList<ChordObject>();
+        key = 1;
+        scale = minor;
+        score = 0;
+        car = new Car();
         run();
     }
 
@@ -38,7 +44,7 @@ public class Game {
         long lastTime = System.currentTimeMillis();
         int frameNo = 0;
 
-        while (true) {
+        while (rungame) {
 
             // add new ChordObject if there aren't any
             if (chords.isEmpty()) {
