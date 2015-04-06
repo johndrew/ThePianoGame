@@ -67,7 +67,7 @@ public class Game {
             boolean goodNotes = true;
             for (Note n : chords.get(0).chord.getNotes()) {
                 if (keymap.containsKey(n.getValue()) && keymap.get(n.getValue())) {
-                    
+                    System.out.println(n.getValue() + " is pressed!");
                 } else {
                     goodNotes = false;
                     break;
