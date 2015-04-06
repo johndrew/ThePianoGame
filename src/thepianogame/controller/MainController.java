@@ -114,8 +114,7 @@ public final class MainController extends JFrame implements ActionListener,
         /*
          Stops the timer and any other things involved in a Game instance
          */
-        timer.stop();
-        g = null;
+        shouldUpdateGame = false;
         gameScreen.showEndGameMenu();
     }
 
@@ -127,8 +126,14 @@ public final class MainController extends JFrame implements ActionListener,
          restart or play again.
          */
         endGame();
+        restartGame();
+        
+    }
+    
+    public void restartGame() {
+        shouldUpdateGame = true;
+        g = new Game(this, gameScreen);
         gameScreen.restartGame();
-        startNewGame();
     }
 
     public void backToMenu() {
