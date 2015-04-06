@@ -97,7 +97,9 @@ public class Game {
             if (currentView.getY() >= roadSize.height/2) {
                 currentView.changeBackgroundColor();
                 decrementLives();
-                chords.remove(i);
+                if (!chords.isEmpty()) {
+                    chords.remove(i);
+                }
 //                car.onRightSide = !car.onRightSide;
             } else {
                 i++;
@@ -105,7 +107,6 @@ public class Game {
         }
         if (!chords.isEmpty()) {
             boolean goodNotes = true;
-//            for (Note n : chords.get(0).chord.getNotes()) {
             ChordObject chord = chords.get(0);
             for (Note n : chord.chord.getNotes()) {
                 if (keymap.containsKey(n.getValue()) && keymap.get(n.getValue())) {
@@ -120,7 +121,13 @@ public class Game {
                 controller.removeChordFromView(chord);
                 increaseScore();
                 chords.remove(0);
-                car.onRightSide = !car.onRightSide;
+                if (car.onRightSide) {
+                    controller.moveCarLeft();
+                    car.onRightSide = false;
+                } else {
+                    controller.moveCarRight();
+                    car.onRightSide = true;
+                }
             }
         }
 

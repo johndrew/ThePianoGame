@@ -382,6 +382,11 @@ public class GameScreenView extends JPanel {
         scorePanel.repaint();
     }
     
+    public void restartGame() {
+        gameWindow = null;
+        makeGameWindow();
+    }
+    
     /*
         Private variables. DO NOT MODIFY.
     */
