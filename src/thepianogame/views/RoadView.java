@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import javax.swing.JPanel;
+import thepianogame.models.Car;
 import thepianogame.models.Road;
 
 public class RoadView extends JPanel {
@@ -119,6 +120,18 @@ public class RoadView extends JPanel {
     
     public Dimension getRoadSize() {
         return this.roadSize;
+    }
+    
+    public void setCarView(CarView car) {
+        this.car = car;
+    }
+    
+    public void addCarModelToCarView(Car model) {
+        car.setModel(model);
+    }
+    
+    public boolean isCarOnRightSide() {
+        return car.isCarOnRightSide();
     }
     
     private class Dash extends JPanel {

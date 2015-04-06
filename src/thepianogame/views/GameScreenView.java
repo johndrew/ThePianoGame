@@ -51,7 +51,6 @@ public class GameScreenView extends JPanel {
         add(Box.createRigidArea(new Dimension(0,5)));
         add(pianoVisualization);
 
-//        gameModel.run();
         gameModel = controller.g;
         chordViews = new ArrayList<>();
     }
@@ -105,14 +104,6 @@ public class GameScreenView extends JPanel {
         
         gameWindow.add(leftMargin, BorderLayout.WEST);
         gameWindow.add(rightMargin, BorderLayout.EAST);
-        
-        roadSize = new Dimension(420, 480);
-        road = new RoadView(roadSize);
-
-        car = new CarView();
-        road.addCar(car);
-        
-        gameWindow.add(road, BorderLayout.CENTER);
         
         settings = new SettingsView(controller);
         rightMargin.add(settings);
@@ -272,8 +263,6 @@ public class GameScreenView extends JPanel {
     
     public void computerKeyPressed(int keyEventCode) {
         piano.computerKeyPressed(keyEventCode);
-        
-//        road.moveCarLeft(25);
     }
     
     public void computerKeyReleased(int keyEventCode) {
@@ -292,40 +281,8 @@ public class GameScreenView extends JPanel {
         road.moveCarRight(amountToMove);
     }
     
-    public int getCarXCoordinate() {
-        return road.getCarXPosition();
-    }
-    
-    public Dimension getRoadSize() {
-        return road.getRoadSize();
-    }
-    
-    public int getTempo() {
-        return settings.getTempo();
-    }
-    
-    public String getKey() {
-        return settings.getKey();
-    }
-    
-    public String getScale() {
-        return settings.getScale();
-    }
-    
-    public void setGameModel(Game game) {
-        this.gameModel = game;
-    }
-    
-    public RoadView getRoadView() {
-        return this.road;
-    }
-    
-    public void setCarModel(Car carModel) {
-        this.car.setModel(carModel);
-    }
-    
     public boolean isCarOnRightSide() {
-        return this.car.isCarOnRightSide();
+        return road.isCarOnRightSide();
     }
     
     public ChordObjectView makeChordView(ChordObject chord) {
@@ -342,7 +299,6 @@ public class GameScreenView extends JPanel {
     }
     
     public void incrementChordViews(double positionIncrement) {
-        
         for (ChordObjectView chordView : chordViews) {
             chordView.moveChordView(positionIncrement, roadSize.height);
         }
@@ -410,12 +366,64 @@ public class GameScreenView extends JPanel {
     }
     
     public void resetScore() {
+        /*
+            Resets the score display back to zero
+        */
         scoreValue = 0;
         scoreNumber.setText(String.valueOf(scoreValue));
         scoreNumber.revalidate();
         scoreNumber.repaint();
         scorePanel.revalidate();
         scorePanel.repaint();
+    }
+    
+    /*
+        GETTERS
+    */
+    
+    public int getCarXCoordinate() {
+        return road.getCarXPosition();
+    }
+    
+    public Dimension getRoadSize() {
+        return road.getRoadSize();
+    }
+    
+    public int getTempo() {
+        return settings.getTempo();
+    }
+    
+    public String getKey() {
+        return settings.getKey();
+    }
+    
+    public String getScale() {
+        return settings.getScale();
+    }
+    
+    public RoadView getRoadView() {
+        return this.road;
+    }
+    
+    /*
+        SETTERS
+    */
+    
+    public void setGameModel(Game game) {
+        this.gameModel = game;
+    }
+    
+    public void setCarModel(Car carModel) {
+        road.addCarModelToCarView(carModel);
+    }
+    
+    public void setRoadView(RoadView road) {
+        this.road = road;
+        gameWindow.add(road, BorderLayout.CENTER);
+    }
+    
+    public void setRoadSize(Dimension size) {
+        this.roadSize = size;
     }
     
     /*

@@ -18,8 +18,13 @@ import static thepianogame.controller.MainController.CONTROL_MODE.COMPUTER_KEYBO
 import static thepianogame.controller.MainController.CONTROL_MODE.MIDI_KEYBOARD;
 import thepianogame.models.ChordObject;
 import thepianogame.models.Game;
+import thepianogame.views.CarView;
 import thepianogame.views.ChordObjectView;
 import thepianogame.views.GameScreenView;
+import thepianogame.views.InstructionsView;
+import thepianogame.views.PianoView;
+import thepianogame.views.RoadView;
+import thepianogame.views.SettingsView;
 import thepianogame.views.TitleScreenView;
 
 public final class MainController extends JFrame implements ActionListener,
@@ -35,8 +40,10 @@ public final class MainController extends JFrame implements ActionListener,
     public boolean shouldUpdateGame;
     private boolean moveCarLeft = false;
     private boolean moveCarRight = false;
+    private Dimension roadSize = new Dimension(420, 480);
 
     public MainController() {
+        makeViews();
         initUI();
 
         addKeyListener(this);
@@ -49,6 +56,17 @@ public final class MainController extends JFrame implements ActionListener,
         current_mode = COMPUTER_KEYBOARD;
         makeKeyPressedMap();
     }
+    
+    public final void makeViews() {
+        titleScreen = new TitleScreenView(this);
+        gameScreen = new GameScreenView(this);
+        
+        roadView = new RoadView(roadSize);
+        carView = new CarView();
+        roadView.addCar(carView);
+        gameScreen.setRoadView(roadView);
+        gameScreen.setRoadSize(roadSize);
+    }
 
     /*
      Setup the GUI and ActionListeners
@@ -58,8 +76,8 @@ public final class MainController extends JFrame implements ActionListener,
          Initializes the various views
          */
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        titleScreen = new TitleScreenView(this);
-        gameScreen = new GameScreenView(this);
+//        titleScreen = new TitleScreenView(this);
+//        gameScreen = new GameScreenView(this);
 
         // start the game on the title screen
         this.add(titleScreen);
@@ -77,13 +95,6 @@ public final class MainController extends JFrame implements ActionListener,
          by USB. If yes, then true is returned.
          */
         return false;
-    }
-
-    public CONTROL_MODE getCurrentMode() {
-        /*
-         Returns the current_mode. Mode is defined by the CONTROL_MODE enum
-         */
-        return current_mode;
     }
 
     public void startGame() {
@@ -149,10 +160,6 @@ public final class MainController extends JFrame implements ActionListener,
         System.exit(0);
     }
     
-    public GameScreenView getGameScreen() {
-        return this.gameScreen;
-    }
-    
     public ChordObjectView makeChordView(ChordObject chord) {
         return gameScreen.makeChordView(chord);
     }
@@ -163,10 +170,6 @@ public final class MainController extends JFrame implements ActionListener,
     
     public void removeChordFromView(ChordObject chord) {
         gameScreen.removeChordFromView(chord);
-    }
-    
-    public Dimension getRoadSize() {
-        return gameScreen.getRoadSize();
     }
     
     public void decrementLives() {
@@ -640,11 +643,43 @@ public final class MainController extends JFrame implements ActionListener,
     }
 
     /*
+        GETTERS
+    */
+    
+    public Dimension getRoadSize() {
+        return gameScreen.getRoadSize();
+    }
+    
+    public GameScreenView getGameScreen() {
+        return this.gameScreen;
+    }
+    
+    public CONTROL_MODE getCurrentMode() {
+        /*
+         Returns the current_mode. Mode is defined by the CONTROL_MODE enum
+         */
+        return current_mode;
+    }
+
+    /*
+        SETTERS
+    */
+    
+    /*
      Private variables. DO NOT MODIFY.
      */
-    private TitleScreenView titleScreen;
-    private GameScreenView gameScreen;
     private HashMap<Integer, Boolean> keyPressedMap;
     private int carLeftBoundary;
     private int carRightBoundary;
+    
+    // single instance views
+    private TitleScreenView titleScreen;
+    private InstructionsView instructionsView;
+    private GameScreenView gameScreen;
+    private RoadView roadView;
+    private CarView carView;
+    private PianoView pianoView;
+    private SettingsView settingsView;
+    
+    // single instance models
 }
