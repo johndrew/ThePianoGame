@@ -136,5 +136,5 @@ public class SettingsView extends JPanel {
         return Integer.parseInt((String) tempos.getSelectedItem());
     }
     
-    private MainController controller;
+    private final MainController controller;
 }

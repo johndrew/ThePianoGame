@@ -170,6 +170,7 @@ public class GameScreenView extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                gameWindow.setVisible(false);
                 showEndGameMenu();
             }
         }) ;
@@ -212,6 +213,7 @@ public class GameScreenView extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 controller.newGame();
                 hideEndGameMenu();
+                gameWindow.setVisible(true);
             }
         });
         

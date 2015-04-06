@@ -28,7 +28,9 @@ public class CarView extends JPanel {
             Logger.getLogger(CarView.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        JLabel icon = new JLabel(new ImageIcon(img));
+        ImageIcon ic = new ImageIcon(img);
+        
+        JLabel icon = new JLabel(ic);
         add(icon);
         
         initComponents();
