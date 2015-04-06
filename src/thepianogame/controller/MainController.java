@@ -63,7 +63,7 @@ public final class MainController extends JFrame implements ActionListener,
 
         titleScreen.setVisible(true);
         gameScreen.setVisible(false);
-        
+
         carLeftBoundary = 63;
         carRightBoundary = 321;
     }
@@ -94,42 +94,42 @@ public final class MainController extends JFrame implements ActionListener,
         gameScreen.setVisible(true);
         startNewGame();
     }
-    
+
     public void startNewGame() {
         /*
-            Creates a new game instance.
+         Creates a new game instance.
         
-            Starts a new timer.
-        */
+         Starts a new timer.
+         */
         shouldUpdateGame = true;
         g = new Game();
         timer = new Timer((int) (1000 / 60), this);
         timer.start();
     }
-    
+
     public void endGame() {
         /*
-            Stops the timer and any other things involved in a Game instance
-        */
+         Stops the timer and any other things involved in a Game instance
+         */
         timer.stop();
     }
-    
+
     public void newGame() {
         /*
-            Ends an old game and starts a new one.
+         Ends an old game and starts a new one.
         
-            This is typically called when the user decides to either
-            restart or play again.
-        */
+         This is typically called when the user decides to either
+         restart or play again.
+         */
         endGame();
         startNewGame();
     }
 
     public void backToMenu() {
         /*
-            Shows the TitleScreenView and hides the GameScreenView
+         Shows the TitleScreenView and hides the GameScreenView
         
-            Ends the current game.
+         Ends the current game.
          */
         gameScreen.setVisible(false);
         titleScreen.setVisible(true);
@@ -145,17 +145,59 @@ public final class MainController extends JFrame implements ActionListener,
      */
     public void actionPerformed(ActionEvent e) {
         if (shouldUpdateGame) {
-            g.setTempo(gameScreen.getTempo() , 60);
+            int key = 0;
+            switch (gameScreen.getKey()) {
+                case "F":
+                    key = 53;
+                    break;
+                case "F#":
+                    key = 54;
+                    break;
+                case "G":
+                    key = 55;
+                    break;
+                case "G#":
+                    key = 56;
+                    break;
+                case "A":
+                    key = 57;
+                    break;
+                case "A#":
+                    key = 58;
+                    break;
+                case "B":
+                    key = 59;
+                    break;
+                case "C":
+                    key = 60;
+                    break;
+                case "C#":
+                    key = 61;
+                    break;
+                case "D":
+                    key = 62;
+                    break;
+                case "D#":
+                    key = 63;
+                    break;
+                case "E":
+                    key = 64;
+                    break;
+                default:
+                    key = 63;
+                    break;
+            }
+            g.setLoopInfo(gameScreen.getTempo(), 60, key, gameScreen.getScale());
             g.run(keyPressedMap);
         }
-        
-        if (!gameScreen.isPauseMenuVisible() 
+
+        if (!gameScreen.isPauseMenuVisible()
                 && !gameScreen.isEndGameMenuVisible()) {
             // adjust this number to control the movement speed of dashes on the
             // road. It should adjust based on the difficulty setting.
             gameScreen.moveDashes(gameScreen.getTempo() / 20);
         }
-        
+
         if (moveCarLeft) {
             int carX = gameScreen.getCarXCoordinate();
             if (carX != carLeftBoundary) {
@@ -180,7 +222,8 @@ public final class MainController extends JFrame implements ActionListener,
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {}
+    public void keyTyped(KeyEvent e) {
+    }
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -200,7 +243,7 @@ public final class MainController extends JFrame implements ActionListener,
             
              Here is a visual representation of the layout:
                 
-              W E R   Y U   O P [
+             W E R   Y U   O P [
              A S D F G H J K L ; '
             
              The last three are a semi-colon, a square open bracket, and
@@ -363,7 +406,7 @@ public final class MainController extends JFrame implements ActionListener,
     @Override
     public void keyReleased(KeyEvent e) {
         /*
-            Assigns computer keys to certain actions
+         Assigns computer keys to certain actions
          */
         int keyCode = e.getKeyCode();
 
@@ -378,7 +421,7 @@ public final class MainController extends JFrame implements ActionListener,
             
              Here is a visual representation of the layout:
                 
-              W E R   Y U   O P [
+             W E R   Y U   O P [
              A S D F G H J K L ; '
             
              The last three are a semi-colon, a square open bracket, and
@@ -504,16 +547,16 @@ public final class MainController extends JFrame implements ActionListener,
                     System.out.println("Other key released.");
                     break;
             }
-        } 
+        }
     }
-    
+
     public ArrayList<Integer> makeComputerKeyEventsList() {
         /*
-            Creates a list of the keyEvents for the computer that will be used
-            to control the game in COMPUTER_KEYBOARD mode.
-        */
+         Creates a list of the keyEvents for the computer that will be used
+         to control the game in COMPUTER_KEYBOARD mode.
+         */
         ArrayList<Integer> events = new ArrayList<Integer>();
-        
+
         events.add(53); // F
         events.add(54); // F#
         events.add(55); // G
@@ -533,20 +576,20 @@ public final class MainController extends JFrame implements ActionListener,
         events.add(69); // A
         events.add(70); // A#
         events.add(71); // B
-        
+
         return events;
     }
-    
+
     public void makeKeyPressedMap() {
         /*
-            Creates a hashmap of KeyEvents to boolean values
+         Creates a hashmap of KeyEvents to boolean values
         
-            Used to determine which keys are being pressed at a certain time.
-        */
+         Used to determine which keys are being pressed at a certain time.
+         */
         ArrayList<Integer> events = makeComputerKeyEventsList();
-        keyPressedMap = new HashMap<Integer,Boolean>();
-        
-        for (int i=0;i<events.size();i++) {
+        keyPressedMap = new HashMap<Integer, Boolean>();
+
+        for (int i = 0; i < events.size(); i++) {
             keyPressedMap.put(events.get(i), false);
         }
     }
@@ -556,7 +599,7 @@ public final class MainController extends JFrame implements ActionListener,
      */
     private TitleScreenView titleScreen;
     private GameScreenView gameScreen;
-    private HashMap<Integer,Boolean> keyPressedMap;
+    private HashMap<Integer, Boolean> keyPressedMap;
     private int carLeftBoundary;
     private int carRightBoundary;
 }

@@ -31,16 +31,22 @@ public class Game {
 
     public Game() {
         chords = new ArrayList<ChordObject>();
-        key = 60;
+        key = 53;
         scale = major;
         score = 0;
         car = new Car();
     }
 
-    public void setTempo(int newTempo, double frameRate) {
+    public void setLoopInfo(int newTempo, double frameRate, int newKey, String newScale) {
         double beatsPerSecond = newTempo / 60.;
         double beatsPerFrame = beatsPerSecond / frameRate;
         fallRate = beatsPerFrame / 4; // chord falls on a per-bar instead of per-beat basis
+        key = newKey;
+        if (newScale.equals("Major")) {
+            scale = major;
+        } else {
+            scale = minor;
+        }
     }
 
     public void run(HashMap<Integer, Boolean> keymap) {
