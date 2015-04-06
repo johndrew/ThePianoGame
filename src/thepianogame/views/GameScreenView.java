@@ -341,6 +341,15 @@ public class GameScreenView extends JPanel {
         }
     }
     
+    public void removeChordFromView(ChordObject chord) {
+        for (ChordObjectView chordView : chordViews) {
+            if (chordView.getName().equals(chord.name)) {
+                chordView.hideChordView();
+                break;
+            }
+        }
+    }
+    
     private JLabel newLife(){
         BufferedImage img = null;
         try {

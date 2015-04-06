@@ -153,6 +153,10 @@ public final class MainController extends JFrame implements ActionListener,
         gameScreen.incrementChordViews();
     }
     
+    public void removeChordFromView(ChordObject chord) {
+        gameScreen.removeChordFromView(chord);
+    }
+    
     /*
      Used for responding to menu clicks
      */
@@ -256,7 +260,7 @@ public final class MainController extends JFrame implements ActionListener,
             
              Here is a visual representation of the layout:
                 
-             W E R   Y U   O P [
+              W E R   Y U   O P [
              A S D F G H J K L ; '
             
              The last three are a semi-colon, a square open bracket, and

@@ -80,14 +80,15 @@ public class Game {
                 lives--;
                 chords.remove(i);
                 car.onRightSide = !car.onRightSide;
-//                car.onRightSide = gameScreen.isCarOnRightSide();
             } else {
                 i++;
             }
         }
         if (!chords.isEmpty()) {
             boolean goodNotes = true;
-            for (Note n : chords.get(0).chord.getNotes()) {
+//            for (Note n : chords.get(0).chord.getNotes()) {
+            ChordObject chord = chords.get(0);
+            for (Note n : chord.chord.getNotes()) {
                 if (keymap.containsKey(n.getValue()) && keymap.get(n.getValue())) {
                     System.out.println(n.getValue() + " is pressed!");
                 } else {
@@ -97,6 +98,7 @@ public class Game {
             }
             if (goodNotes) {
                 System.out.println("GOOD CHORD!");
+                controller.removeChordFromView(chord);
                 score += 10;
                 chords.remove(0);
                 car.onRightSide = !car.onRightSide;

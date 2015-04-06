@@ -28,30 +28,36 @@ public class ChordObjectView extends JPanel {
         initComponents();
     }
     
-    // This method breaks our MVC framework
     public final void initComponents() {
-//        String n = formatName(name);
-        JLabel chordLabel = new JLabel(name);
-//        JLabel chordLabel = new JLabel("F");  //change this
+        String n = formatName(name);
+        JLabel chordLabel = new JLabel(n);
         chordLabel.setFont(new Font(chordLabel.getFont().getName(), 
-                Font.PLAIN, 15));
+                Font.PLAIN, 32));
         
         add(chordLabel);
     }
     
-//    public String formatName(String name) {
-//        String result = "";
-//        
-//        if (name.contains("#")) {
-//            
-//        }
-//        
-//        if (name.contains("diminished")) {
-//            return name.getChars(0, WIDTH, dst, ALLBITS);
-//        } else {
-//            return name;
-//        }
-//    }
+    public String formatName(String name) {
+        String result = "";
+        
+        if (name.contains("#")) {
+            result = name.substring(0, 2);
+        } else {
+            result = name.substring(0, 1);
+        }
+        
+        if (name.contains("diminished")) {
+            result = result + "dim";
+        } else if (name.contains("major")) {
+            return result;
+        } else if (name.contains("minor")) {
+            result = result + "m";
+        } else  {
+            return name;
+        }
+        
+        return result;
+    }
     
     public void setObjectBounds(Dimension roadSize) {
         int leftX = (roadSize.width/2) - 150;
@@ -72,6 +78,14 @@ public class ChordObjectView extends JPanel {
     
     public void setModel(ChordObject chord) {
         model = chord;
+    }
+    
+    public void hideChordView() {
+        setVisible(false);
+    }
+    
+    public String getName() {
+        return this.name;
     }
     
 //    @Override
