@@ -67,13 +67,14 @@ public class Game {
             boolean goodNotes = true;
             for (Note n : chords.get(0).chord.getNotes()) {
                 if (keymap.containsKey(n.getValue()) && keymap.get(n.getValue())) {
-                    continue;
+                    
                 } else {
                     goodNotes = false;
                     break;
                 }
             }
             if (goodNotes) {
+                System.out.println("GOOD CHORD!");
                 score += 10;
                 chords.remove(0);
                 car.onRightSide = !car.onRightSide;
