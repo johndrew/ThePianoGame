@@ -74,8 +74,8 @@ public class SettingsView extends JPanel {
 
         tempoLabel.setText("TEMPO:");
 
-        tempos.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"80",
-            "100", "120", "140", "160", "180", "200", "220"}));
+        tempos.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"40", "60", "80",
+            "100", "120", "140", "160", "180"}));
         tempos.addPopupMenuListener(new PopupMenuListener() {
 
             @Override
