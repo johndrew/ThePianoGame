@@ -125,7 +125,6 @@ public final class MainController extends JFrame implements ActionListener,
          This is typically called when the user decides to either
          restart or play again.
          */
-//        shouldUpdateGame = false;
         newGame();
     }
     

@@ -181,10 +181,9 @@ public class GameScreenView extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameWindow.setVisible(false);
                 showEndGameMenu();
             }
-        }) ;
+        });
         
         pauseMenu.setPreferredSize(new Dimension(400, 400));
         pauseMenu.setLocation(new Point(200, 200));
@@ -237,6 +236,8 @@ public class GameScreenView extends JPanel {
                 hideEndGameMenu();
             }
         });
+        
+        title.setFont(new Font(title.getFont().getName(), Font.PLAIN, 30));
         
         endGameMenu.setLayout(new BorderLayout());
         endGameMenu.add(container, BorderLayout.CENTER);
@@ -398,12 +399,22 @@ public class GameScreenView extends JPanel {
 
         gameWindow.add(road, BorderLayout.CENTER);
         removeChordViews();
+        resetScore();
     }
     
     public void removeChordViews() {
         for (ChordObjectView view : chordViews) {
             view.setVisible(false);
         }
+    }
+    
+    public void resetScore() {
+        scoreValue = 0;
+        scoreNumber.setText(String.valueOf(scoreValue));
+        scoreNumber.revalidate();
+        scoreNumber.repaint();
+        scorePanel.revalidate();
+        scorePanel.repaint();
     }
     
     /*

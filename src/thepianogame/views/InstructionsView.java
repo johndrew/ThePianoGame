@@ -93,8 +93,7 @@ public class InstructionsView extends JDialog {
         ArrayList<JTextArea> instructions = new ArrayList<JTextArea>();
         JTextArea i1 = new JTextArea("You control a car driving down a road.");
         JTextArea i2 = new JTextArea("Objects with a chord label will move down "
-                + "the road\n towards the car. An exclamation point will "
-                + "indicate\n when one is coming.");
+                + "the road\n towards the car.");
         JTextArea i3 = new JTextArea("Your objective is to collect these "
                 + "objects by moving\n the car into the correct lane.");
         JTextArea i4 = new JTextArea("To move the car into a lane, play the "
