@@ -17,6 +17,7 @@ import thepianogame.controller.MainController;
 public class SettingsView extends JPanel {
     
     private JComboBox tempos;
+    private JComboBox keys;
     
     public SettingsView(MainController controller) {
         this.controller = controller;
@@ -133,6 +134,10 @@ public class SettingsView extends JPanel {
     }
     
     public int getTempo() {
+        return Integer.parseInt((String) tempos.getSelectedItem());
+    }
+    
+    public int getKey() {
         return Integer.parseInt((String) tempos.getSelectedItem());
     }
     

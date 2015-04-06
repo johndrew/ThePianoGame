@@ -6,6 +6,7 @@
 package thepianogame.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Game {
 
@@ -30,8 +31,8 @@ public class Game {
 
     public Game() {
         chords = new ArrayList<ChordObject>();
-        key = 1;
-        scale = minor;
+        key = 60;
+        scale = major;
         score = 0;
         car = new Car();
     }
@@ -42,13 +43,13 @@ public class Game {
         fallRate = beatsPerFrame / 4; // chord falls on a per-bar instead of per-beat basis
     }
 
-    public void run() {
+    public void run(HashMap<Integer, Boolean> keymap) {
 
         // add new ChordObject if there aren't any
         if (chords.isEmpty()) {
             // fix this so objects aren't always on the right side of the screen
             chords.add(new ChordObject(Chord.getRandomChord(key, scale), true));
-            System.out.println("New chord: " + chords.get(0).name);
+            chords.get(0).chord.printChord();
         }
         // advance all the current chords, hurt the player if a chord has
         // moved too far without being cleared
@@ -62,21 +63,25 @@ public class Game {
                 i++;
             }
         }
-        // FIXME: CHECK IF CORRECT KEYS ARE PRESSED. do something like:
-        // bool goodNotes = true;
-        // for (note n : chords.get(0).getNotes()) {
-        //      if (n isn't pressed) {
-        //          goodNotes = false;
-        //          break;
-        //      }
-        // }
-        // if (goodNotes) {
-        //      score += 10;
-        //      chords.remove(i);
-        //      car.onRightSide = !car.onRightSide;
-        // }
+        if (!chords.isEmpty()) {
+            boolean goodNotes = true;
+            for (Note n : chords.get(0).chord.getNotes()) {
+                if (keymap.containsKey(n.getValue()) && keymap.get(n.getValue())) {
+                    continue;
+                } else {
+                    goodNotes = false;
+                    break;
+                }
+            }
+            if (goodNotes) {
+                score += 10;
+                chords.remove(0);
+                car.onRightSide = !car.onRightSide;
+            }
+        }
 
-        if (lives <= 0) {
+        if (lives
+                <= 0) {
             // end the game
         }
 

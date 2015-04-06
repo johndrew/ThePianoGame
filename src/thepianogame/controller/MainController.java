@@ -44,6 +44,7 @@ public final class MainController extends JFrame implements ActionListener,
 //        current_mode = isMIDIKeyboardConnected() ? MIDI_KEYBOARD
 //                : COMPUTER_KEYBOARD;
         current_mode = COMPUTER_KEYBOARD;
+        makeKeyPressedMap();
     }
 
     /*
@@ -145,7 +146,7 @@ public final class MainController extends JFrame implements ActionListener,
     public void actionPerformed(ActionEvent e) {
         if (shouldUpdateGame) {
             g.setTempo(gameScreen.getTempo() , 60);
-            g.run();
+            g.run(keyPressedMap);
         }
         
         if (!gameScreen.isPauseMenuVisible() 
