@@ -44,7 +44,7 @@ public class Chord {
 
         // if statements handle chord notes that go beyond the first 
         // octave of the scale
-        _notes.add(new Note(key + root));
+        _notes.add(new Note(key + scale.steps[root]));
         if (third > 6) {
             _notes.add(new Note(key + scale.steps[third % 7] + 12));
         } else {
@@ -62,7 +62,14 @@ public class Chord {
 
          }
          */
-        return new Chord(scale.chords[root], _notes);
+        return new Chord(scale.chords[root] + " " + (root + 1), _notes);
+    }   
+    
+    public void printChord() {
+        String out = name;
+        for (Note n : notes) {
+            out += (" " + n.getValue());
+        }
+        System.out.println(out);
     }
-
 }

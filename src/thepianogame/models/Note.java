@@ -12,4 +12,8 @@ public class Note {
     public Note(int value) {
         this.value = value;
     }
+    
+    public int getValue() {
+        return this.value;
+    }
 }

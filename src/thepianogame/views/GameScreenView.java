@@ -289,6 +289,14 @@ public class GameScreenView extends JPanel {
         return settings.getTempo();
     }
     
+    public String getKey() {
+        return settings.getKey();
+    }
+    
+    public String getScale() {
+        return settings.getScale();
+    }
+    
     private JLabel newLife(){
         BufferedImage img = null;
         try {
