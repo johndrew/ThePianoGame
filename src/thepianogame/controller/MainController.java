@@ -118,19 +118,18 @@ public final class MainController extends JFrame implements ActionListener,
         gameScreen.showEndGameMenu();
     }
 
-    public void newGame() {
+    public void restartGame() {
         /*
          Ends an old game and starts a new one.
         
          This is typically called when the user decides to either
          restart or play again.
          */
-        endGame();
-        restartGame();
-        
+//        shouldUpdateGame = false;
+        newGame();
     }
     
-    public void restartGame() {
+    public void newGame() {
         shouldUpdateGame = true;
         g = new Game(this, gameScreen);
         gameScreen.restartGame();

@@ -85,12 +85,12 @@ public class GameScreenView extends JPanel {
         scorePanel.add(score);
         scorePanel.add(scoreNumber);
       
-        JPanel lifesPanel = new JPanel();
+        livesPanel = new JPanel();
         Dimension lifesSize = new Dimension(150, 50);
-        lifesPanel.setPreferredSize(lifesSize);
+        livesPanel.setPreferredSize(lifesSize);
    
         // add a life for every life the player has
-        for(int i = 0; i < player.lives; i++){lifesPanel.add(newLife());}
+        for(int i = 0; i < player.lives; i++){livesPanel.add(newLife());}
 
         Dimension marginSize = new Dimension(200, 480);
         JPanel leftMargin = new JPanel();
@@ -116,7 +116,7 @@ public class GameScreenView extends JPanel {
         
         settings = new SettingsView(controller);
         rightMargin.add(settings);
-        leftMargin.add(lifesPanel);
+        leftMargin.add(livesPanel);
         leftMargin.add(scorePanel);
     }
     
@@ -172,7 +172,7 @@ public class GameScreenView extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.newGame();
+                controller.restartGame();
                 hidePauseMenu();
             }
         });
@@ -388,18 +388,22 @@ public class GameScreenView extends JPanel {
     }
     
     public void restartGame() {
-        makeGameWindow();
         for (int i=0;i<3;i++) {
-            newLife();
+            livesPanel.add(newLife());
         }
         road = new RoadView(roadSize);
 
         car = new CarView();
         road.addCar(car);
-        
+
         gameWindow.add(road, BorderLayout.CENTER);
-        gameWindow.revalidate();
-        gameWindow.repaint();
+        removeChordViews();
+    }
+    
+    public void removeChordViews() {
+        for (ChordObjectView view : chordViews) {
+            view.setVisible(false);
+        }
     }
     
     /*
@@ -423,4 +427,5 @@ public class GameScreenView extends JPanel {
     private int scoreValue;
     private JPanel scorePanel;
     private JLabel scoreNumber;
+    private JPanel livesPanel;
 }
