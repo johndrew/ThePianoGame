@@ -92,9 +92,9 @@ public class Game {
             Dimension roadSize = controller.getRoadSize();
             
             chord.position += fallRate;
-            controller.incrementChordViews();
+            controller.incrementChordViews(fallRate);
             
-            if (currentView.getY() >= roadSize.height/2) {
+            if (chord.position >= 1) {
                 currentView.changeBackgroundColor();
                 decrementLives();
                 if (!chords.isEmpty()) {

@@ -154,8 +154,8 @@ public final class MainController extends JFrame implements ActionListener,
         return gameScreen.makeChordView(chord);
     }
     
-    public void incrementChordViews() {
-        gameScreen.incrementChordViews();
+    public void incrementChordViews(double positionIncrement) {
+        gameScreen.incrementChordViews(positionIncrement);
     }
     
     public void removeChordFromView(ChordObject chord) {

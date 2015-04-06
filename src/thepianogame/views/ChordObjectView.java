@@ -20,6 +20,7 @@ import thepianogame.models.ChordObject;
 public class ChordObjectView extends JPanel {
     
     public String id;
+    private double position;
     
     public ChordObjectView(String name, boolean isOnRightSide, String id) {
         setPreferredSize(new Dimension(100, 100));
@@ -27,6 +28,7 @@ public class ChordObjectView extends JPanel {
         this.isOnRightSide = isOnRightSide;
         this.name = name;
         this.id = id;
+        this.position = 0;
         
         initComponents();
     }
@@ -75,8 +77,9 @@ public class ChordObjectView extends JPanel {
         }
     }
     
-    public void moveChordView(int amountToMove) {
-        setBounds(getX(), getY() + amountToMove, getWidth(), getHeight());
+    public void moveChordView(double positionIncrement, int roadheight) {
+        position += positionIncrement;
+        setBounds(getX(), (int) (-100 + (position * (100 + (roadheight / 2)))), getWidth(), getHeight());
     }
     
     public void setModel(ChordObject chord) {

@@ -337,11 +337,10 @@ public class GameScreenView extends JPanel {
         return chordView;
     }
     
-    public void incrementChordViews() {
-        int incrementValue = 1; // change this with the difficulty
+    public void incrementChordViews(double positionIncrement) {
         
         for (ChordObjectView chordView : chordViews) {
-            chordView.moveChordView(incrementValue);
+            chordView.moveChordView(positionIncrement, roadSize.height);
         }
     }
     
