@@ -326,7 +326,7 @@ public class GameScreenView extends JPanel {
     
     public ChordObjectView makeChordView(ChordObject chord) {
         ChordObjectView chordView = new ChordObjectView(chord.chord.getName(), 
-                chord.onRightSide);
+                chord.onRightSide, chord.id);
         
         chordViews.add(chordView);
         chordView.setObjectBounds(roadSize);
@@ -347,8 +347,9 @@ public class GameScreenView extends JPanel {
     
     public void removeChordFromView(ChordObject chord) {
         for (ChordObjectView chordView : chordViews) {
-            if (chordView.getName().equals(chord.name)) {
+            if (chordView.id.equals(chord.id)) {
                 chordView.hideChordView();
+                chordView = null;
                 break;
             }
         }

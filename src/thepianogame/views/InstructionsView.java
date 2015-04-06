@@ -101,9 +101,9 @@ public class InstructionsView extends JDialog {
                 + "chord highlighted on the piano visualization on the "
                 + "corresponding side of the piano (e.g. to move left, play "
                 + "the chord on the\n left side of the piano)");
-        JTextArea i5 = new JTextArea("Sometimes two chord objects will appear"
-                + "on both sides of the road, in which case you must play "
-                + "the chord on both sides of the piano.");
+        JTextArea i5 = new JTextArea("If you don't play the correct chord in "
+                + "time, the chord\n will turn red which means that you can't "
+                + "get it\n anymore.");
         JTextArea i6 = new JTextArea("You will be able to adjust the spped "
                 + "of the game, the difficulty level, and the key of the "
                 + "chords. To make\n adjustments like these, first pause the "

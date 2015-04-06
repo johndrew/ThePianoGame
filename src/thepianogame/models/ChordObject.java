@@ -5,6 +5,8 @@
  */
 package thepianogame.models;
 
+import java.util.UUID;
+
 public class ChordObject {
 
     public String name;
@@ -13,6 +15,7 @@ public class ChordObject {
                             // 1 is whatever part of the screen hurts the player.
                             // makes it easier to draw on screens of any size
     public boolean onRightSide;
+    public String id = UUID.randomUUID().toString();
 
     public ChordObject(Chord chord, boolean onRightSide) {
         this.name = chord.getName();

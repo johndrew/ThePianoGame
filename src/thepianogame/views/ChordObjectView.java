@@ -19,11 +19,14 @@ import thepianogame.models.ChordObject;
 
 public class ChordObjectView extends JPanel {
     
-    public ChordObjectView(String name, boolean isOnRightSide) {
+    public String id;
+    
+    public ChordObjectView(String name, boolean isOnRightSide, String id) {
         setPreferredSize(new Dimension(100, 100));
         setBackground(Color.white);
         this.isOnRightSide = isOnRightSide;
         this.name = name;
+        this.id = id;
         
         initComponents();
     }
@@ -63,10 +66,10 @@ public class ChordObjectView extends JPanel {
         int leftX = (roadSize.width/2) - 150;
         int leftY = -100;
         int rightX = (roadSize.width/2) + 100;
-        int rightY = 0;
+        int rightY = -100;
         
         if (isOnRightSide) {
-            setBounds(rightX, rightY, 200, 200);
+            setBounds(rightX, rightY, 100, 100);
         } else {
             setBounds(leftX, leftY, 100, 100);
         }
