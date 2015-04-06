@@ -5,6 +5,7 @@
  */
 package thepianogame.controller;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -17,6 +18,7 @@ import static thepianogame.controller.MainController.CONTROL_MODE.COMPUTER_KEYBO
 import static thepianogame.controller.MainController.CONTROL_MODE.MIDI_KEYBOARD;
 import thepianogame.models.ChordObject;
 import thepianogame.models.Game;
+import thepianogame.views.ChordObjectView;
 import thepianogame.views.GameScreenView;
 import thepianogame.views.TitleScreenView;
 
@@ -67,7 +69,7 @@ public final class MainController extends JFrame implements ActionListener,
 
         carLeftBoundary = 63;
         carRightBoundary = 321;
-    }
+        }
 
     public boolean isMIDIKeyboardConnected() {
         /*
@@ -113,6 +115,7 @@ public final class MainController extends JFrame implements ActionListener,
          Stops the timer and any other things involved in a Game instance
          */
         timer.stop();
+        gameScreen.showEndGameMenu();
     }
 
     public void newGame() {
@@ -145,8 +148,8 @@ public final class MainController extends JFrame implements ActionListener,
         return this.gameScreen;
     }
     
-    public void makeChordView(ChordObject chord) {
-        gameScreen.makeChordView(chord);
+    public ChordObjectView makeChordView(ChordObject chord) {
+        return gameScreen.makeChordView(chord);
     }
     
     public void incrementChordViews() {
@@ -155,6 +158,18 @@ public final class MainController extends JFrame implements ActionListener,
     
     public void removeChordFromView(ChordObject chord) {
         gameScreen.removeChordFromView(chord);
+    }
+    
+    public Dimension getRoadSize() {
+        return gameScreen.getRoadSize();
+    }
+    
+    public void decrementLives() {
+        gameScreen.removeLife();
+    }
+    
+    public void increaseScore() {
+        gameScreen.increaseScore();
     }
     
     /*

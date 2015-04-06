@@ -38,6 +38,7 @@ public class GameScreenView extends JPanel {
     
     public GameScreenView(MainController controller) {
         this.controller = controller;
+        lives = new ArrayList<>();
         
         makeGameWindow();
         makePianoVisualization();
@@ -66,17 +67,18 @@ public class GameScreenView extends JPanel {
         JSeparator separator= new javax.swing.JSeparator();
         gameWindow.add(separator, BorderLayout.NORTH);
         
+        player = new Player(0, 3);
         JLabel score = new JLabel();
         JLabel scoreNumber = new JLabel();
+        scoreValue = player.score;
         
-        player = new Player(0, 3);
         score.setText("SCORE:");
-        scoreNumber.setText(String.valueOf(player.score));
+        scoreNumber.setText(String.valueOf(scoreValue));
         
         score.setFont(score.getFont ().deriveFont (18.0f));
         scoreNumber.setFont(scoreNumber.getFont ().deriveFont (18.0f));
         
-        JPanel scorePanel = new JPanel();
+        scorePanel = new JPanel();
         Dimension scoreSize = new Dimension(200, 28);
         scorePanel.setPreferredSize(scoreSize);
         scorePanel.setLayout(new FlowLayout());
@@ -322,7 +324,7 @@ public class GameScreenView extends JPanel {
         return this.car.isCarOnRightSide();
     }
     
-    public void makeChordView(ChordObject chord) {
+    public ChordObjectView makeChordView(ChordObject chord) {
         ChordObjectView chordView = new ChordObjectView(chord.chord.getName(), 
                 chord.onRightSide);
         
@@ -331,6 +333,8 @@ public class GameScreenView extends JPanel {
         road.add(chordView);
         road.revalidate();
         road.repaint();
+        
+        return chordView;
     }
     
     public void incrementChordViews() {
@@ -360,8 +364,22 @@ public class GameScreenView extends JPanel {
         }
         
         JLabel life = new JLabel(new ImageIcon(img));
+        lives.add(life);
         
         return life;
+    }
+    
+    public void removeLife() {
+        lives.remove(0).setVisible(false);
+        if (lives.isEmpty()) {
+            controller.endGame();
+        } 
+    }
+    
+    public void increaseScore() {
+        scoreValue += 10;
+        scorePanel.revalidate();
+        scorePanel.repaint();
     }
     
     /*
@@ -381,4 +399,7 @@ public class GameScreenView extends JPanel {
     private ArrayList<ChordObjectView> chordViews;
     private ArrayList<ChordObject> chordObjects;
     private Dimension roadSize;
+    private ArrayList<JLabel> lives;
+    private int scoreValue;
+    private JPanel scorePanel;
 }

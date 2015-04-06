@@ -53,9 +53,9 @@ public class SettingsView extends JPanel {
 
         levelLabel.setText("LEVEL:");
 
-        // Add an expert level after the prototype is turned in
+        // Add an intermediate and expert level after the prototype is turned in
         levels.setModel(new javax.swing.DefaultComboBoxModel(new String[]{
-            "Beginner", "Intermediate"}));
+            "Beginner"}));
         levels.addPopupMenuListener(new PopupMenuListener() {
 
             @Override

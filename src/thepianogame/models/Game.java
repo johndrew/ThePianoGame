@@ -5,6 +5,7 @@
  */
 package thepianogame.models;
 
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.HashMap;
 import thepianogame.controller.MainController;
@@ -42,6 +43,9 @@ public class Game {
         this.gameScreen = gameScreen;
         
         gameScreen.setCarModel(car);
+        
+        lives = 3;
+        chordsToViewsMap = new HashMap<>();
     }
 
     public void setLoopInfo(int newTempo, double frameRate, int newKey, String newScale) {
@@ -55,6 +59,16 @@ public class Game {
             scale = minor;
         }
     }
+    
+    public void decrementLives() {
+        lives--;
+        controller.decrementLives();
+    }
+    
+    public void increaseScore() {
+        score += 10;
+        controller.increaseScore();
+    }
 
     public void run(HashMap<Integer, Boolean> keymap) {
 
@@ -65,21 +79,26 @@ public class Game {
 //            chords.get(0).chord.printChord();
             ChordObject chord = new ChordObject(Chord.getRandomChord(key, scale), 
                     !gameScreen.isCarOnRightSide());
-            controller.makeChordView(chord);
+            ChordObjectView chordView = controller.makeChordView(chord);
             chords.add(chord);
+            chordsToViewsMap.put(chord, chordView);
             System.out.println("New chord: " + chords.get(0).name);
         }
         // advance all the current chords, hurt the player if a chord has
         // moved too far without being cleared
         for (int i = 0; i < chords.size();) {
             ChordObject chord = chords.get(i);
-//            ChordObjectView chordView = new ChordObjectView(chord, controller);
+            ChordObjectView currentView = chordsToViewsMap.get(chord);
+            Dimension roadSize = controller.getRoadSize();
+            
             chord.position += fallRate;
             controller.incrementChordViews();
-            if (chords.get(i).position >= 1) {
-                lives--;
+            
+            if (currentView.getY() >= roadSize.height/2) {
+                currentView.changeBackgroundColor();
+                decrementLives();
                 chords.remove(i);
-                car.onRightSide = !car.onRightSide;
+//                car.onRightSide = !car.onRightSide;
             } else {
                 i++;
             }
@@ -99,7 +118,7 @@ public class Game {
             if (goodNotes) {
                 System.out.println("GOOD CHORD!");
                 controller.removeChordFromView(chord);
-                score += 10;
+                increaseScore();
                 chords.remove(0);
                 car.onRightSide = !car.onRightSide;
             }
@@ -113,4 +132,5 @@ public class Game {
     
     private MainController controller;
     private final GameScreenView gameScreen;
+    private HashMap<ChordObject,ChordObjectView> chordsToViewsMap;
 }

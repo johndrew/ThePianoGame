@@ -88,6 +88,11 @@ public class ChordObjectView extends JPanel {
         return this.name;
     }
     
+    // used when a chord can't be gotten
+    public void changeBackgroundColor() {
+        setBackground(Color.red);
+    }
+    
 //    @Override
 //    public final void paintComponent(Graphics g) {
 //        super.paintComponent(g);
