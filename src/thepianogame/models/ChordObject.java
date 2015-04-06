@@ -20,4 +20,8 @@ public class ChordObject {
         this.position = 0;
         this.onRightSide = onRightSide;
     }
+    
+    public boolean getLanePosition() {
+        return this.onRightSide;
+    }
 }

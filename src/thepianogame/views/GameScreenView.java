@@ -6,6 +6,7 @@
 package thepianogame.views;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -15,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -27,6 +29,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import thepianogame.controller.MainController;
+import thepianogame.models.Car;
+import thepianogame.models.ChordObject;
+import thepianogame.models.Game;
 import thepianogame.models.Player;
 
 public class GameScreenView extends JPanel {
@@ -45,6 +50,9 @@ public class GameScreenView extends JPanel {
         add(Box.createRigidArea(new Dimension(0,5)));
         add(pianoVisualization);
 
+//        gameModel.run();
+        gameModel = controller.g;
+        chordViews = new ArrayList<>();
     }
     
     public final void makeGameWindow() {
@@ -96,7 +104,8 @@ public class GameScreenView extends JPanel {
         gameWindow.add(leftMargin, BorderLayout.WEST);
         gameWindow.add(rightMargin, BorderLayout.EAST);
         
-        road = new RoadView(new Dimension(420, 480));
+        roadSize = new Dimension(420, 480);
+        road = new RoadView(roadSize);
 
         car = new CarView();
         road.addCar(car);
@@ -297,6 +306,41 @@ public class GameScreenView extends JPanel {
         return settings.getScale();
     }
     
+    public void setGameModel(Game game) {
+        this.gameModel = game;
+    }
+    
+    public RoadView getRoadView() {
+        return this.road;
+    }
+    
+    public void setCarModel(Car carModel) {
+        this.car.setModel(carModel);
+    }
+    
+    public boolean isCarOnRightSide() {
+        return this.car.isCarOnRightSide();
+    }
+    
+    public void makeChordView(ChordObject chord) {
+        ChordObjectView chordView = new ChordObjectView(chord.chord.getName(), 
+                chord.onRightSide);
+        
+        chordViews.add(chordView);
+        chordView.setObjectBounds(roadSize);
+        road.add(chordView);
+        road.revalidate();
+        road.repaint();
+    }
+    
+    public void incrementChordViews() {
+        int incrementValue = 1; // change this with the difficulty
+        
+        for (ChordObjectView chordView : chordViews) {
+            chordView.moveChordView(incrementValue);
+        }
+    }
+    
     private JLabel newLife(){
         BufferedImage img = null;
         try {
@@ -324,5 +368,8 @@ public class GameScreenView extends JPanel {
     private PianoView piano;
     private SettingsView settings;
     private Player player;
-    
+    private Game gameModel;
+    private ArrayList<ChordObjectView> chordViews;
+    private ArrayList<ChordObject> chordObjects;
+    private Dimension roadSize;
 }

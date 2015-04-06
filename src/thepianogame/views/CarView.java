@@ -7,6 +7,7 @@ package thepianogame.views;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -15,6 +16,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import thepianogame.models.Car;
 
 public class CarView extends JPanel {
     
@@ -46,5 +48,17 @@ public class CarView extends JPanel {
         g.drawImage(img, 200, 200, null);
     }
     
+    public void setModel(Car car) {
+        this.model = car;
+    }
+    
+    public boolean isCarOnRightSide() {
+        Rectangle bounds = this.getBounds();
+        int middleX = 150; // this is a rough estimate
+        
+        return bounds.x >= middleX;
+    }
+    
     private BufferedImage img;
+    private Car model;
 }

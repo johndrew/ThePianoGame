@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 import static thepianogame.controller.MainController.CONTROL_MODE.COMPUTER_KEYBOARD;
 import static thepianogame.controller.MainController.CONTROL_MODE.MIDI_KEYBOARD;
+import thepianogame.models.ChordObject;
 import thepianogame.models.Game;
 import thepianogame.views.GameScreenView;
 import thepianogame.views.TitleScreenView;
@@ -102,7 +103,7 @@ public final class MainController extends JFrame implements ActionListener,
          Starts a new timer.
          */
         shouldUpdateGame = true;
-        g = new Game();
+        g = new Game(this, gameScreen);
         timer = new Timer((int) (1000 / 60), this);
         timer.start();
     }
@@ -139,7 +140,19 @@ public final class MainController extends JFrame implements ActionListener,
     public void closeProgram() {
         System.exit(0);
     }
-
+    
+    public GameScreenView getGameScreen() {
+        return this.gameScreen;
+    }
+    
+    public void makeChordView(ChordObject chord) {
+        gameScreen.makeChordView(chord);
+    }
+    
+    public void incrementChordViews() {
+        gameScreen.incrementChordViews();
+    }
+    
     /*
      Used for responding to menu clicks
      */
