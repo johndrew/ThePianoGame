@@ -58,14 +58,23 @@ public final class MainController extends JFrame implements ActionListener,
     }
     
     public final void makeViews() {
-        titleScreen = new TitleScreenView(this);
-        gameScreen = new GameScreenView(this);
+        // Two main views
+        titleScreenView = new TitleScreenView(this);
+        gameScreenView = new GameScreenView(this);
         
+        // Views on the game screen
         roadView = new RoadView(roadSize);
         carView = new CarView();
         roadView.addCar(carView);
-        gameScreen.setRoadView(roadView);
-        gameScreen.setRoadSize(roadSize);
+        pianoView = new PianoView(current_mode);
+        settingsView = new SettingsView(this);
+        
+        // Views on the title screen
+        
+        gameScreenView.setRoadView(roadView);
+        gameScreenView.setRoadSize(roadSize);
+        gameScreenView.setPiano(pianoView);
+        gameScreenView.setSettingsView(settingsView);
     }
 
     /*
@@ -76,14 +85,14 @@ public final class MainController extends JFrame implements ActionListener,
          Initializes the various views
          */
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        titleScreen = new TitleScreenView(this);
-//        gameScreen = new GameScreenView(this);
+//        titleScreenView = new TitleScreenView(this);
+//        gameScreenView = new GameScreenView(this);
 
         // start the game on the title screen
-        this.add(titleScreen);
+        this.add(titleScreenView);
 
-        titleScreen.setVisible(true);
-        gameScreen.setVisible(false);
+        titleScreenView.setVisible(true);
+        gameScreenView.setVisible(false);
 
         carLeftBoundary = 63;
         carRightBoundary = 321;
@@ -102,10 +111,10 @@ public final class MainController extends JFrame implements ActionListener,
          Switches to the game screen.
          Hides the title screen, but does not remove it
          */
-        this.add(gameScreen);
+        this.add(gameScreenView);
 
-        titleScreen.setVisible(false);
-        gameScreen.setVisible(true);
+        titleScreenView.setVisible(false);
+        gameScreenView.setVisible(true);
         startNewGame();
     }
 
@@ -116,7 +125,7 @@ public final class MainController extends JFrame implements ActionListener,
          Starts a new timer.
          */
         shouldUpdateGame = true;
-        g = new Game(this, gameScreen);
+        g = new Game(this, gameScreenView);
         timer = new Timer((int) (1000 / 60), this);
         timer.start();
     }
@@ -126,7 +135,7 @@ public final class MainController extends JFrame implements ActionListener,
          Stops the timer and any other things involved in a Game instance
          */
         shouldUpdateGame = false;
-        gameScreen.showEndGameMenu();
+        gameScreenView.showEndGameMenu();
     }
 
     public void restartGame() {
@@ -141,8 +150,8 @@ public final class MainController extends JFrame implements ActionListener,
     
     public void newGame() {
         shouldUpdateGame = true;
-        g = new Game(this, gameScreen);
-        gameScreen.restartGame();
+        g = new Game(this, gameScreenView);
+        gameScreenView.restartGame();
     }
 
     public void backToMenu() {
@@ -151,8 +160,8 @@ public final class MainController extends JFrame implements ActionListener,
         
          Ends the current game.
          */
-        gameScreen.setVisible(false);
-        titleScreen.setVisible(true);
+        gameScreenView.setVisible(false);
+        titleScreenView.setVisible(true);
         endGame();
     }
 
@@ -161,23 +170,23 @@ public final class MainController extends JFrame implements ActionListener,
     }
     
     public ChordObjectView makeChordView(ChordObject chord) {
-        return gameScreen.makeChordView(chord);
+        return gameScreenView.makeChordView(chord);
     }
     
     public void incrementChordViews(double positionIncrement) {
-        gameScreen.incrementChordViews(positionIncrement);
+        gameScreenView.incrementChordViews(positionIncrement);
     }
     
     public void removeChordFromView(ChordObject chord) {
-        gameScreen.removeChordFromView(chord);
+        gameScreenView.removeChordFromView(chord);
     }
     
     public void decrementLives() {
-        gameScreen.removeLife();
+        gameScreenView.removeLife();
     }
     
     public void increaseScore() {
-        gameScreen.increaseScore();
+        gameScreenView.increaseScore();
     }
     
     public void moveCarLeft() {
@@ -194,7 +203,7 @@ public final class MainController extends JFrame implements ActionListener,
     public void actionPerformed(ActionEvent e) {
         if (shouldUpdateGame) {
             int key = 0;
-            switch (gameScreen.getKey()) {
+            switch (gameScreenView.getKey()) {
                 case "F":
                     key = 53;
                     break;
@@ -235,34 +244,34 @@ public final class MainController extends JFrame implements ActionListener,
                     key = 63;
                     break;
             }
-            g.setLoopInfo(gameScreen.getTempo(), 60, key, gameScreen.getScale());
+            g.setLoopInfo(gameScreenView.getTempo(), 60, key, gameScreenView.getScale());
             g.run(keyPressedMap);
         }
 
-        if (!gameScreen.isPauseMenuVisible()
-                && !gameScreen.isEndGameMenuVisible()) {
+        if (!gameScreenView.isPauseMenuVisible()
+                && !gameScreenView.isEndGameMenuVisible()) {
             // adjust this number to control the movement speed of dashes on the
             // road. It should adjust based on the difficulty setting.
-            gameScreen.moveDashes(gameScreen.getTempo() / 20);
+            gameScreenView.moveDashes(gameScreenView.getTempo() / 20);
         }
 
         if (moveCarLeft) {
-            int carX = gameScreen.getCarXCoordinate();
+            int carX = gameScreenView.getCarXCoordinate();
             if (carX != carLeftBoundary) {
                 // if you change this number below, you must also change
                 // the carLeftBoundary because the boundary needs to be
                 // a multiple of the number below
-                gameScreen.moveCarLeft(3);
+                gameScreenView.moveCarLeft(3);
             } else {
                 moveCarLeft = false;
             }
         } else if (moveCarRight) {
-            int carX = gameScreen.getCarXCoordinate();
+            int carX = gameScreenView.getCarXCoordinate();
             if (carX != carRightBoundary) {
                 // if you change this number below, you must also change
                 // the carRightBoundary because the boundary needs to be
                 // a multiple of the number below
-                gameScreen.moveCarRight(3);
+                gameScreenView.moveCarRight(3);
             } else {
                 moveCarRight = false;
             }
@@ -301,13 +310,13 @@ public final class MainController extends JFrame implements ActionListener,
                 case KeyEvent.VK_SPACE:
                     System.out.println("Space bar pressed.");
 
-                    if (gameScreen.isVisible()
-                            && !gameScreen.isPauseMenuVisible()) {
-                        gameScreen.showPauseMenu();
+                    if (gameScreenView.isVisible()
+                            && !gameScreenView.isPauseMenuVisible()) {
+                        gameScreenView.showPauseMenu();
                         shouldUpdateGame = false;
-                    } else if (gameScreen.isVisible()
-                            && gameScreen.isPauseMenuVisible()) {
-                        gameScreen.hidePauseMenu();
+                    } else if (gameScreenView.isVisible()
+                            && gameScreenView.isPauseMenuVisible()) {
+                        gameScreenView.hidePauseMenu();
                         shouldUpdateGame = true;
                     }
 
@@ -315,117 +324,117 @@ public final class MainController extends JFrame implements ActionListener,
                 case KeyEvent.VK_A:
                     // F3
                     System.out.println("A key pressed.");
-                    gameScreen.computerKeyPressed(KeyEvent.VK_A);
+                    gameScreenView.computerKeyPressed(KeyEvent.VK_A);
                     keyPressedMap.put(53, true);
 //                    moveCarLeft = true;
                     break;
                 case KeyEvent.VK_W:
                     // F#3 or Gb3
                     System.out.println("W key pressed.");
-                    gameScreen.computerKeyPressed(KeyEvent.VK_W);
+                    gameScreenView.computerKeyPressed(KeyEvent.VK_W);
                     keyPressedMap.put(54, true);
 //                    moveCarRight = true;
                     break;
                 case KeyEvent.VK_S:
                     // G3
                     System.out.println("S key pressed.");
-                    gameScreen.computerKeyPressed(KeyEvent.VK_S);
+                    gameScreenView.computerKeyPressed(KeyEvent.VK_S);
                     keyPressedMap.put(55, true);
                     break;
                 case KeyEvent.VK_E:
                     // G#3 or Ab3
                     System.out.println("E key pressed.");
-                    gameScreen.computerKeyPressed(KeyEvent.VK_E);
+                    gameScreenView.computerKeyPressed(KeyEvent.VK_E);
                     keyPressedMap.put(56, true);
                     break;
                 case KeyEvent.VK_D:
                     // A3
                     System.out.println("D key pressed.");
-                    gameScreen.computerKeyPressed(KeyEvent.VK_D);
+                    gameScreenView.computerKeyPressed(KeyEvent.VK_D);
                     keyPressedMap.put(57, true);
                     break;
                 case KeyEvent.VK_R:
                     // A#3 or Bb3
                     System.out.println("R key pressed.");
-                    gameScreen.computerKeyPressed(KeyEvent.VK_R);
+                    gameScreenView.computerKeyPressed(KeyEvent.VK_R);
                     keyPressedMap.put(58, true);
                     break;
                 case KeyEvent.VK_F:
                     // B3
                     System.out.println("F key pressed.");
-                    gameScreen.computerKeyPressed(KeyEvent.VK_F);
+                    gameScreenView.computerKeyPressed(KeyEvent.VK_F);
                     keyPressedMap.put(59, true);
                     break;
                 case KeyEvent.VK_G:
                     // Middle C or C4
                     System.out.println("G key pressed.");
-                    gameScreen.computerKeyPressed(KeyEvent.VK_G);
+                    gameScreenView.computerKeyPressed(KeyEvent.VK_G);
                     keyPressedMap.put(60, true);
                     break;
                 case KeyEvent.VK_Y:
                     // C#4 or Db4
                     System.out.println("Y key pressed.");
-                    gameScreen.computerKeyPressed(KeyEvent.VK_Y);
+                    gameScreenView.computerKeyPressed(KeyEvent.VK_Y);
                     keyPressedMap.put(61, true);
                     break;
                 case KeyEvent.VK_H:
                     // D4
                     System.out.println("H key pressed.");
-                    gameScreen.computerKeyPressed(KeyEvent.VK_H);
+                    gameScreenView.computerKeyPressed(KeyEvent.VK_H);
                     keyPressedMap.put(62, true);
                     break;
                 case KeyEvent.VK_U:
                     // D#4 or Eb4
                     System.out.println("U key pressed.");
-                    gameScreen.computerKeyPressed(KeyEvent.VK_U);
+                    gameScreenView.computerKeyPressed(KeyEvent.VK_U);
                     keyPressedMap.put(63, true);
                     break;
                 case KeyEvent.VK_J:
                     // E4
                     System.out.println("J key pressed.");
-                    gameScreen.computerKeyPressed(KeyEvent.VK_J);
+                    gameScreenView.computerKeyPressed(KeyEvent.VK_J);
                     keyPressedMap.put(64, true);
                     break;
                 case KeyEvent.VK_K:
                     // F4
                     System.out.println("K key pressed.");
-                    gameScreen.computerKeyPressed(KeyEvent.VK_K);
+                    gameScreenView.computerKeyPressed(KeyEvent.VK_K);
                     keyPressedMap.put(65, true);
                     break;
                 case KeyEvent.VK_O:
                     // F#4 or Gb4
                     System.out.println("O key pressed.");
-                    gameScreen.computerKeyPressed(KeyEvent.VK_O);
+                    gameScreenView.computerKeyPressed(KeyEvent.VK_O);
                     keyPressedMap.put(66, true);
                     break;
                 case KeyEvent.VK_L:
                     // G4
                     System.out.println("L key pressed.");
-                    gameScreen.computerKeyPressed(KeyEvent.VK_L);
+                    gameScreenView.computerKeyPressed(KeyEvent.VK_L);
                     keyPressedMap.put(67, true);
                     break;
                 case KeyEvent.VK_P:
                     // G#4 or Ab4
                     System.out.println("P key pressed.");
-                    gameScreen.computerKeyPressed(KeyEvent.VK_P);
+                    gameScreenView.computerKeyPressed(KeyEvent.VK_P);
                     keyPressedMap.put(68, true);
                     break;
                 case KeyEvent.VK_SEMICOLON:
                     // A4
                     System.out.println("; key pressed.");
-                    gameScreen.computerKeyPressed(KeyEvent.VK_SEMICOLON);
+                    gameScreenView.computerKeyPressed(KeyEvent.VK_SEMICOLON);
                     keyPressedMap.put(69, true);
                     break;
                 case KeyEvent.VK_OPEN_BRACKET:
                     // A#4 or Bb4
                     System.out.println("[ key pressed.");
-                    gameScreen.computerKeyPressed(KeyEvent.VK_OPEN_BRACKET);
+                    gameScreenView.computerKeyPressed(KeyEvent.VK_OPEN_BRACKET);
                     keyPressedMap.put(70, true);
                     break;
                 case KeyEvent.VK_QUOTE:
                     // B4
                     System.out.println("' key pressed.");
-                    gameScreen.computerKeyPressed(KeyEvent.VK_QUOTE);
+                    gameScreenView.computerKeyPressed(KeyEvent.VK_QUOTE);
                     keyPressedMap.put(71, true);
                     break;
                 default:
@@ -436,12 +445,12 @@ public final class MainController extends JFrame implements ActionListener,
             switch (keyCode) {
                 case KeyEvent.VK_SPACE:
                     System.out.println("Space bar pressed.");
-                    if (gameScreen.isVisible()
-                            && !gameScreen.isPauseMenuVisible()) {
-                        gameScreen.showPauseMenu();
-                    } else if (gameScreen.isVisible()
-                            && gameScreen.isPauseMenuVisible()) {
-                        gameScreen.hidePauseMenu();
+                    if (gameScreenView.isVisible()
+                            && !gameScreenView.isPauseMenuVisible()) {
+                        gameScreenView.showPauseMenu();
+                    } else if (gameScreenView.isVisible()
+                            && gameScreenView.isPauseMenuVisible()) {
+                        gameScreenView.hidePauseMenu();
                     }
                     break;
                 default:
@@ -480,115 +489,115 @@ public final class MainController extends JFrame implements ActionListener,
                     // F3
                     System.out.println("A key released.");
 //                    keyPressedMap.put(keyCode, true);
-                    gameScreen.computerKeyReleased(KeyEvent.VK_A);
+                    gameScreenView.computerKeyReleased(KeyEvent.VK_A);
                     keyPressedMap.put(53, false);
                     break;
                 case KeyEvent.VK_W:
                     // F#3 or Gb3
                     System.out.println("W key released.");
-                    gameScreen.computerKeyReleased(KeyEvent.VK_W);
+                    gameScreenView.computerKeyReleased(KeyEvent.VK_W);
                     keyPressedMap.put(54, false);
                     break;
                 case KeyEvent.VK_S:
                     // G3
                     System.out.println("S key released.");
-                    gameScreen.computerKeyReleased(KeyEvent.VK_S);
+                    gameScreenView.computerKeyReleased(KeyEvent.VK_S);
                     keyPressedMap.put(55, false);
                     break;
                 case KeyEvent.VK_E:
                     // G#3 or Ab3
                     System.out.println("E key released.");
-                    gameScreen.computerKeyReleased(KeyEvent.VK_E);
+                    gameScreenView.computerKeyReleased(KeyEvent.VK_E);
                     keyPressedMap.put(56, false);
                     break;
                 case KeyEvent.VK_D:
                     // A3
                     System.out.println("D key released.");
-                    gameScreen.computerKeyReleased(KeyEvent.VK_D);
+                    gameScreenView.computerKeyReleased(KeyEvent.VK_D);
                     keyPressedMap.put(57, false);
                     break;
                 case KeyEvent.VK_R:
                     // A#3 or Bb3
                     System.out.println("R key released.");
-                    gameScreen.computerKeyReleased(KeyEvent.VK_R);
+                    gameScreenView.computerKeyReleased(KeyEvent.VK_R);
                     keyPressedMap.put(58, false);
                     break;
                 case KeyEvent.VK_F:
                     // B3
                     System.out.println("F key released.");
-                    gameScreen.computerKeyReleased(KeyEvent.VK_F);
+                    gameScreenView.computerKeyReleased(KeyEvent.VK_F);
                     keyPressedMap.put(59, false);
                     break;
                 case KeyEvent.VK_G:
                     // Middle C or C4
                     System.out.println("G key released.");
-                    gameScreen.computerKeyReleased(KeyEvent.VK_G);
+                    gameScreenView.computerKeyReleased(KeyEvent.VK_G);
                     keyPressedMap.put(60, false);
                     break;
                 case KeyEvent.VK_Y:
                     // C#4 or Db4
                     System.out.println("Y key released.");
-                    gameScreen.computerKeyReleased(KeyEvent.VK_Y);
+                    gameScreenView.computerKeyReleased(KeyEvent.VK_Y);
                     keyPressedMap.put(61, false);
                     break;
                 case KeyEvent.VK_H:
                     // D4
                     System.out.println("H key released.");
-                    gameScreen.computerKeyReleased(KeyEvent.VK_H);
+                    gameScreenView.computerKeyReleased(KeyEvent.VK_H);
                     keyPressedMap.put(62, false);
                     break;
                 case KeyEvent.VK_U:
                     // D#4 or Eb4
                     System.out.println("U key released.");
-                    gameScreen.computerKeyReleased(KeyEvent.VK_U);
+                    gameScreenView.computerKeyReleased(KeyEvent.VK_U);
                     keyPressedMap.put(63, false);
                     break;
                 case KeyEvent.VK_J:
                     // E4
                     System.out.println("J key released.");
-                    gameScreen.computerKeyReleased(KeyEvent.VK_J);
+                    gameScreenView.computerKeyReleased(KeyEvent.VK_J);
                     keyPressedMap.put(64, false);
                     break;
                 case KeyEvent.VK_K:
                     // F4
                     System.out.println("K key released.");
-                    gameScreen.computerKeyReleased(KeyEvent.VK_K);
+                    gameScreenView.computerKeyReleased(KeyEvent.VK_K);
                     keyPressedMap.put(65, false);
                     break;
                 case KeyEvent.VK_O:
                     // F#4 or Gb4
                     System.out.println("O key released.");
-                    gameScreen.computerKeyReleased(KeyEvent.VK_O);
+                    gameScreenView.computerKeyReleased(KeyEvent.VK_O);
                     keyPressedMap.put(66, false);
                     break;
                 case KeyEvent.VK_L:
                     // G4
                     System.out.println("L key released.");
-                    gameScreen.computerKeyReleased(KeyEvent.VK_L);
+                    gameScreenView.computerKeyReleased(KeyEvent.VK_L);
                     keyPressedMap.put(67, false);
                     break;
                 case KeyEvent.VK_P:
                     // G#4 or Ab4
                     System.out.println("P key released.");
-                    gameScreen.computerKeyReleased(KeyEvent.VK_P);
+                    gameScreenView.computerKeyReleased(KeyEvent.VK_P);
                     keyPressedMap.put(68, false);
                     break;
                 case KeyEvent.VK_SEMICOLON:
                     // A4
                     System.out.println("; key released.");
-                    gameScreen.computerKeyReleased(KeyEvent.VK_SEMICOLON);
+                    gameScreenView.computerKeyReleased(KeyEvent.VK_SEMICOLON);
                     keyPressedMap.put(69, false);
                     break;
                 case KeyEvent.VK_OPEN_BRACKET:
                     // A#4 or Bb4
                     System.out.println("[ key released.");
-                    gameScreen.computerKeyReleased(KeyEvent.VK_OPEN_BRACKET);
+                    gameScreenView.computerKeyReleased(KeyEvent.VK_OPEN_BRACKET);
                     keyPressedMap.put(70, false);
                     break;
                 case KeyEvent.VK_QUOTE:
                     // B4
                     System.out.println("' key released.");
-                    gameScreen.computerKeyReleased(KeyEvent.VK_QUOTE);
+                    gameScreenView.computerKeyReleased(KeyEvent.VK_QUOTE);
                     keyPressedMap.put(71, false);
                     break;
                 default:
@@ -647,11 +656,11 @@ public final class MainController extends JFrame implements ActionListener,
     */
     
     public Dimension getRoadSize() {
-        return gameScreen.getRoadSize();
+        return gameScreenView.getRoadSize();
     }
     
     public GameScreenView getGameScreen() {
-        return this.gameScreen;
+        return this.gameScreenView;
     }
     
     public CONTROL_MODE getCurrentMode() {
@@ -673,9 +682,9 @@ public final class MainController extends JFrame implements ActionListener,
     private int carRightBoundary;
     
     // single instance views
-    private TitleScreenView titleScreen;
+    private TitleScreenView titleScreenView;
     private InstructionsView instructionsView;
-    private GameScreenView gameScreen;
+    private GameScreenView gameScreenView;
     private RoadView roadView;
     private CarView carView;
     private PianoView pianoView;
