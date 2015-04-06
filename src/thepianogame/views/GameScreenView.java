@@ -164,6 +164,7 @@ public class GameScreenView extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 hidePauseMenu();
+                controller.shouldUpdateGame = true;
             }
             
         });

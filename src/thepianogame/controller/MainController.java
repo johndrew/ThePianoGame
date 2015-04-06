@@ -32,7 +32,7 @@ public final class MainController extends JFrame implements ActionListener,
     private final CONTROL_MODE current_mode;
     private Timer timer;
     public Game g;
-    private boolean shouldUpdateGame;
+    public boolean shouldUpdateGame;
     private boolean moveCarLeft = false;
     private boolean moveCarRight = false;
 
