@@ -69,7 +69,7 @@ public class GameScreenView extends JPanel {
         
         player = new Player(0, 3);
         JLabel score = new JLabel();
-        JLabel scoreNumber = new JLabel();
+        scoreNumber = new JLabel();
         scoreValue = player.score;
         
         score.setText("SCORE:");
@@ -215,6 +215,7 @@ public class GameScreenView extends JPanel {
         */
         endGameMenu = new JDialog();
         JPanel container = new JPanel();
+        JLabel title = new JLabel("Game Over");
         JButton playAgain = new JButton("Play Again");
         JButton backToMenu = new JButton("Back To Menu");
         
@@ -239,6 +240,7 @@ public class GameScreenView extends JPanel {
         
         endGameMenu.setLayout(new BorderLayout());
         endGameMenu.add(container, BorderLayout.CENTER);
+        endGameMenu.add(title, BorderLayout.NORTH);
         container.setLayout(new GridLayout(2,1));
         container.add(playAgain);
         container.add(backToMenu);
@@ -378,13 +380,26 @@ public class GameScreenView extends JPanel {
     
     public void increaseScore() {
         scoreValue += 10;
+        scoreNumber.setText(String.valueOf(scoreValue));
+        scoreNumber.revalidate();
+        scoreNumber.repaint();
         scorePanel.revalidate();
         scorePanel.repaint();
     }
     
     public void restartGame() {
-        gameWindow = null;
         makeGameWindow();
+        for (int i=0;i<3;i++) {
+            newLife();
+        }
+        road = new RoadView(roadSize);
+
+        car = new CarView();
+        road.addCar(car);
+        
+        gameWindow.add(road, BorderLayout.CENTER);
+        gameWindow.revalidate();
+        gameWindow.repaint();
     }
     
     /*
@@ -407,4 +422,5 @@ public class GameScreenView extends JPanel {
     private ArrayList<JLabel> lives;
     private int scoreValue;
     private JPanel scorePanel;
+    private JLabel scoreNumber;
 }

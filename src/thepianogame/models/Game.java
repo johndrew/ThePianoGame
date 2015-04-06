@@ -31,7 +31,7 @@ public class Game {
     static Car car;
 
     static double fallRate = .01;
-    static boolean rungame = true;
+    static public boolean rungame = true;
 
     public Game(MainController controller, GameScreenView gameScreen) {
         chords = new ArrayList<ChordObject>();
