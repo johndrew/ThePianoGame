@@ -11,11 +11,13 @@ import java.util.Random;
 public class Chord {
 
     private String name;
+    public String formattedName;
     private ArrayList<Note> notes;
 
     //TODO: figure out some way to set notes as root, third, fifth, etc.
-    public Chord(String name, ArrayList<Note> notes) {
+    public Chord(String name, String formattedName, ArrayList<Note> notes) {
         this.name = name;
+        this.formattedName = formattedName;
         this.notes = notes;
     }
 
@@ -25,7 +27,7 @@ public class Chord {
          */
         return this.notes;
     }
-    
+
     public String getName() {
         /*
          Returns a list of the notes in this chord
@@ -62,14 +64,28 @@ public class Chord {
 
          }
          */
-        return new Chord(scale.chords[root] + " " + (root + 1), _notes);
-    }   
-    
+        String _formattedName = "";
+        _formattedName += Game.keyNames[(key + scale.steps[root]) % 12];
+        switch (scale.chords[root]) {
+            case "minor":
+                _formattedName += "m";
+                break;
+            case "diminished":
+                _formattedName += "dim";
+                break;
+        }
+        return new Chord(Game.keyNames[(key + scale.steps[root]) % 12] + " ("
+                + (root + 1)
+                + ") "
+                + scale.chords[root], _formattedName, _notes);
+    }
+
     public void printChord() {
         String out = name;
         for (Note n : notes) {
             out += (" " + n.getValue());
         }
         System.out.println(out);
+        System.out.println(formattedName);
     }
 }
