@@ -32,10 +32,10 @@ public class RoadView extends JPanel {
         setBackground(new java.awt.Color(0, 0, 0));
         setLayout(null);
         
-        makeDashedCenterDivider(this);
+        makeDashedCenterDivider();
     }
     
-    public void makeDashedCenterDivider(JPanel road) {
+    public void makeDashedCenterDivider() {
         /*
             Draws the dashes on the road.
         */
@@ -45,7 +45,7 @@ public class RoadView extends JPanel {
         gapSize = (dashHeight*2);
         int dashX = (this.roadSize.width/2) + dashWidth;
         int dashY = (dashHeight * -1) - gapSize;
-        dashes = new ArrayList<Dash>();
+        dashes = new ArrayList<>();
         Dash dash;
         
         for (int i=0;i<numberOfDashes;i++) {
@@ -87,35 +87,6 @@ public class RoadView extends JPanel {
         this.car = car;
         car.setBounds(this.roadSize.width - 75, this.roadSize.height - 125, 
                 100, 180);
-    }
-    
-    public void moveCarLeft(int amountToMove) {
-        /*
-            Adjusts the x position of the car. Does nothing to the y position.
-        */
-        // ensures that no matter the input, the car will move left.
-        if (amountToMove < 0) {
-            amountToMove *= -1;
-        }
-        
-        car.setBounds(car.getX() - amountToMove, car.getY(), 
-                    car.getWidth(), car.getHeight());
-    }
-    
-    public int getCarXPosition() {
-        return car.getX();
-    }
-    
-    public void moveCarRight(int amountToMove) {
-        /*
-            Adjusts the x position of the car. Does nothing to the y position.
-        */
-        // ensures that no matter the input, the car will move left.
-        if (amountToMove < 0) {
-            amountToMove *= -1;
-        }
-        car.setBounds(car.getX() + amountToMove, car.getY(), 
-                car.getWidth(), car.getHeight());
     }
     
     public Dimension getRoadSize() {
