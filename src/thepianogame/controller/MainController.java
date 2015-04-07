@@ -70,11 +70,13 @@ public final class MainController extends JFrame implements ActionListener,
         settingsView = new SettingsView(this);
         
         // Views on the title screen
+        instructionsView = new InstructionsView(current_mode);
         
         gameScreenView.setRoadView(roadView);
         gameScreenView.setRoadSize(roadSize);
         gameScreenView.setPiano(pianoView);
         gameScreenView.setSettingsView(settingsView);
+        titleScreenView.setInstructionsView(instructionsView);
     }
 
     /*
@@ -656,19 +658,19 @@ public final class MainController extends JFrame implements ActionListener,
     */
     
     public Dimension getRoadSize() {
-        return gameScreenView.getRoadSize();
+        return roadSize;
     }
     
     public GameScreenView getGameScreen() {
         return this.gameScreenView;
     }
     
-    public CONTROL_MODE getCurrentMode() {
-        /*
-         Returns the current_mode. Mode is defined by the CONTROL_MODE enum
-         */
-        return current_mode;
-    }
+//    public CONTROL_MODE getCurrentMode() {
+//        /*
+//         Returns the current_mode. Mode is defined by the CONTROL_MODE enum
+//         */
+//        return current_mode;
+//    }
 
     /*
         SETTERS
