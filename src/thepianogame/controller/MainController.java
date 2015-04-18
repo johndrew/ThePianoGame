@@ -684,6 +684,14 @@ public final class MainController extends JFrame implements ActionListener,
     public Car getCarModel() {
         return this.carModel;
     }
+    
+    /*
+        SETTERS
+    */
+    
+    public void setCarView(CarView car) {
+        carView = car;
+    }
 
     /*
         OTHER METHODS

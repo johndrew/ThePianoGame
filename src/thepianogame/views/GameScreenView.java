@@ -414,6 +414,7 @@ public class GameScreenView extends JPanel {
 
         car = new CarView();
         road.addCar(car);
+        controller.setCarView(car);
 
         gameWindow.add(road, BorderLayout.CENTER);
         removeChordViews();
