@@ -24,6 +24,7 @@ public class ThePianoGame {
                 controller.setPreferredSize(screenSize);
                 controller.setMaximumSize(screenSize);
                 controller.setMinimumSize(screenSize);
+                controller.setResizable(false);
                 controller.pack();
                 controller.setVisible(true);
             }
