@@ -5,6 +5,7 @@
  */
 package thepianogame.views;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +13,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import thepianogame.controller.MainController;
 
@@ -22,11 +24,11 @@ public class TitleScreenView extends JPanel {
     public TitleScreenView(MainController controller) {
         this.controller = controller;
         
-        title = new JLabel("The Piano Game");
+        title = new JLabel("The Piano Game", SwingConstants.CENTER);
         
         title.setFont (title.getFont ().deriveFont (64.0f));
-        this.setLayout(new BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
-        this.add(title);
+        this.setLayout(new BorderLayout());
+        this.add(title, BorderLayout.NORTH);
         this.add(makeButtons());
     }
     

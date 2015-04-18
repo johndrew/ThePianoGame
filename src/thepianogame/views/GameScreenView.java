@@ -17,6 +17,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -28,6 +30,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import thepianogame.controller.MainController;
 import thepianogame.models.Car;
@@ -136,7 +139,7 @@ public class GameScreenView extends JPanel {
     public final void makePauseDialog() {
         pauseMenu = new JDialog();
         JPanel menuContainer = new JPanel();
-        JLabel title = new JLabel("Paused Game");
+        JLabel title = new JLabel("Paused Game", SwingConstants.CENTER);
         JButton resume = new JButton("Resume");
         JButton restart = new JButton("Restart");
         JButton endGame = new JButton("End Game");
@@ -184,10 +187,11 @@ public class GameScreenView extends JPanel {
         });
         
         pauseMenu.setPreferredSize(new Dimension(400, 400));
-        pauseMenu.setLocation(new Point(200, 200));
+        pauseMenu.setLocation(new Point(250, 200));
         pauseMenu.setVisible(false);
         pauseMenu.pack();
         pauseMenu.setModal(false);
+        pauseMenu.setAlwaysOnTop(true);
     }
     
     public final void makeEndGameDialog() {
@@ -200,7 +204,7 @@ public class GameScreenView extends JPanel {
         */
         endGameMenu = new JDialog();
         JPanel container = new JPanel();
-        JLabel title = new JLabel("Game Over");
+        JLabel title = new JLabel("Game Over", SwingConstants.CENTER);
         JButton playAgain = new JButton("Play Again");
         JButton backToMenu = new JButton("Back To Menu");
         endGameMenu.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -234,10 +238,12 @@ public class GameScreenView extends JPanel {
         container.add(backToMenu);
         
         endGameMenu.setPreferredSize(new Dimension(400, 400));
-        endGameMenu.setLocation(new Point(200, 200));
+        endGameMenu.setLocation(new Point(250, 200));
         endGameMenu.setVisible(false);
         endGameMenu.pack();
         endGameMenu.setModal(true);
+        endGameMenu.setAlwaysOnTop(true);
+        
     }
     
     public ChordObjectView makeChordView(ChordObject chord) {
