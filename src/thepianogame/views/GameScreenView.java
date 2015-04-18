@@ -28,6 +28,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.WindowConstants;
 import thepianogame.controller.MainController;
 import thepianogame.models.Car;
 import thepianogame.models.ChordObject;
@@ -150,6 +151,7 @@ public class GameScreenView extends JPanel {
         pauseMenu.add(menuContainer, BorderLayout.CENTER);
         menuContainer.setLayout(new BorderLayout());
         title.setFont(new Font(title.getFont().getName(), Font.PLAIN, 32));
+        pauseMenu.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         
         menuContainer.add(title, BorderLayout.NORTH);
         
@@ -217,6 +219,7 @@ public class GameScreenView extends JPanel {
         JLabel title = new JLabel("Game Over");
         JButton playAgain = new JButton("Play Again");
         JButton backToMenu = new JButton("Back To Menu");
+        endGameMenu.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         
         playAgain.addActionListener(new ActionListener() {
 

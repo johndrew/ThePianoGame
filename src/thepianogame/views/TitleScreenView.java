@@ -12,6 +12,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 import thepianogame.controller.MainController;
 
 public class TitleScreenView extends JPanel {
@@ -23,6 +24,7 @@ public class TitleScreenView extends JPanel {
         
         title = new JLabel("The Piano Game");
         instructionsDialog = makeInstructionsDialog();
+        instructionsDialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         
         title.setFont (title.getFont ().deriveFont (64.0f));
         this.setLayout(new BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
