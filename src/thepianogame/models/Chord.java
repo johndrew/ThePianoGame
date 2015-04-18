@@ -13,6 +13,7 @@ public class Chord {
 
     private String name;
     public String formattedName;
+    public String listOfNotes;
     private ArrayList<Note> notes;
 
     //TODO: figure out some way to set notes as root, third, fifth, etc.
@@ -20,6 +21,13 @@ public class Chord {
         this.name = name;
         this.formattedName = formattedName;
         this.notes = notes;
+        this.listOfNotes = "";
+        for (int i = 0; i < notes.size(); i++) {
+            if (i >= 1) {
+                listOfNotes += ", ";
+            }
+            listOfNotes += notes.get(i).getName();
+        }
     }
 
     public ArrayList<Note> getNotes() {
