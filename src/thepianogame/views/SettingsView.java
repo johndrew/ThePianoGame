@@ -45,7 +45,7 @@ public class SettingsView extends JPanel {
         JLabel levelLabel = new javax.swing.JLabel();
         JComboBox levels = new javax.swing.JComboBox();
         JLabel tempoLabel = new javax.swing.JLabel();
-        tempos = new javax.swing.JSlider(JSlider.HORIZONTAL, 40, 180, 80);
+        tempos = new javax.swing.JSlider(JSlider.HORIZONTAL, 20, 180, 80);
         JLabel keyLabel = new javax.swing.JLabel();
         keys = new javax.swing.JComboBox();
         majorOrMinor = new javax.swing.JComboBox();

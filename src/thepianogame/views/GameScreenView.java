@@ -392,6 +392,9 @@ public class GameScreenView extends JPanel {
     }
     
     public void restartGame() {
+        while (!lives.isEmpty()) {
+            lives.remove(0).setVisible(false);
+        }
         for (int i=0;i<3;i++) {
             livesPanel.add(newLife());
         }
