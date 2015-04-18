@@ -7,8 +7,6 @@ package thepianogame.views;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.Timer;
 import javax.swing.border.BevelBorder;
 import thepianogame.controller.MainController.CONTROL_MODE;
 import static thepianogame.controller.MainController.CONTROL_MODE.MIDI_KEYBOARD;
@@ -86,9 +83,8 @@ public class PianoView extends JScrollPane {
             deactivateKeys(keys);
         }
      
-        this.setViewportView(layer);
-        setSize(685, 92); 
-        
+        setViewportView(layer);
+        setSize(685, 92);
     }
     
     // creates the piano's white keys

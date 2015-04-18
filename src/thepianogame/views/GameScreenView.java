@@ -40,22 +40,23 @@ public class GameScreenView extends JPanel {
     public GameScreenView(MainController controller) {
         this.controller = controller;
         lives = new ArrayList<>();
+        gameModel = controller.g;
+        chordViews = new ArrayList<>();
         
+        initComponents();
+    }
+    
+    public final void initComponents() {
         makeGameWindow();
-        makePianoVisualization();
         makePauseDialog();
         makeEndGameDialog();
         
         setLayout(new BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
-        
-        add(gameWindow);
-        add(Box.createRigidArea(new Dimension(0,5)));
-        add(pianoVisualization);
-
-//        gameModel.run();
-        gameModel = controller.g;
-        chordViews = new ArrayList<>();
     }
+    
+    /*
+        MAKE FUNCTIONS
+    */
     
     public final void makeGameWindow() {
         /*
@@ -99,7 +100,7 @@ public class GameScreenView extends JPanel {
         leftMargin.setMaximumSize(marginSize);
         leftMargin.setMinimumSize(marginSize);
         
-        JPanel rightMargin = new JPanel();
+        rightMargin = new JPanel();
         rightMargin.setPreferredSize(marginSize);
         rightMargin.setMaximumSize(marginSize);
         rightMargin.setMinimumSize(marginSize);
@@ -107,35 +108,29 @@ public class GameScreenView extends JPanel {
         gameWindow.add(leftMargin, BorderLayout.WEST);
         gameWindow.add(rightMargin, BorderLayout.EAST);
         
-        roadSize = new Dimension(420, 480);
-        road = new RoadView(roadSize);
-
-        car = new CarView();
-        road.addCar(car);
-        
-        gameWindow.add(road, BorderLayout.CENTER);
-        
-        settings = new SettingsView(controller);
-        rightMargin.add(settings);
         leftMargin.add(livesPanel);
         leftMargin.add(scorePanel);
+        
+        add(gameWindow);
+        // Add a gap to separate the road from the piano
+        add(Box.createRigidArea(new Dimension(0,5)));
     }
     
     public final void makePianoVisualization() {
         /*
             Creates the piano visualization
         */
-        pianoVisualization = new JPanel();
+        pianoViewContainer = new JPanel();
         Dimension pianoSize = new Dimension(684, 92);
-        pianoVisualization.setSize(pianoSize);
-        pianoVisualization.setPreferredSize(pianoSize);
-        pianoVisualization.setMaximumSize(pianoSize);
-        pianoVisualization.setMinimumSize(pianoSize);
-        piano = new PianoView(controller.getCurrentMode());
+        pianoViewContainer.setSize(pianoSize);
+        pianoViewContainer.setPreferredSize(pianoSize);
+        pianoViewContainer.setMaximumSize(pianoSize);
+        pianoViewContainer.setMinimumSize(pianoSize);
 
         piano.setMinimumSize(pianoSize);
-        pianoVisualization.setLayout(new BorderLayout());
-        pianoVisualization.add(piano, BorderLayout.CENTER);
+        pianoViewContainer.setLayout(new BorderLayout());
+        pianoViewContainer.add(piano, BorderLayout.CENTER);
+        add(pianoViewContainer);
     }
     
     public final void makePauseDialog() {
@@ -166,6 +161,7 @@ public class GameScreenView extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 hidePauseMenu();
+                controller.shouldUpdateGame = true;
             }
             
         });
@@ -192,18 +188,6 @@ public class GameScreenView extends JPanel {
         pauseMenu.setVisible(false);
         pauseMenu.pack();
         pauseMenu.setModal(false);
-    }
-    
-    public boolean isPauseMenuVisible() {
-        return pauseMenu.isVisible();
-    }
-    
-    public void showPauseMenu() {
-        pauseMenu.setVisible(true);
-    }
-    
-    public void hidePauseMenu() {
-        pauseMenu.setVisible(false);
     }
     
     public final void makeEndGameDialog() {
@@ -256,6 +240,90 @@ public class GameScreenView extends JPanel {
         endGameMenu.setModal(true);
     }
     
+    public ChordObjectView makeChordView(ChordObject chord) {
+        ChordObjectView chordView = new ChordObjectView(chord.chord.getName(), 
+                chord.onRightSide, chord.id);
+        
+        chordViews.add(chordView);
+        chordView.setObjectBounds(roadSize);
+        road.add(chordView);
+        road.revalidate();
+        road.repaint();
+        
+        return chordView;
+    }
+    
+    /*
+        GETTERS
+    */
+    
+    public Dimension getRoadSize() {
+        return road.getRoadSize();
+    }
+    
+    public int getTempo() {
+        return settings.getTempo();
+    }
+    
+    public String getKey() {
+        return settings.getKey();
+    }
+    
+    public String getScale() {
+        return settings.getScale();
+    }
+    
+    public RoadView getRoadView() {
+        return this.road;
+    }
+    
+    /*
+        SETTERS
+    */
+    
+    public void setGameModel(Game game) {
+        this.gameModel = game;
+    }
+    
+    public void setCarModel(Car carModel) {
+        road.addCarModelToCarView(carModel);
+    }
+    
+    public void setRoadView(RoadView road) {
+        this.road = road;
+        gameWindow.add(road, BorderLayout.CENTER);
+    }
+    
+    public void setRoadSize(Dimension size) {
+        this.roadSize = size;
+    }
+    
+    public void setPiano(PianoView pianoView) {
+        this.piano = pianoView;
+        makePianoVisualization();
+    }
+    
+    public void setSettingsView(SettingsView settings) {
+        this.settings = settings;
+        rightMargin.add(settings);
+    }
+    
+    /*
+        OTHER FUNCTIONS
+    */
+    
+    public boolean isPauseMenuVisible() {
+        return pauseMenu.isVisible();
+    }
+    
+    public void showPauseMenu() {
+        pauseMenu.setVisible(true);
+    }
+    
+    public void hidePauseMenu() {
+        pauseMenu.setVisible(false);
+    }
+    
     public boolean isEndGameMenuVisible() {
         return endGameMenu.isVisible();
     }
@@ -274,8 +342,6 @@ public class GameScreenView extends JPanel {
     
     public void computerKeyPressed(int keyEventCode) {
         piano.computerKeyPressed(keyEventCode);
-        
-//        road.moveCarLeft(25);
     }
     
     public void computerKeyReleased(int keyEventCode) {
@@ -286,65 +352,11 @@ public class GameScreenView extends JPanel {
         road.moveDashes(amountToMove);
     }
     
-    public void moveCarLeft(int amountToMove) {
-        road.moveCarLeft(amountToMove);
-    }
-    
-    public void moveCarRight(int amountToMove) {
-        road.moveCarRight(amountToMove);
-    }
-    
-    public int getCarXCoordinate() {
-        return road.getCarXPosition();
-    }
-    
-    public Dimension getRoadSize() {
-        return road.getRoadSize();
-    }
-    
-    public int getTempo() {
-        return settings.getTempo();
-    }
-    
-    public String getKey() {
-        return settings.getKey();
-    }
-    
-    public String getScale() {
-        return settings.getScale();
-    }
-    
-    public void setGameModel(Game game) {
-        this.gameModel = game;
-    }
-    
-    public RoadView getRoadView() {
-        return this.road;
-    }
-    
-    public void setCarModel(Car carModel) {
-        this.car.setModel(carModel);
-    }
-    
     public boolean isCarOnRightSide() {
-        return this.car.isCarOnRightSide();
-    }
-    
-    public ChordObjectView makeChordView(ChordObject chord) {
-        ChordObjectView chordView = new ChordObjectView(chord.chord.getName(), 
-                chord.onRightSide, chord.id);
-        
-        chordViews.add(chordView);
-        chordView.setObjectBounds(roadSize);
-        road.add(chordView);
-        road.revalidate();
-        road.repaint();
-        
-        return chordView;
+        return road.isCarOnRightSide();
     }
     
     public void incrementChordViews(double positionIncrement) {
-        
         for (ChordObjectView chordView : chordViews) {
             chordView.moveChordView(positionIncrement, roadSize.height);
         }
@@ -415,6 +427,9 @@ public class GameScreenView extends JPanel {
     }
     
     public void resetScore() {
+        /*
+            Resets the score display back to zero
+        */
         scoreValue = 0;
         scoreNumber.setText(String.valueOf(scoreValue));
         scoreNumber.revalidate();
@@ -428,7 +443,7 @@ public class GameScreenView extends JPanel {
     */
     private MainController controller;
     private JPanel gameWindow;
-    private JPanel pianoVisualization;
+    private JPanel pianoViewContainer;
     private JDialog pauseMenu;
     private JDialog endGameMenu;
     private RoadView road;
@@ -445,4 +460,5 @@ public class GameScreenView extends JPanel {
     private JPanel scorePanel;
     private JLabel scoreNumber;
     private JPanel livesPanel;
+    private JPanel rightMargin;
 }

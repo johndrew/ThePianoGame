@@ -23,15 +23,11 @@ public class TitleScreenView extends JPanel {
         this.controller = controller;
         
         title = new JLabel("The Piano Game");
-        instructionsDialog = makeInstructionsDialog();
-        instructionsDialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         
         title.setFont (title.getFont ().deriveFont (64.0f));
         this.setLayout(new BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
         this.add(title);
         this.add(makeButtons());
-        
-        instructionsDialog.setVisible(false);
     }
     
     public final JPanel makeButtons() {
@@ -75,7 +71,6 @@ public class TitleScreenView extends JPanel {
             
         });
         
-//        buttons.setPreferredSize(new Dimension(200, 200));
         buttons.setLayout(new GridLayout(3, 1));
         
         buttons.add(start);
@@ -85,11 +80,9 @@ public class TitleScreenView extends JPanel {
         return buttons;
     }
     
-    public final InstructionsView makeInstructionsDialog() {
-        /*
-            Creates the JDialog that holds the instructions
-        */
-        return new InstructionsView(controller.getCurrentMode());
+    public void setInstructionsView(InstructionsView view) {
+        this.instructionsDialog = view;
+        instructionsDialog.setVisible(false);
     }
     
     /*

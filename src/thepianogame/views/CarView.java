@@ -59,6 +59,29 @@ public class CarView extends JPanel {
         return bounds.x >= middleX;
     }
     
+    public void moveCarLeft(int amountToMove) {
+        /*
+            Adjusts the x position of the car. Does nothing to the y position.
+        */
+        // ensures that no matter the input, the car will move left.
+        if (amountToMove < 0) {
+            amountToMove *= -1;
+        }
+        
+        setBounds(getX() - amountToMove, getY(), getWidth(), getHeight());
+    }
+    
+    public void moveCarRight(int amountToMove) {
+        /*
+            Adjusts the x position of the car. Does nothing to the y position.
+        */
+        // ensures that no matter the input, the car will move left.
+        if (amountToMove < 0) {
+            amountToMove *= -1;
+        }
+        setBounds(getX() + amountToMove, getY(), getWidth(), getHeight());
+    }
+    
     private BufferedImage img;
     private Car model;
 }

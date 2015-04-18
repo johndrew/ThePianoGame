@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import javax.swing.JPanel;
+import thepianogame.models.Car;
 import thepianogame.models.Road;
 
 public class RoadView extends JPanel {
@@ -31,10 +32,10 @@ public class RoadView extends JPanel {
         setBackground(new java.awt.Color(0, 0, 0));
         setLayout(null);
         
-        makeDashedCenterDivider(this);
+        makeDashedCenterDivider();
     }
     
-    public void makeDashedCenterDivider(JPanel road) {
+    public void makeDashedCenterDivider() {
         /*
             Draws the dashes on the road.
         */
@@ -44,7 +45,7 @@ public class RoadView extends JPanel {
         gapSize = (dashHeight*2);
         int dashX = (this.roadSize.width/2) + dashWidth;
         int dashY = (dashHeight * -1) - gapSize;
-        dashes = new ArrayList<Dash>();
+        dashes = new ArrayList<>();
         Dash dash;
         
         for (int i=0;i<numberOfDashes;i++) {
@@ -88,37 +89,20 @@ public class RoadView extends JPanel {
                 100, 180);
     }
     
-    public void moveCarLeft(int amountToMove) {
-        /*
-            Adjusts the x position of the car. Does nothing to the y position.
-        */
-        // ensures that no matter the input, the car will move left.
-        if (amountToMove < 0) {
-            amountToMove *= -1;
-        }
-        
-        car.setBounds(car.getX() - amountToMove, car.getY(), 
-                    car.getWidth(), car.getHeight());
-    }
-    
-    public int getCarXPosition() {
-        return car.getX();
-    }
-    
-    public void moveCarRight(int amountToMove) {
-        /*
-            Adjusts the x position of the car. Does nothing to the y position.
-        */
-        // ensures that no matter the input, the car will move left.
-        if (amountToMove < 0) {
-            amountToMove *= -1;
-        }
-        car.setBounds(car.getX() + amountToMove, car.getY(), 
-                car.getWidth(), car.getHeight());
-    }
-    
     public Dimension getRoadSize() {
         return this.roadSize;
+    }
+    
+    public void setCarView(CarView car) {
+        this.car = car;
+    }
+    
+    public void addCarModelToCarView(Car model) {
+        car.setModel(model);
+    }
+    
+    public boolean isCarOnRightSide() {
+        return car.isCarOnRightSide();
     }
     
     private class Dash extends JPanel {

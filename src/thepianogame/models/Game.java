@@ -34,15 +34,13 @@ public class Game {
     static public boolean rungame = true;
 
     public Game(MainController controller, GameScreenView gameScreen) {
-        chords = new ArrayList<ChordObject>();
+        this.controller = controller;
+        this.gameScreen = gameScreen;
+        chords = new ArrayList<>();
         key = 53;
         scale = major;
         score = 0;
-        car = new Car();
-        this.controller = controller;
-        this.gameScreen = gameScreen;
-        
-        gameScreen.setCarModel(car);
+        car = controller.getCarModel();
         
         lives = 3;
         chordsToViewsMap = new HashMap<>();
@@ -74,22 +72,20 @@ public class Game {
 
         // add new ChordObject if 
         if (chords.isEmpty()) {
-//            // fix this so objects aren't always on the right side of the screen
-//            chords.add(new ChordObject(Chord.getRandomChord(key, scale), true));
-//            chords.get(0).chord.printChord();
             ChordObject chord = new ChordObject(Chord.getRandomChord(key, scale), 
                     !gameScreen.isCarOnRightSide());
             ChordObjectView chordView = controller.makeChordView(chord);
+            
             chords.add(chord);
             chordsToViewsMap.put(chord, chordView);
             System.out.println("New chord: " + chords.get(0).name);
         }
+        
         // advance all the current chords, hurt the player if a chord has
         // moved too far without being cleared
         for (int i = 0; i < chords.size();) {
             ChordObject chord = chords.get(i);
             ChordObjectView currentView = chordsToViewsMap.get(chord);
-            Dimension roadSize = controller.getRoadSize();
             
             chord.position += fallRate;
             controller.incrementChordViews(fallRate);
@@ -100,14 +96,15 @@ public class Game {
                 if (!chords.isEmpty()) {
                     chords.remove(i);
                 }
-//                car.onRightSide = !car.onRightSide;
             } else {
                 i++;
             }
         }
+        
         if (!chords.isEmpty()) {
             boolean goodNotes = true;
             ChordObject chord = chords.get(0);
+            
             for (Note n : chord.chord.getNotes()) {
                 if (keymap.containsKey(n.getValue()) && keymap.get(n.getValue())) {
                     System.out.println(n.getValue() + " is pressed!");
@@ -116,11 +113,13 @@ public class Game {
                     break;
                 }
             }
+            
             if (goodNotes) {
                 System.out.println("GOOD CHORD!");
                 controller.removeChordFromView(chord);
                 increaseScore();
                 chords.remove(0);
+                
                 if (car.onRightSide) {
                     controller.moveCarLeft();
                     car.onRightSide = false;
@@ -135,6 +134,10 @@ public class Game {
             // end the game
         }
 
+    }
+    
+    public void setCarModel(Car car) {
+        this.car = car;
     }
     
     private MainController controller;
