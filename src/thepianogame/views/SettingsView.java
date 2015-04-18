@@ -7,6 +7,8 @@ package thepianogame.views;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -117,6 +119,26 @@ public class SettingsView extends JPanel {
             @Override
             public void popupMenuCanceled(PopupMenuEvent e) {
             }
+        });
+        
+        tempos.addMouseListener(new MouseListener() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {}
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                ctrl.requestFocus();
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {}
+
+            @Override
+            public void mouseEntered(MouseEvent e) {}
+
+            @Override
+            public void mouseExited(MouseEvent e) {}
         });
 
         levelPanel.add(levelLabel, BorderLayout.NORTH);
