@@ -10,13 +10,14 @@ import java.awt.Dimension;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import thepianogame.controller.MainController;
 
 public class SettingsView extends JPanel {
 
-    private JComboBox tempos;
+    private JSlider tempos;
     private JComboBox keys;
     private JComboBox majorOrMinor;
 
@@ -44,7 +45,7 @@ public class SettingsView extends JPanel {
         JLabel levelLabel = new javax.swing.JLabel();
         JComboBox levels = new javax.swing.JComboBox();
         JLabel tempoLabel = new javax.swing.JLabel();
-        tempos = new javax.swing.JComboBox();
+        tempos = new javax.swing.JSlider(JSlider.HORIZONTAL, 40, 180, 80);
         JLabel keyLabel = new javax.swing.JLabel();
         keys = new javax.swing.JComboBox();
         majorOrMinor = new javax.swing.JComboBox();
@@ -73,24 +74,10 @@ public class SettingsView extends JPanel {
         });
 
         tempoLabel.setText("TEMPO:");
-
-        tempos.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"40", "60", "80",
-            "100", "120", "140", "160", "180"}));
-        tempos.addPopupMenuListener(new PopupMenuListener() {
-
-            @Override
-            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-            }
-
-            @Override
-            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-                ctrl.requestFocus();
-            }
-
-            @Override
-            public void popupMenuCanceled(PopupMenuEvent e) {
-            }
-        });
+        tempos.setMajorTickSpacing(40);
+        tempos.setMinorTickSpacing(10);
+        tempos.setPaintTicks(true);
+        tempos.setPaintLabels(true);
 
         keyLabel.setText("KEY:");
 
@@ -148,7 +135,7 @@ public class SettingsView extends JPanel {
     }
 
     public int getTempo() {
-        return Integer.parseInt((String) tempos.getSelectedItem());
+        return tempos.getValue();
     }
 
     public String getKey() {
