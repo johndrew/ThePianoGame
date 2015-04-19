@@ -6,7 +6,6 @@
 package thepianogame.views;
 
 import java.awt.BorderLayout;
-import static java.awt.BorderLayout.CENTER;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -50,6 +49,7 @@ public class InstructionsView extends JDialog {
         ArrayList<String> instructions = getInstructions();
         back = new JButton("Back");
         next = new JButton("Next");
+        finish = new JButton("Finish");
         JPanel buttons = new JPanel();
         try {
         for (int i=0;i<instructions.size();i++) {
@@ -67,6 +67,7 @@ public class InstructionsView extends JDialog {
         buttons.setLayout(new GridLayout(1, 2));
         buttons.add(back);
         buttons.add(next);
+        back.setEnabled(false);
         
         add(buttons, BorderLayout.SOUTH);
         
@@ -75,9 +76,15 @@ public class InstructionsView extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 int index = instructionsContainer.getSelectedIndex();
                 JTabbedPane ic = instructionsContainer;
-                if(index == ic.getTabCount() - 1) {
-                    ic.setSelectedIndex(0);  
-                } else {
+                if(index == ic.getTabCount() - 2) {
+                     next.setText("Finish");
+                     ic.setSelectedIndex(index + 1);
+                } 
+                else if (index == ic.getTabCount() - 1) {
+                    setVisible(false);
+                }
+                else {
+                    back.setEnabled(true);
                     ic.setSelectedIndex(index + 1);
                 }  
             }
@@ -90,7 +97,7 @@ public class InstructionsView extends JDialog {
                 int index = instructionsContainer.getSelectedIndex();
                 JTabbedPane ic = instructionsContainer;
                 if(index == 0) {
-                    ic.setSelectedIndex(ic.getTabCount()-1);  
+                    back.setEnabled(false);
                 } else {
                     ic.setSelectedIndex(index - 1);
                 }  
@@ -139,4 +146,5 @@ public class InstructionsView extends JDialog {
     private CONTROL_MODE controlMode;
     private JButton next;
     private JButton back;
+    private JButton finish;
 }
