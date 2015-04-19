@@ -26,7 +26,7 @@ public class TitleScreenView extends JPanel {
         
         title = new JLabel("The Piano Game", SwingConstants.CENTER);
         
-        title.setFont (title.getFont ().deriveFont (64.0f));
+            title.setFont (title.getFont ().deriveFont (64.0f));
         this.setLayout(new BorderLayout());
         this.add(title, BorderLayout.NORTH);
         this.add(makeButtons());

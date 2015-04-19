@@ -6,18 +6,24 @@
 package thepianogame.views;
 
 import java.awt.BorderLayout;
+import static java.awt.BorderLayout.CENTER;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 import thepianogame.controller.MainController.CONTROL_MODE;
 
 public class InstructionsView extends JDialog {
@@ -30,8 +36,9 @@ public class InstructionsView extends JDialog {
     
     public final void initComponents() {
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(500, 500));
-        setLocation(new Point(100, 200));
+        setPreferredSize(new Dimension(650, 600));
+        setLocation(new Point(120, 100));
+        setAlwaysOnTop(true);
         pack();
         setModal(true);
         
@@ -40,13 +47,15 @@ public class InstructionsView extends JDialog {
     }
     
     public final void addInstructionsToDialog() {
-        ArrayList<JTextArea> instructions = getInstructions();
+        ArrayList<String> instructions = getInstructions();
         back = new JButton("Back");
         next = new JButton("Next");
         JPanel buttons = new JPanel();
-        
+        try {
         for (int i=0;i<instructions.size();i++) {
-            JTextArea instruction = instructions.get(i);
+            JLabel instruction = new JLabel();
+            instruction.setIcon(new ImageIcon(ImageIO.read(getClass().getResourceAsStream(instructions.get(i)))));
+            instruction.setHorizontalAlignment(SwingConstants.CENTER);
             JPanel container = new JPanel();
             container.setLayout(new BorderLayout());
             container.add(instruction, BorderLayout.CENTER);
@@ -88,65 +97,33 @@ public class InstructionsView extends JDialog {
             }
         });
     }
+    catch (IOException e) {
+        e.printStackTrace();
+    }
+    }
     
-    public ArrayList<JTextArea> getInstructions() {
-        ArrayList<JTextArea> instructions = new ArrayList<JTextArea>();
-        JTextArea i1 = new JTextArea("You control a car driving down a road.");
-        JTextArea i2 = new JTextArea("Objects with a chord label will move down "
-                + "the road\n towards the car.");
-        JTextArea i3 = new JTextArea("Your objective is to collect these "
-                + "objects by moving\n the car into the correct lane.");
-        JTextArea i4 = new JTextArea("To move the car into a lane, play the "
-                + "chord highlighted on the piano visualization on the "
-                + "corresponding side of the piano (e.g. to move left, play "
-                + "the chord on the\n left side of the piano)");
-        JTextArea i5 = new JTextArea("If you don't play the correct chord in "
-                + "time, the chord\n will turn red which means that you can't "
-                + "get it\n anymore.");
-        JTextArea i6 = new JTextArea("You will be able to adjust the spped "
-                + "of the game, the difficulty level, and the key of the "
-                + "chords. To make\n adjustments like these, first pause the "
-                + "game by\n pressing the space bar.");
+    public ArrayList<String> getInstructions() {
+        ArrayList<String> instructions = new ArrayList();
         
-        JTextArea comp_key_i = new JTextArea("Since you are using a MIDI keyboard, "
-                + "you can play the piano by using the computer keys. The keys "
-                + "available\n for you to play will be labeled on the piano "
-                + "on the\n screen once you start the game.");
-        
-        setFont(i1);
-        setFont(i2);
-        setFont(i3);
-        setFont(i4);
-        setFont(i5);
-        setFont(i6);
-        setFont(comp_key_i);
-        
-        i1.setLineWrap(true);
-        i2.setLineWrap(true);
-        i3.setLineWrap(true);
-        i4.setLineWrap(true);
-        i5.setLineWrap(true);
-        i6.setLineWrap(true);
-        comp_key_i.setLineWrap(true);
-        
-        i1.setBackground(null);
-        i2.setBackground(null);
-        i3.setBackground(null);
-        i4.setBackground(null);
-        i5.setBackground(null);
-        i6.setBackground(null);
-        comp_key_i.setBackground(null);
-        
+        String i1 = "/thepianogame/resources/pressPlay.png";
+        String i2 = "/thepianogame/resources/startGame.png";
+        String i3 = "/thepianogame/resources/correct.png";
+        String i4 = "/thepianogame/resources/incorrect.png";
+        String i5 = "/thepianogame/resources/pauseGame.png";
+        String i6 = "/thepianogame/resources/tempo.png";
+        String i7 = "/thepianogame/resources/majorChords.png";
+        String i8 = "/thepianogame/resources/minorChords.png";
+        String i9 = "/thepianogame/resources/diminishedChords.png";
+       
         instructions.add(i1);
         instructions.add(i2);
         instructions.add(i3);
         instructions.add(i4);
-        
-        // Remove this after prototype is turned in
-        instructions.add(comp_key_i);
-        
         instructions.add(i5);
         instructions.add(i6);
+        instructions.add(i7);
+        instructions.add(i8);
+        instructions.add(i9);
         
         return instructions;
     }
