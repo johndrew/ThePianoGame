@@ -47,7 +47,7 @@ public class GameScreenView extends JPanel {
     }
     
     public final void initComponents() {
-        dialogPosition = new Point(900, 200);
+        dialogPosition = new Point(250, 200);
         makeGameWindow();
         makePauseDialog();
         makeEndGameDialog();
