@@ -175,7 +175,7 @@ public final class MainController extends JFrame implements ActionListener,
         if (moveCarLeft) {
 //            int carX = gameScreenView.getCarXCoordinate();
             int carX = carView.getX();
-            if (carX != carLeftBoundary) {
+            if (carX > carLeftBoundary) {
                 // if you change this number below, you must also change
                 // the carLeftBoundary because the boundary needs to be
                 // a multiple of the number below
@@ -186,7 +186,7 @@ public final class MainController extends JFrame implements ActionListener,
         } else if (moveCarRight) {
 //            int carX = gameScreenView.getCarXCoordinate();
             int carX = carView.getX();
-            if (carX != carRightBoundary) {
+            if (carX < carRightBoundary) {
                 // if you change this number below, you must also change
                 // the carRightBoundary because the boundary needs to be
                 // a multiple of the number below
