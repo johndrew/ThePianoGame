@@ -182,6 +182,14 @@ public class PianoView extends JScrollPane {
             turnKeyDifferentColor(keyIndex, Color.black);
         }
     }
+    
+    public void turnAllKeysBackToOriginalColor() {
+        ArrayList<Integer> events = makeComputerKeyEventsList();
+        
+        for (int i=0;i<events.size();i++) {
+            turnKeyBackToOriginalColor(events.get(i));
+        }
+    }
 
     public ArrayList<Integer> makeComputerKeyEventsList() {
         /*

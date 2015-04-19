@@ -5,7 +5,6 @@
  */
 package thepianogame.controller;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -162,10 +161,8 @@ public final class MainController extends JFrame implements ActionListener,
                     key = 63;
                     break;
             }
-//            g.setLoopInfo(gameScreenView.getTempo(), 60, gameScreenView.getScale());
             g.run(keyPressedMap);
             g.setKey(key);
-            gameKey = key;
         }
 
         if (!gameScreenView.isPauseMenuVisible()
@@ -788,6 +785,4 @@ public final class MainController extends JFrame implements ActionListener,
     
     // single instance models
     private Car carModel;
-    
-    private int gameKey;
 }

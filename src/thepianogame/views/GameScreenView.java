@@ -6,7 +6,6 @@
 package thepianogame.views;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -17,8 +16,6 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -50,6 +47,7 @@ public class GameScreenView extends JPanel {
     }
     
     public final void initComponents() {
+        dialogPosition = new Point(900, 200);
         makeGameWindow();
         makePauseDialog();
         makeEndGameDialog();
@@ -174,6 +172,7 @@ public class GameScreenView extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.restartGame();
+                piano.turnAllKeysBackToOriginalColor();
                 hidePauseMenu();
             }
         });
@@ -187,7 +186,7 @@ public class GameScreenView extends JPanel {
         });
         
         pauseMenu.setPreferredSize(new Dimension(400, 400));
-        pauseMenu.setLocation(new Point(250, 200));
+        pauseMenu.setLocation(dialogPosition);
         pauseMenu.setVisible(false);
         pauseMenu.pack();
         pauseMenu.setModal(false);
@@ -214,6 +213,7 @@ public class GameScreenView extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.newGame();
+                piano.turnAllKeysBackToOriginalColor();
                 hideEndGameMenu();
                 gameWindow.setVisible(true);
             }
@@ -238,7 +238,7 @@ public class GameScreenView extends JPanel {
         container.add(backToMenu);
         
         endGameMenu.setPreferredSize(new Dimension(400, 400));
-        endGameMenu.setLocation(new Point(250, 200));
+        endGameMenu.setLocation(dialogPosition);
         endGameMenu.setVisible(false);
         endGameMenu.pack();
         endGameMenu.setModal(true);
@@ -470,4 +470,5 @@ public class GameScreenView extends JPanel {
     private JLabel scoreNumber;
     private JPanel livesPanel;
     private JPanel rightMargin;
+    private Point dialogPosition;
 }

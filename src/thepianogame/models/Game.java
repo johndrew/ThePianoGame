@@ -5,7 +5,6 @@
  */
 package thepianogame.models;
 
-import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.HashMap;
 import thepianogame.controller.MainController;
@@ -96,6 +95,8 @@ public class Game {
             controller.incrementChordViews(fallRate);
             
             if (chord.position >= 1) {
+                // if a user doesn't play the chord in time, the green keys
+                // turn back to their original color
                 controller.changeKeysBackToOriginalColor(chord.chord.getNotes());
                 currentView.changeBackgroundColor();
                 decrementLives();
@@ -111,6 +112,7 @@ public class Game {
             boolean goodNotes = true;
             ChordObject chord = chords.get(0);
             
+            // highlights the keys the user needs to play
             controller.changeKeysGreen(chord.chord.getNotes());
             
             for (Note n : chord.chord.getNotes()) {
