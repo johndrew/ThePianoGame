@@ -46,16 +46,19 @@ public class Game {
         chordsToViewsMap = new HashMap<>();
     }
 
-    public void setLoopInfo(int newTempo, double frameRate, int newKey, String newScale) {
+    public void setLoopInfo(int newTempo, double frameRate, String newScale) {
         double beatsPerSecond = newTempo / 60.;
         double beatsPerFrame = beatsPerSecond / frameRate;
         fallRate = beatsPerFrame / 4; // chord falls on a per-bar instead of per-beat basis
-        key = newKey;
         if (newScale.equals("Major")) {
             scale = major;
         } else {
             scale = minor;
         }
+    }
+    
+    public void setKey(int newKey) {
+        key = newKey;
     }
     
     public void decrementLives() {
@@ -69,6 +72,8 @@ public class Game {
     }
 
     public void run(HashMap<Integer, Boolean> keymap) {
+        
+        setLoopInfo(gameScreen.getTempo(), 60, gameScreen.getScale());
 
         // add new ChordObject if 
         if (chords.isEmpty()) {
@@ -91,6 +96,7 @@ public class Game {
             controller.incrementChordViews(fallRate);
             
             if (chord.position >= 1) {
+                controller.changeKeysBackToOriginalColor(chord.chord.getNotes());
                 currentView.changeBackgroundColor();
                 decrementLives();
                 if (!chords.isEmpty()) {
@@ -104,6 +110,8 @@ public class Game {
         if (!chords.isEmpty()) {
             boolean goodNotes = true;
             ChordObject chord = chords.get(0);
+            
+            controller.changeKeysGreen(chord.chord.getNotes());
             
             for (Note n : chord.chord.getNotes()) {
                 if (keymap.containsKey(n.getValue()) && keymap.get(n.getValue())) {

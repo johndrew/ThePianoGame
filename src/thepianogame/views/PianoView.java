@@ -78,9 +78,9 @@ public class PianoView extends JScrollPane {
                 
             }
             
-            labelWhiteKeys(keys);
-            labelBlackKeys(keys);
-            deactivateKeys(keys);
+            labelWhiteKeys();
+            labelBlackKeys();
+            deactivateKeys();
         }
      
         setViewportView(layer);
@@ -110,7 +110,7 @@ public class PianoView extends JScrollPane {
     
     // if the game is in computer mode, it labels the white keys with the 
     // associating letters on the keyboard
-    private void labelWhiteKeys(JPanel[] keys){
+    private void labelWhiteKeys(){
         int[] whiteKeyIndexes = {0, 2, 4, 6, 7, 9, 11, 12, 14, 16, 18};
         String[] whiteComputerKeys = {"A", "S", "D", "F", "G","H", "J", "K", "L", 
             ";", "'"};
@@ -126,7 +126,7 @@ public class PianoView extends JScrollPane {
     
     // if the game is in computer mode, it labels the black keys with the 
     // associating letters on the keyboard
-    private void labelBlackKeys(JPanel[] keys) {
+    private void labelBlackKeys() {
         int[] blackKeyIndexes = {1, 3, 5, 8, 10, 13, 15, 17};
         String[] blackComputerKeys = {"W", "E", "R", "Y", "U", "O", "P", "["};
         
@@ -139,7 +139,7 @@ public class PianoView extends JScrollPane {
     }
     
     // turns inactive keys grey
-    private void deactivateKeys(JPanel[] keys) {
+    private void deactivateKeys() {
         for(int i = 0; i < keys.length; i++){
             if(i<17 || i>35){
                 if(keys[i].getBackground() == Color.BLACK) {
@@ -153,56 +153,12 @@ public class PianoView extends JScrollPane {
         }
     }
     
-    // takes in a set of key indexes mapping to the location of the keys on
-    // the virtual keyboard and turns them green
-    public void turnKeysGreen(int[] keyIndexes, JPanel[] keys){
-        /*
-            Highlights specific keys green. 
-        
-            The specific keys are the ones that have the indexes in the list
-            keyIndexes.
-        
-            Used when the user correctly presses keys to get a chord object.
-        */
-        for(int i=0; i<keyIndexes.length; i++){
-            keys[keyIndexes[i]].setBackground(Color.green);
-        }
+    public void turnKeyGreen(int keyEventCode) {
+        final Integer keyIndex = computerKeyEventMap.get(keyEventCode);
+        turnKeyDifferentColor(keyIndex, Color.green);
     }
     
-    // takes in a set of key indexes mapping to the location of the keys on
-    // the virtual keyboard and turns them red
-    public void turnKeysRed(int[] keyIndexes, JPanel[] keys){
-        /*
-            Highlights specific keys red. 
-        
-            The specific keys are the ones that have the indexes in the list
-            keyIndexes.
-        
-            Used when the user incorrectly presses keys to get a chord object.
-        */
-        for(int i=0; i<keyIndexes.length; i++){
-            keys[keyIndexes[i]].setBackground(Color.red);
-        }
-    } 
-    
-    public void turnKeysDifferentColor(int[] keyIndexes, JPanel[] keys, 
-            Color color) {
-        /*
-            Highlights specific keys the provided color. 
-        
-            The specific keys are the ones that have the indexes in the list
-            keyIndexes.
-        
-            Used when the user either correctly or incorrectly presses keys 
-            to get a chord object.
-        */
-        for(int i=0; i<keyIndexes.length; i++){
-            keys[keyIndexes[i]].setBackground(color);
-        }
-    }
-    
-    public void turnKeyDifferentColor(int keyIndex, JPanel[] keys, 
-            Color color ) {
+    public void turnKeyDifferentColor(int keyIndex, Color color ) {
         /*
             Turns a single key, denoted by the provided index, a 
             different color.
@@ -212,6 +168,19 @@ public class PianoView extends JScrollPane {
             keyboard inputs.
         */
         keys[keyIndex].setBackground(color);
+    }
+    
+    public void turnKeyBackToOriginalColor(int keyEventCode) {
+        final Integer keyIndex = computerKeyEventMap.get(keyEventCode);
+        PianoKeyView key = (PianoKeyView)keys[keyIndex];
+        PIANOKEY_TYPE originalColor = key.getType();
+        
+        if (originalColor == WHITE_KEY) {
+            turnKeyDifferentColor(keyIndex, Color.white);
+        }
+        else {
+            turnKeyDifferentColor(keyIndex, Color.black);
+        }
     }
 
     public ArrayList<Integer> makeComputerKeyEventsList() {
@@ -247,20 +216,15 @@ public class PianoView extends JScrollPane {
     public void computerKeyPressed(int keyEventCode) {
         final Integer keyIndex = computerKeyEventMap.get(keyEventCode);
         
-        turnKeyDifferentColor(keyIndex, keys, Color.blue);
+        turnKeyDifferentColor(keyIndex, Color.blue);
     }
     
     public void computerKeyReleased(int keyEventCode) {
-        final Integer keyIndex = computerKeyEventMap.get(keyEventCode);
-        PianoKeyView key = (PianoKeyView)keys[keyIndex];
-        PIANOKEY_TYPE originalColor = key.getType();
-        
-        if (originalColor == WHITE_KEY) {
-            turnKeyDifferentColor(keyIndex, keys, Color.white);
-        }
-        else {
-            turnKeyDifferentColor(keyIndex, keys, Color.black);
-        }
+        turnKeyBackToOriginalColor(keyEventCode);
+    }
+    
+    public JPanel[] getKeys() {
+        return keys;
     }
     
     public JPanel[] keys;

@@ -5,6 +5,7 @@
  */
 package thepianogame.controller;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +20,7 @@ import static thepianogame.controller.MainController.CONTROL_MODE.MIDI_KEYBOARD;
 import thepianogame.models.Car;
 import thepianogame.models.ChordObject;
 import thepianogame.models.Game;
+import thepianogame.models.Note;
 import thepianogame.views.CarView;
 import thepianogame.views.ChordObjectView;
 import thepianogame.views.GameScreenView;
@@ -97,8 +99,6 @@ public final class MainController extends JFrame implements ActionListener,
          Initializes the various views
          */
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        titleScreenView = new TitleScreenView(this);
-//        gameScreenView = new GameScreenView(this);
 
         // start the game on the title screen
         this.add(titleScreenView);
@@ -162,8 +162,10 @@ public final class MainController extends JFrame implements ActionListener,
                     key = 63;
                     break;
             }
-            g.setLoopInfo(gameScreenView.getTempo(), 60, key, gameScreenView.getScale());
+//            g.setLoopInfo(gameScreenView.getTempo(), 60, gameScreenView.getScale());
             g.run(keyPressedMap);
+            g.setKey(key);
+            gameKey = key;
         }
 
         if (!gameScreenView.isPauseMenuVisible()
@@ -584,9 +586,16 @@ public final class MainController extends JFrame implements ActionListener,
         
          Ends the current game.
          */
+        
         gameScreenView.setVisible(false);
         titleScreenView.setVisible(true);
-        endGame();
+        shouldUpdateGame = false;
+        
+        remove(gameScreenView);
+        remove(titleScreenView);
+        makeViews();
+        makeModels();
+        initUI();
     }
 
     public void closeProgram() {
@@ -615,6 +624,29 @@ public final class MainController extends JFrame implements ActionListener,
     
     public void moveCarRight() {
         moveCarRight = true;
+    }
+    
+    public void changeKeysGreen(ArrayList<Note> notes) {
+        /*
+            Highlights the keys green on the pianoview that the user should play 
+        */
+        HashMap<Integer, Integer> map = makeMIDIKeyToComputerKeyMap();
+        
+        for (Note note : notes) {
+            pianoView.turnKeyGreen(map.get(note.getValue()));
+        }
+    }
+    
+    public void changeKeysBackToOriginalColor(ArrayList<Note> notes) {
+        /*
+            Turns the keys back to their original color (either white or black)
+        */
+        HashMap<Integer, Integer> map = makeMIDIKeyToComputerKeyMap();
+        ArrayList<Integer> events = makeComputerKeyEventsList();
+        
+        for (Note note : notes) {
+            pianoView.turnKeyBackToOriginalColor(map.get(note.getValue()));
+        }
     }
     
     /*
@@ -667,6 +699,39 @@ public final class MainController extends JFrame implements ActionListener,
         for (int i = 0; i < events.size(); i++) {
             keyPressedMap.put(events.get(i), false);
         }
+    }
+    
+    public HashMap<Integer, Integer> makeMIDIKeyToComputerKeyMap() {
+        ArrayList<Integer> events = makeComputerKeyEventsList();
+        ArrayList<Integer> keyCodes = new ArrayList<>();
+        HashMap<Integer, Integer> map = new HashMap<>();
+        
+        keyCodes.add(KeyEvent.VK_A);
+        keyCodes.add(KeyEvent.VK_W);
+        keyCodes.add(KeyEvent.VK_S);
+        keyCodes.add(KeyEvent.VK_E);
+        keyCodes.add(KeyEvent.VK_D);
+        keyCodes.add(KeyEvent.VK_R);
+        keyCodes.add(KeyEvent.VK_F);
+        keyCodes.add(KeyEvent.VK_G);
+        keyCodes.add(KeyEvent.VK_Y);
+        keyCodes.add(KeyEvent.VK_H);
+        keyCodes.add(KeyEvent.VK_U);
+        keyCodes.add(KeyEvent.VK_J);
+        keyCodes.add(KeyEvent.VK_K);
+        keyCodes.add(KeyEvent.VK_O);
+        keyCodes.add(KeyEvent.VK_L);
+        keyCodes.add(KeyEvent.VK_P);
+        keyCodes.add(KeyEvent.VK_SEMICOLON);
+        keyCodes.add(KeyEvent.VK_OPEN_BRACKET);
+        keyCodes.add(KeyEvent.VK_QUOTE);
+        keyCodes.add(KeyEvent.VK_CLOSE_BRACKET);
+        
+        for (int i=0;i<events.size();i++) {
+            map.put(events.get(i), keyCodes.get(i));
+        }
+        
+        return map;
     }
     
     /*
@@ -723,4 +788,6 @@ public final class MainController extends JFrame implements ActionListener,
     
     // single instance models
     private Car carModel;
+    
+    private int gameKey;
 }
