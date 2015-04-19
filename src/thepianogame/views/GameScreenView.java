@@ -324,10 +324,12 @@ public class GameScreenView extends JPanel {
     
     public void showPauseMenu() {
         pauseMenu.setVisible(true);
+        settings.activate();
     }
     
     public void hidePauseMenu() {
         pauseMenu.setVisible(false);
+        settings.deactivate();
     }
     
     public boolean isEndGameMenuVisible() {

@@ -48,9 +48,12 @@ public class SettingsView extends JPanel {
         JComboBox levels = new javax.swing.JComboBox();
         JLabel tempoLabel = new javax.swing.JLabel();
         tempos = new javax.swing.JSlider(JSlider.HORIZONTAL, 20, 180, 40);
+        tempos.setEnabled(false);
         JLabel keyLabel = new javax.swing.JLabel();
         keys = new javax.swing.JComboBox();
+        keys.setEnabled(false);
         majorOrMinor = new javax.swing.JComboBox();
+        majorOrMinor.setEnabled(false);
 
         this.setLayout(new BorderLayout());
 
@@ -167,6 +170,18 @@ public class SettingsView extends JPanel {
 
     public String getScale() {
         return (String) majorOrMinor.getSelectedItem();
+    }
+    
+    public void activate() {
+        tempos.setEnabled(true);
+        keys.setEnabled(true);
+        majorOrMinor.setEnabled(true);
+    }
+    
+    public void deactivate() {
+        tempos.setEnabled(false);
+        keys.setEnabled(false);
+        majorOrMinor.setEnabled(false);
     }
 
     private MainController controller;
