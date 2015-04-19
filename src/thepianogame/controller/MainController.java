@@ -549,7 +549,9 @@ public final class MainController extends JFrame implements ActionListener,
         shouldUpdateGame = true;
         g = new Game(this, gameScreenView);
         g.setCarModel(carModel);
-        timer = new Timer((int) (1000 / 60), this);
+        if (timer == null) {
+            timer = new Timer((int) (1000 / 60), this);
+        }
         timer.start();
     }
 
@@ -587,7 +589,7 @@ public final class MainController extends JFrame implements ActionListener,
         gameScreenView.setVisible(false);
         titleScreenView.setVisible(true);
         shouldUpdateGame = false;
-        
+        timer.stop();
         remove(gameScreenView);
         remove(titleScreenView);
         makeViews();
