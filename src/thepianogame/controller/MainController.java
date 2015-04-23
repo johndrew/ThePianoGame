@@ -80,6 +80,8 @@ public final class MainController extends JFrame implements ActionListener,
         gameScreenView.setRoadSize(roadSize);
         gameScreenView.setPiano(pianoView);
         gameScreenView.setSettingsView(settingsView);
+        // users will want to change settings before pressing the start button
+        settingsView.activate();
         titleScreenView.setInstructionsView(instructionsView);
     }
     
@@ -537,7 +539,7 @@ public final class MainController extends JFrame implements ActionListener,
 
         titleScreenView.setVisible(false);
         gameScreenView.setVisible(true);
-        startNewGame();
+        gameScreenView.makeCountdownDialogVisible();
     }
 
     public void startNewGame() {

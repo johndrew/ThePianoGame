@@ -51,6 +51,7 @@ public class GameScreenView extends JPanel {
         makeGameWindow();
         makePauseDialog();
         makeEndGameDialog();
+        makeCountdownDialog();
         
         setLayout(new BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
     }
@@ -244,6 +245,31 @@ public class GameScreenView extends JPanel {
         endGameMenu.setModal(true);
         endGameMenu.setAlwaysOnTop(true);
         
+    }
+    
+    public final void makeCountdownDialog() {
+        countdownDialog = new JDialog();
+        JButton start = new JButton("Start");
+        countdownDialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        
+        start.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.startNewGame();
+                countdownDialog.setVisible(false);
+                settings.deactivate();
+            }
+        });
+        
+        countdownDialog.setLayout(new BorderLayout());
+        countdownDialog.add(start, BorderLayout.CENTER);
+        countdownDialog.setPreferredSize(new Dimension(100, 100));
+        countdownDialog.setLocation(new Point(388, 300));
+        countdownDialog.setVisible(false);
+        countdownDialog.pack();
+        countdownDialog.setModal(false);
+        countdownDialog.setAlwaysOnTop(true);
     }
     
     public ChordObjectView makeChordView(ChordObject chord) {
@@ -447,6 +473,14 @@ public class GameScreenView extends JPanel {
         scorePanel.repaint();
     }
     
+    public void makeCountdownDialogVisible() {
+        countdownDialog.setVisible(true);
+    }
+    
+    public void makeCountdownDialogInvisible() {
+        countdownDialog.setVisible(false);
+    }
+    
     /*
         Private variables. DO NOT MODIFY.
     */
@@ -471,4 +505,5 @@ public class GameScreenView extends JPanel {
     private JPanel livesPanel;
     private JPanel rightMargin;
     private Point dialogPosition;
+    private JDialog countdownDialog;
 }
