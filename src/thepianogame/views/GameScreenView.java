@@ -6,6 +6,7 @@
 package thepianogame.views;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -51,7 +52,7 @@ public class GameScreenView extends JPanel {
         makeGameWindow();
         makePauseDialog();
         makeEndGameDialog();
-        makeCountdownDialog();
+        makeStartButtonDialog();
         
         setLayout(new BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
     }
@@ -205,6 +206,7 @@ public class GameScreenView extends JPanel {
         endGameMenu = new JDialog();
         JPanel container = new JPanel();
         JLabel title = new JLabel("Game Over", SwingConstants.CENTER);
+        title.setForeground(Color.red);
         JButton playAgain = new JButton("Play Again");
         JButton backToMenu = new JButton("Back To Menu");
         endGameMenu.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -247,29 +249,29 @@ public class GameScreenView extends JPanel {
         
     }
     
-    public final void makeCountdownDialog() {
-        countdownDialog = new JDialog();
+    public final void makeStartButtonDialog() {
+        startButtonDialog = new JDialog();
         JButton start = new JButton("Start");
-        countdownDialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        startButtonDialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         
         start.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.startNewGame();
-                countdownDialog.setVisible(false);
+                startButtonDialog.setVisible(false);
                 settings.deactivate();
             }
         });
         
-        countdownDialog.setLayout(new BorderLayout());
-        countdownDialog.add(start, BorderLayout.CENTER);
-        countdownDialog.setPreferredSize(new Dimension(100, 100));
-        countdownDialog.setLocation(new Point(388, 300));
-        countdownDialog.setVisible(false);
-        countdownDialog.pack();
-        countdownDialog.setModal(false);
-        countdownDialog.setAlwaysOnTop(true);
+        startButtonDialog.setLayout(new BorderLayout());
+        startButtonDialog.add(start, BorderLayout.CENTER);
+        startButtonDialog.setPreferredSize(new Dimension(100, 100));
+        startButtonDialog.setLocation(new Point(388, 300));
+        startButtonDialog.setVisible(false);
+        startButtonDialog.pack();
+        startButtonDialog.setModal(false);
+        startButtonDialog.setAlwaysOnTop(true);
     }
     
     public ChordObjectView makeChordView(ChordObject chord) {
@@ -474,11 +476,11 @@ public class GameScreenView extends JPanel {
     }
     
     public void makeCountdownDialogVisible() {
-        countdownDialog.setVisible(true);
+        startButtonDialog.setVisible(true);
     }
     
     public void makeCountdownDialogInvisible() {
-        countdownDialog.setVisible(false);
+        startButtonDialog.setVisible(false);
     }
     
     /*
@@ -505,5 +507,5 @@ public class GameScreenView extends JPanel {
     private JPanel livesPanel;
     private JPanel rightMargin;
     private Point dialogPosition;
-    private JDialog countdownDialog;
+    private JDialog startButtonDialog;
 }
