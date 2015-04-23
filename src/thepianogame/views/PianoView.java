@@ -7,6 +7,7 @@ package thepianogame.views;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -156,6 +157,7 @@ public class PianoView extends JScrollPane {
     public void turnKeyGreen(int keyEventCode) {
         final Integer keyIndex = computerKeyEventMap.get(keyEventCode);
         turnKeyDifferentColor(keyIndex, Color.green);
+        changeKeyLabelColor(keyIndex, Color.black);
     }
     
     public void turnKeyDifferentColor(int keyIndex, Color color ) {
@@ -180,6 +182,9 @@ public class PianoView extends JScrollPane {
         }
         else {
             turnKeyDifferentColor(keyIndex, Color.black);
+            // when black keys are turned green, the label color turns black
+            // this action reverts the label text color
+            changeKeyLabelColor(keyIndex, Color.white);
         }
     }
     
@@ -189,6 +194,15 @@ public class PianoView extends JScrollPane {
         for (int i=0;i<events.size();i++) {
             turnKeyBackToOriginalColor(events.get(i));
         }
+    }
+    
+    public void changeKeyLabelColor(int keyIndex, Color color) {
+        JPanel key = keys[keyIndex];
+        BorderLayout layout = (BorderLayout)key.getLayout();
+        JLabel keyLabel = (JLabel)layout.getLayoutComponent(BorderLayout.SOUTH);
+        Font oldFont = keyLabel.getFont();
+        
+        keyLabel.setForeground(color);
     }
 
     public ArrayList<Integer> makeComputerKeyEventsList() {
